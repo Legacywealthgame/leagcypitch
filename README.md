@@ -5,7 +5,7 @@ Static site plus one serverless function. No build step, no dependencies.
 ```
 netlify.toml                     build config, clean URLs, security headers
 assets/css/base.css              design tokens — every page loads this
-legacy-pitch.html                Legacy Pitch tool (chrome-free QR page)
+legacypitch.html                Legacy Pitch tool (chrome-free QR page)
 netlify/functions/pitch.js       server-side pitch generator, holds the API key
 ```
 
