@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legacy Pitch | Legacy Wealth</title>
+<meta name="description" content="Build a clear, 30 to 60 second pitch for your business idea. Part of the Legacy Wealth board game.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/base.css">
+<style>
+  /* Page-specific only. Everything shared lives in base.css. */
+  body {
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 32px 16px;
+  }
+  .wrap { width: 100%; max-width: 440px; }
+
+  .masthead { text-align: center; margin-bottom: 28px; }
+  .masthead .eyebrow { margin-bottom: 6px; }
+  .masthead h1 { margin: 0 0 10px; }
+
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--gold-deep);
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    padding: 4px 12px;
+    margin-bottom: 12px;
+  }
+
+  .sub { font-size: 14px; color: var(--text-muted); margin: 0; }
+
+  .progress { display: flex; justify-content: center; gap: 6px; margin-bottom: 22px; }
+  .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: rgba(0, 0, 0, 0.15);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .dot.active { background: var(--gold); transform: scale(1.2); }
+  .dot.done { background: var(--gold-deep); }
+
+  .step-label {
+    font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-muted); font-weight: 600; margin-bottom: 10px;
+  }
+  .question { font-family: var(--font-display); font-size: 20px; margin: 0 0 6px; line-height: 1.35; }
+  .hint { font-size: 13px; color: var(--text-muted); margin: 0 0 16px; line-height: 1.45; }
+  textarea { min-height: 80px; }
+
+  .counter { text-align: right; font-size: 11.5px; color: var(--text-muted); margin-top: 6px; }
+  .counter.near { color: var(--gold-deep); font-weight: 600; }
+
+  .error { color: var(--red); font-size: 13px; margin-top: 10px; text-align: center; }
+
+  .pitch-card {
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    border-left: 4px solid var(--gold);
+    border-radius: var(--radius-md);
+    padding: 20px 22px;
+    margin-bottom: 14px;
+    opacity: 0;
+    transform: translateY(14px);
+    animation: deal 0.5s ease forwards;
+  }
+  .pitch-card:nth-of-type(1) { animation-delay: 0.05s; }
+  .pitch-card:nth-of-type(2) { animation-delay: 0.25s; }
+  .pitch-card:nth-of-type(3) { animation-delay: 0.45s; }
+  .pitch-card:nth-of-type(4) { animation-delay: 0.65s; }
+  @keyframes deal { to { opacity: 1; transform: translateY(0); } }
+
+  .pitch-label {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold-deep); font-weight: 700; margin-bottom: 8px;
+  }
+  .pitch-text { font-size: 15.5px; line-height: 1.6; margin: 0; }
+
+  .loading { text-align: center; padding: 40px 0; color: var(--text-muted); font-size: 14px; }
+  .spinner {
+    width: 28px; height: 28px;
+    border: 2.5px solid rgba(0, 0, 0, 0.1);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    margin: 0 auto 14px;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .read-time { text-align: center; font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+  .timer-row { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 8px; }
+  .timer-display {
+    font-family: var(--font-display); font-size: 30px; font-weight: 600;
+    min-width: 74px; text-align: center;
+  }
+  .timer-display.warn { color: var(--red); }
+  .btn-timer {
+    padding: 10px 18px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+    background: var(--card); font-family: var(--font-body); font-weight: 600;
+    font-size: 13px; cursor: pointer; color: var(--black);
+  }
+  .btn-timer:hover { background: rgba(0, 0, 0, 0.03); }
+  .btn-timer.running { border-color: var(--gold); color: var(--gold-deep); }
+
+  .finish-note {
+    text-align: center; font-size: 13.5px; font-weight: 600;
+    color: var(--green); margin-bottom: 14px; min-height: 18px;
+  }
+
+  /* The investment round — what happens after the pitch is read aloud. */
+  .invest {
+    background: rgba(201, 168, 76, 0.09);
+    border: 1px solid var(--gold);
+    border-radius: var(--radius-md);
+    padding: 18px 20px;
+    margin: 20px 0 4px;
+    opacity: 0;
+    animation: deal 0.5s ease 0.85s forwards;
+  }
+  .invest .pitch-label { margin-bottom: 6px; }
+  .invest p { font-size: 14.5px; line-height: 1.55; margin: 0 0 8px; }
+  .invest p:last-child { margin-bottom: 0; }
+  .invest .fine { font-size: 13px; color: var(--text-muted); }
+
+  .result-actions { display: flex; gap: 10px; }
+  .result-actions .btn { margin-top: 6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">Legacy Wealth</div>
+    <h1>Legacy Pitch</h1>
+    <div class="badge">AI Legacy Mentor</div>
+    <p class="sub">Build a clear, 30&ndash;60 second pitch for your business idea.</p>
+  </header>
+
+  <div class="progress" id="progress">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <div class="panel step" id="step0">
+    <div class="step-label">Step 1 of 4</div>
+    <p class="question"><label for="input-business">What's your business idea?</label></p>
+    <p class="hint">Keep it short. One line is plenty.</p>
+    <input type="text" id="input-business" maxlength="100" placeholder="Mobile dog grooming service">
+    <div class="counter" id="count-business">0 / 100</div>
+    <button class="btn" data-go="1">Continue</button>
+  </div>
+
+  <div class="panel step hidden" id="step1">
+    <div class="step-label">Step 2 of 4</div>
+    <p class="question"><label for="input-customer">Who is your ideal customer?</label></p>
+    <p class="hint">Be specific. "Everyone" is not a customer.</p>
+    <input type="text" id="input-customer" maxlength="100" placeholder="Busy pet owners in the suburbs">
+    <div class="counter" id="count-customer">0 / 100</div>
+    <button class="btn" data-go="2">Continue</button>
+    <button class="btn btn-ghost" data-go="0">Back</button>
+  </div>
+
+  <div class="panel step hidden" id="step2">
+    <div class="step-label">Step 3 of 4</div>
+    <p class="question"><label for="input-problem">What problem does this solve for them?</label></p>
+    <p class="hint">This is the most important question. Every real business solves a real problem.</p>
+    <input type="text" id="input-problem" maxlength="120" placeholder="They don't have time to drive to a groomer">
+    <div class="counter" id="count-problem">0 / 120</div>
+    <button class="btn" data-go="3">Continue</button>
+    <button class="btn btn-ghost" data-go="1">Back</button>
+  </div>
+
+  <div class="panel step hidden" id="step3">
+    <div class="step-label">Step 4 of 4</div>
+    <p class="question"><label for="input-details">Any other key details?</label></p>
+    <p class="hint">Optional. Pricing, what makes you different, anything else.</p>
+    <textarea id="input-details" maxlength="200" placeholder="We come to their driveway, no cages, done in under an hour"></textarea>
+    <div class="counter" id="count-details">0 / 200</div>
+    <button class="btn" id="btn-generate">Build my pitch</button>
+    <button class="btn btn-ghost" data-go="2">Back</button>
+    <div id="error" class="error hidden" role="alert"></div>
+  </div>
+
+  <div class="hidden" id="loading">
+    <div class="loading" role="status">
+      <div class="spinner"></div>
+      <span id="loading-text">Building your pitch...</span>
+    </div>
+  </div>
+
+  <div class="hidden" id="result"></div>
+
+  <footer class="tool-footer">
+    <a class="wordmark" href="/">Legacy Wealth</a>
+    <a href="/">Home</a><span class="sep">&middot;</span>
+    <a href="/faq">FAQ</a><span class="sep">&middot;</span>
+    <a href="/buy">Where to buy</a>
+  </footer>
+
+</div>
+
+<script>
+const ENDPOINT = '/.netlify/functions/pitch';
+
+let state = { business: '', customer: '', problem: '', details: '' };
+
+/* ---- Character counters ---- */
+const counters = [
+  ['input-business', 'count-business', 100],
+  ['input-customer', 'count-customer', 100],
+  ['input-problem',  'count-problem',  120],
+  ['input-details',  'count-details',  200],
+];
+counters.forEach(([inputId, countId, max]) => {
+  const input = document.getElementById(inputId);
+  const label = document.getElementById(countId);
+  input.addEventListener('input', () => {
+    const len = input.value.length;
+    label.textContent = len + ' / ' + max;
+    label.classList.toggle('near', len > max * 0.8);
+  });
+});
+
+/* ---- Wiring ---- */
+document.querySelectorAll('[data-go]').forEach((btn) => {
+  btn.addEventListener('click', () => goToStep(Number(btn.dataset.go)));
+});
+document.getElementById('btn-generate').addEventListener('click', () => generatePitch());
+
+['input-business', 'input-customer', 'input-problem'].forEach((id, i) => {
+  document.getElementById(id).addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); goToStep(i + 1); }
+  });
+});
+document.getElementById('input-details').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); generatePitch(); }
+});
+
+function goToStep(n) {
+  if (n === 1) {
+    const v = document.getElementById('input-business').value.trim();
+    if (!v) return; state.business = v;
+  }
+  if (n === 2) {
+    const v = document.getElementById('input-customer').value.trim();
+    if (!v) return; state.customer = v;
+  }
+  if (n === 3) {
+    const v = document.getElementById('input-problem').value.trim();
+    if (!v) return; state.problem = v;
+  }
+  document.querySelectorAll('.step').forEach((s) => s.classList.add('hidden'));
+  document.getElementById('step' + n).classList.remove('hidden');
+  document.querySelectorAll('.dot').forEach((d, i) => {
+    d.classList.toggle('active', i === n);
+    d.classList.toggle('done', i < n);
+  });
+  const focusMap = ['input-business', 'input-customer', 'input-problem', 'input-details'];
+  const el = document.getElementById(focusMap[n]);
+  if (el) setTimeout(() => el.focus(), 60);
+}
+
+async function generatePitch(isRetry) {
+  if (!isRetry) {
+    state.details = document.getElementById('input-details').value.trim();
+  }
+  const errorEl = document.getElementById('error');
+  errorEl.classList.add('hidden');
+
+  document.querySelectorAll('.step').forEach((s) => s.classList.add('hidden'));
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('progress').classList.add('hidden');
+  document.getElementById('loading').classList.remove('hidden');
+  document.getElementById('loading-text').textContent =
+    isRetry ? 'Writing a fresh version...' : 'Building your pitch...';
+
+  try {
+    const response = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(state),
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      /* The function sends a plain-language message for every failure it
+         knows about — rate limits, missing fields, config problems. */
+      throw new Error(data.message || 'Something went wrong building your pitch. Try again.');
+    }
+
+    renderPitch(data);
+  } catch (err) {
+    showFailure(err.message);
+  }
+}
+
+function showFailure(message) {
+  const errorEl = document.getElementById('error');
+  document.getElementById('loading').classList.add('hidden');
+  document.getElementById('step3').classList.remove('hidden');
+  document.getElementById('progress').classList.remove('hidden');
+  errorEl.textContent = message || 'Something went wrong building your pitch. Try again.';
+  errorEl.classList.remove('hidden');
+}
+
+function renderPitch(pitch) {
+  document.getElementById('loading').classList.add('hidden');
+  const resultEl = document.getElementById('result');
+
+  const allText = [pitch.hook, pitch.problem, pitch.solution, pitch.value].join(' ');
+  const wordCount = allText.trim().split(/\s+/).length;
+  const seconds = Math.max(20, Math.round((wordCount / 150) * 60));
+
+  resultEl.innerHTML = `
+    <p class="read-time">About ${seconds} seconds when read aloud (${wordCount} words)</p>
+    <div class="timer-row">
+      <button class="btn-timer" id="timer-btn">Start reading</button>
+      <div class="timer-display" id="timer-display">1:00</div>
+    </div>
+    <p class="finish-note" id="finish-note"></p>
+    <div class="pitch-card">
+      <div class="pitch-label">Hook</div>
+      <p class="pitch-text">${escapeHtml(pitch.hook)}</p>
+    </div>
+    <div class="pitch-card">
+      <div class="pitch-label">Problem</div>
+      <p class="pitch-text">${escapeHtml(pitch.problem)}</p>
+    </div>
+    <div class="pitch-card">
+      <div class="pitch-label">Solution</div>
+      <p class="pitch-text">${escapeHtml(pitch.solution)}</p>
+    </div>
+    <div class="pitch-card">
+      <div class="pitch-label">Value</div>
+      <p class="pitch-text">${escapeHtml(pitch.value)}</p>
+    </div>
+    <div class="invest">
+      <div class="pitch-label">Next: the investment round</div>
+      <p>Read your pitch out loud to the table, then every other player decides
+         whether to back you.</p>
+      <p class="fine">Each player invests any amount of their own Legacy Dollars,
+         or passes. There is no minimum &mdash; a small investment still counts.</p>
+    </div>
+    <div class="result-actions">
+      <button class="btn btn-gold" id="btn-regenerate">Try another version</button>
+      <button class="btn btn-ghost" id="btn-startover">Start over</button>
+    </div>
+    <p class="read-time" style="margin-top:16px">Tap Start reading to time yourself.</p>
+  `;
+
+  document.getElementById('timer-btn').addEventListener('click', toggleTimer);
+  document.getElementById('btn-regenerate').addEventListener('click', () => {
+    resetTimer();
+    generatePitch(true);
+  });
+  document.getElementById('btn-startover').addEventListener('click', startOver);
+
+  resultEl.classList.remove('hidden');
+}
+
+/* ---- Reading timer ---- */
+let timerInterval = null;
+let timerSeconds = 60;
+
+function formatTime(total) {
+  const m = Math.floor(total / 60);
+  const s = total % 60;
+  return m + ':' + String(s).padStart(2, '0');
+}
+
+function resetTimer() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  timerSeconds = 60;
+}
+
+function toggleTimer() {
+  const btn = document.getElementById('timer-btn');
+  const display = document.getElementById('timer-display');
+  const note = document.getElementById('finish-note');
+
+  if (timerInterval) {
+    /* Stopped early means they finished. Report their time. */
+    const used = 60 - timerSeconds;
+    clearInterval(timerInterval);
+    timerInterval = null;
+    note.textContent = used > 0 ? `Nice pitch. You said it in ${used} seconds.` : '';
+    timerSeconds = 60;
+    display.textContent = '1:00';
+    display.classList.remove('warn');
+    btn.textContent = 'Start reading';
+    btn.classList.remove('running');
+    return;
+  }
+
+  note.textContent = '';
+  btn.textContent = "I'm done";
+  btn.classList.add('running');
+  timerInterval = setInterval(() => {
+    timerSeconds -= 1;
+    display.textContent = formatTime(Math.max(timerSeconds, 0));
+    if (timerSeconds <= 10) display.classList.add('warn');
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      display.textContent = "Time's up";
+      btn.textContent = 'Start reading';
+      btn.classList.remove('running');
+      timerSeconds = 60;
+    }
+  }, 1000);
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function startOver() {
+  resetTimer();
+  state = { business: '', customer: '', problem: '', details: '' };
+  ['input-business', 'input-customer', 'input-problem', 'input-details'].forEach((id) => {
+    document.getElementById(id).value = '';
+  });
+  counters.forEach(([, countId, max]) => {
+    const label = document.getElementById(countId);
+    label.textContent = '0 / ' + max;
+    label.classList.remove('near');
+  });
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('progress').classList.remove('hidden');
+  goToStep(0);
+}
+
+setTimeout(() => document.getElementById('input-business').focus(), 100);
+</script>
+</body>
+</html>

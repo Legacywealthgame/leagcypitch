@@ -1,0 +1,214 @@
+/* ==========================================================================
+   Legacy Wealth — shared base stylesheet
+   Every page on legacywealthgame.com loads this file.
+   Reskin later by editing the tokens below; nothing else should hardcode a
+   color, font or radius.
+   ========================================================================== */
+
+:root {
+  /* Brand palette */
+  --cream:      #F8F5EC;
+  --card:       #FFFFFF;
+  --gold:       #C9A84C;
+  --gold-deep:  #A6873A;
+  --black:      #07080D;
+  --silver:     #C9CDD3;
+  --text-muted: #6B6B66;
+  --green:      #3B6D11;
+  --red:        #A32D2D;
+
+  /* Derived surfaces — keep these expressed in terms of the palette */
+  --hairline:   rgba(0, 0, 0, 0.06);
+  --border:     rgba(0, 0, 0, 0.15);
+  --input-bg:   #FDFCFA;
+  --shadow-sm:  0 2px 14px rgba(0, 0, 0, 0.04);
+
+  /* Type */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Geometry */
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--cream);
+  font-family: var(--font-body);
+  color: var(--black);
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   Type primitives
+   -------------------------------------------------------------------------- */
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0 0 12px;
+}
+
+h1 { font-size: 32px; }
+h2 { font-size: 24px; }
+h3 { font-size: 19px; }
+
+p { margin: 0 0 14px; }
+
+a { color: var(--gold-deep); }
+
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  font-weight: 600;
+}
+
+.muted {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* --------------------------------------------------------------------------
+   Surfaces
+   -------------------------------------------------------------------------- */
+
+.panel {
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* --------------------------------------------------------------------------
+   Form controls
+   -------------------------------------------------------------------------- */
+
+input[type=text],
+textarea {
+  width: 100%;
+  padding: 13px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  font-family: var(--font-body);
+  font-size: 16px; /* 16px minimum stops iOS Safari zooming on focus */
+  background: var(--input-bg);
+  color: var(--black);
+  resize: none;
+}
+
+input[type=text]:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.18);
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+
+.btn {
+  margin-top: 14px;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--black);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.15s ease;
+}
+
+.btn:hover  { background: #17181f; }
+.btn:active { transform: scale(0.98); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--black);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { background: rgba(0, 0, 0, 0.03); }
+
+.btn-gold {
+  background: var(--gold);
+  color: var(--black);
+}
+.btn-gold:hover { background: var(--gold-deep); }
+
+/* --------------------------------------------------------------------------
+   Accessibility floor
+   -------------------------------------------------------------------------- */
+
+:focus-visible {
+  outline: 2px solid var(--gold-deep);
+  outline-offset: 2px;
+}
+
+.hidden { display: none !important; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Tool page footer — used by the chrome-free QR pages
+   -------------------------------------------------------------------------- */
+
+.tool-footer {
+  text-align: center;
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid var(--hairline);
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.tool-footer a {
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  padding-bottom: 1px;
+}
+
+.tool-footer a:hover { color: var(--gold-deep); border-bottom-color: var(--gold); }
+
+.tool-footer .sep { opacity: 0.4; margin: 0 7px; }
+
+.tool-footer .wordmark {
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--black);
+  display: block;
+  margin-bottom: 6px;
+}
