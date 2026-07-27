@@ -1,0 +1,1119 @@
+Conversation with Gemini
+how do i do this? Here's the path from these files to a live page at legacywealthgame.com/legacy-pitch.
+
+
+
+1. Get the files into GitHub
+
+Netlify deploys from a GitHub repo, so that's the first stop.
+
+
+
+Create a free account at github.com if you don't have one
+
+Create a new repository — call it something like legacywealthgame
+
+Download the 5 files I gave you and put them in this exact folder structure on your computer:
+
+legacywealthgame/
+
+├── netlify.toml
+
+├── assets/
+
+│ └── css/
+
+│ └── base.css
+
+├── legacy-pitch.html
+
+└── netlify/
+
+└── functions/
+
+└── pitch.js
+
+Upload that folder to the GitHub repo (GitHub's website lets you drag-and-drop files in the browser — no command line needed for this part)
+
+2. Connect Netlify to it
+
+Create a free account at netlify.com
+
+Add new site → Import an existing project → GitHub → pick the repo
+
+Leave the build command blank, publish directory as . — Netlify usually detects this from netlify.toml automatically
+
+Click deploy. Netlify gives you a random URL like chipper-cupcake-123.netlify.app — that's your site, live, just not on your domain yet
+
+3. Add your API key
+
+This is the step that makes the pitch tool actually generate pitches.
+
+
+
+Go to console.anthropic.com, create an API key, and turn on billing on that account (separate from any Claude.ai subscription you have)
+
+Back in Netlify: Site configuration → Environment variables → Add a variable
+
+Key: ANTHROPIC_API_KEY, value: the key you just created
+
+Redeploy the site (Netlify → Deploys → Trigger deploy) — it won't see the new variable until you do
+
+4. Point your domain at it
+
+Netlify → Domain management → Add a domain → type legacywealthgame.com
+
+Netlify shows you DNS records to add (usually just changing nameservers, or adding a couple of records)
+
+Go to wherever you bought the domain (GoDaddy, Namecheap, etc.) and enter those records
+
+Takes anywhere from a few minutes to a few hours to go live, depending on the registrar
+
+Once that's done, legacywealthgame.com/legacy-pitch is the real, live tool.
+
+One note: where'd you register the domain? I can give you the exact DNS steps for that specific registrar instead of the generic version.
+
+This process is straightforward when broken down into ordered steps. Following this workflow gets your pitch tool live, secure, and running under your custom domain without needing to write terminal code.
+
+Here is the exact step-by-step walk-through.
+
+Phase 1: Set Up GitHub & Upload Your Structure
+Create/Log in to GitHub:
+
+Go to github.com and sign in or create a free account.
+
+Create a New Repository:
+
+Click the + icon in the top-right corner and select New repository.
+
+Name it legacywealthgame.
+
+Keep it set to Public (or Private if you prefer—Netlify handles both).
+
+Leave "Add a README file" unchecked so the repository stays completely empty, then click Create repository.
+
+Organize Local Files:
+
+On your computer, create a main folder called legacywealthgame.
+
+Mirror the exact nested file layout:
+
+Plaintext
+legacywealthgame/
+├── netlify.toml
+├── assets/
+│   └── css/
+│       └── base.css
+├── legacy-pitch.html
+└── netlify/
+    └── functions/
+        └── pitch.js
+Upload to GitHub:
+
+On your newly created GitHub repository page, click the link that says uploading an existing file.
+
+Drag all files and subfolders from inside your local legacywealthgame folder straight into the browser window.
+
+At the bottom of the page, click the green Commit changes button.
+
+Phase 2: Connect Netlify & Deploy
+Sign Up/Log In to Netlify:
+
+Go to netlify.com and log in (signing in with your GitHub account makes permissions seamless).
+
+Import the Repository:
+
+Click Add new site → Import an existing project.
+
+Select GitHub as your Git provider and authorize Netlify.
+
+Search for and select your legacywealthgame repository.
+
+Selecting your GitHub repository inside Netlify, AI generated
+Selecting your GitHub repository inside Netlify. Source: Netlify Support Forums
+Deploy Settings:
+
+Netlify automatically reads your netlify.toml configuration file.
+
+Leave Build command empty and set Publish directory to ..
+
+Click Deploy legacywealthgame. Netlify generates a temporary testing URL (e.g., chipper-cupcake-123.netlify.app).
+
+Phase 3: Add Your Anthropic API Key
+Keep API keys out of public code files. Setting them as environment variables inside Netlify ensures serverless functions access them securely.
+
+Generate the Key:
+
+Go to console.anthropic.com.
+
+Navigate to API Keys and generate a new secret key. Ensure billing is enabled on your API account.
+
+Add Key to Netlify:
+
+In your Netlify Site Dashboard, navigate to Site configuration → Environment variables.
+
+Click Add a variable → Add a single variable.
+
+Set Key: ANTHROPIC_API_KEY
+
+Set Value: Paste your secret key from Anthropic.
+
+Click Create variable.
+
+Trigger Redeployment:
+
+Go to Deploys tab in Netlify.
+
+Click Trigger deploy → Clear cache and deploy site. This bakes the environment variable into your serverless function backend.
+
+Phase 4: Point Your Custom Domain
+Connect Domain in Netlify:
+
+Go to Domain management → Add a domain.
+
+Enter legacywealthgame.com and click Verify.
+
+Configure DNS at Your Registrar:
+
+Netlify presents two setup routes:
+
+Option A (Recommended - Netlify DNS): Copy the 4 nameservers provided by Netlify (e.g., dns1.p05.nsone.net). Paste these into your domain registrar's custom nameservers section.
+
+Option B (External DNS): Add an A record pointing @ to Netlify's IP address and a CNAME record pointing www to your ...netlify.app URL.
+
+Verify SSL/TLS:
+
+Once DNS records propagate (typically 5–30 minutes), Netlify automatically issues a free HTTPS SSL certificate.
+
+Navigation to [legacywealthgame.com/legacy-pitch](https://legacywealthgame.com/legacy-pitch) will render the live tool directly.
+
+Where is your domain currently registered?
+
+Configure domain DNS on GoDaddy
+
+Configure domain DNS on Namecheap
+
+Configure domain DNS on Google Domains / Squarespace
+
+this is what i see,
+
+You are right on the launchpad! Since the repository is completely empty, GitHub gives you this quick setup screen.
+
+Here is what to click next:
+
+Look in the blue section labeled Quick setup — if you've done this kind of thing before.
+
+Click the blue link that says uploading an existing file (it's in the sentence right under the repository URL box).
+
+Drag and drop your files/folders (netlify.toml, legacy-pitch.html, the assets folder, and the netlify folder) straight into the upload area that appears.
+
+Scroll to the bottom and click the green Commit changes button.
+
+Once you click Commit changes, your repository structure is set and ready to connect to Netlify!
+
+ok i uploaded this what i see.
+
+Almost there, but we need to fix one detail: Netlify can't read a .zip file directly. It needs to see all your individual files and subfolders laid out right inside the repository.
+
+Here is how to fix this in under two minutes:
+
+1. Delete files.zip from GitHub
+Click on files.zip in your repository list.
+
+Click the three dots (...) near the top-right corner of the file view (next to the pencil icon).
+
+Select Delete file.
+
+Scroll down and click the green Commit changes button.
+
+2. Unzip the Folder on Your Computer
+Locate files.zip on your computer.
+
+Right-click it and select Extract All... (Windows) or double-click it (Mac) to uncompress the folder.
+
+Open that newly extracted folder so you can see the actual items inside:
+
+netlify.toml
+
+legacy-pitch.html
+
+assets/ (folder)
+
+netlify/ (folder)
+
+3. Upload the Unzipped Files to GitHub
+Back on your GitHub repository page, click the Add file button → Upload files.
+
+Select all the unzipped files and folders from your computer, and drag them into the browser upload box.
+
+Scroll down and click Commit changes.
+
+Once you see netlify.toml and legacy-pitch.html listed individually on your main repository screen (instead of files.zip), you are ready to jump into Phase 2: Connect Netlify!
+
+now this is what i see
+
+We are almost there! Look closely at the file list—the individual files uploaded, but two things need to be fixed so Netlify can build your site correctly:
+
+Folder paths got lost: base.css and pitch.js are sitting in the root folder instead of being inside their folders (assets/css/ and netlify/functions/).
+
+files.zip is still in there.
+
+Step 1: Clean out this current upload
+The fastest way to fix this without manual deleting is to start clean:
+
+In GitHub, click Settings (far right tab at the top of your repository page).
+
+Scroll all the way to the bottom to the Danger Zone.
+
+Click Delete this repository and confirm.
+
+Step 2: Upload the folder properly
+Click the + icon at the top right of GitHub → New repository.
+
+Name it legacywealthgame again and click Create repository.
+
+On the quick setup screen, click uploading an existing file.
+
+Instead of selecting files individually, drag the actual inner folders/files straight into the browser.
+
+Important: GitHub's web interface won't preserve folder paths if you select individual files inside subfolders. To upload folders on GitHub's website, drag and drop the folders directly from your file manager window into the web browser upload area.
+
+When uploaded correctly, your root directory should look like this:
+
+Plaintext
+├── assets/
+├── netlify/
+├── legacy-pitch.html
+└── netlify.toml
+Once your files match that exact structure, head over to Netlify to import the repository!
+
+this is how the files look in my folder
+
+Ah, that screenshot explains everything! Right now, all those files are extracted into a single flat folder on your computer—the subfolders (assets/css/ and netlify/functions/) were lost during the unzip.
+
+Netlify needs those exact subfolders to know where to find your styling and your backend API code.
+
+Here is how to create the folders on your computer in less than two minutes before dragging them into GitHub.
+
+Step 1: Create the Subfolders on Your Computer
+Inside this exact folder on your PC, you need to create two subfolder paths:
+
+Create the CSS folder path:
+
+Right-click empty space in the folder → New → Folder. Name it assets.
+
+Open the new assets folder.
+
+Right-click inside it → New → Folder. Name it css.
+
+Go back to your main folder, select base (or base.css), and drag it into assets/css/.
+
+Create the Serverless Function folder path:
+
+In your main folder, right-click empty space → New → Folder. Name it netlify.
+
+Open the new netlify folder.
+
+Right-click inside it → New → Folder. Name it functions.
+
+Go back to your main folder, select pitch (or pitch.js), and drag it into netlify/functions/.
+
+Step 2: Double-Check Your Local Folder
+Your main folder should now look like this:
+
+Plaintext
+📁 legacywealthgame/
+├── 📁 assets/
+│   └── 📁 css/
+│       └── base.css
+├── 📁 netlify/
+│   └── 📁 functions/
+│       └── pitch.js
+├── legacy-pitch.html
+├── netlify.toml
+└── README.md
+Step 3: Drag and Drop to GitHub
+Delete the old files/repo on GitHub (or use Add file → Upload files on GitHub).
+
+Highlight the assets folder, netlify folder, legacy-pitch.html, netlify.toml, and README.md.
+
+Drag all of them together into the GitHub upload box in your browser.
+
+GitHub will preserve the folder paths as long as you drag the assets and netlify folders directly into the browser!
+
+this correct?
+
+Not quite—there's one minor issue!
+
+Notice how every path starts with /legacywealthgame/? You dragged the entire outer parent folder into GitHub, which created an unnecessary extra directory level.
+
+When Netlify looks at your repository, it expects legacy-pitch.html and netlify.toml to be in the root folder, not nested inside /legacywealthgame/.
+
+How to fix it on the upload screen:
+Cancel or clear the current upload batch.
+
+Open your legacywealthgame folder on your computer.
+
+Select only the contents inside that folder:
+
+assets (folder)
+
+netlify (folder)
+
+legacy-pitch.html
+
+netlify.toml
+
+README.md
+
+Drag those 5 items directly into the GitHub browser window.
+
+What it should look like before you click Commit:
+assets/css/base.css
+
+legacy-pitch.html
+
+netlify/functions/pitch.js
+
+netlify.toml
+
+README.md
+
+(Notice no /legacywealthgame/ prefix at the start of the paths). Once it looks like that, hit Commit changes and Phase 1 is officially complete!
+
+Spot on! That is 100% perfect.
+
+All the file paths and folder structures are exactly where they need to be.
+
+Go ahead and click the green Commit changes button at the bottom of the page. Once that's saved, Phase 1 is complete!
+
+Next Up: Phase 2 — Connect Netlify
+Head over to netlify.com and sign in.
+
+Click Add new site → Import an existing project.
+
+Choose GitHub as your provider and select your legacywealthgame repository.
+
+Leave the Build command blank and Publish directory as ..
+
+Click Deploy legacywealthgame.
+
+Netlify will build the site and give you a temporary testing URL (e.g., something-123.netlify.app). Let me know as soon as you see that deploy finish!
+
+this is what i see
+
+Awesome, you are right on the import screen!
+
+Here is how to connect your GitHub repo from here:
+
+Under Import a Git repository, click the GitHub button.
+
+A pop-up window will ask you to authorize Netlify to access your GitHub account—click Authorize Netlify.
+
+Once authorized, search for and select your legacywealthgame repository from the list.
+
+On the configuration screen that pops up:
+
+Build command: Leave empty.
+
+Publish directory: Set to . (a single period) if it isn't already.
+
+Click Deploy legacywealthgame.
+
+Netlify will take a few seconds to build the site and generate your temporary URL (like chipper-cupcake-123.netlify.app). Let me know once that's done and we'll jump into adding your API key!
+
+I don't see where it says add a new site
+
+Look at the section on your current screen under "Import a Git repository"—that section is the "Add a new site" flow!
+
+Instead of looking for a button named "Add new site," simply click the GitHub button directly under Import a Git repository (the first icon with the GitHub logo).
+
+Here is what happens next:
+
+Clicking GitHub opens a pop-up window asking for permission to access your GitHub account. Click Authorize Netlify.
+
+Netlify will show a search box listing your GitHub repositories. Select legacywealthgame.
+
+On the next screen, leave Build command blank, make sure Publish directory is set to ., and click Deploy legacywealthgame.
+
+Once you click that GitHub button and select the repo, Netlify takes care of the build! Let me know what you see on the screen after selecting legacywealthgame.
+
+That screen looks 100% correct and ready to go!
+
+Here is what to do next:
+
+Deploy the site:
+
+Leave all those settings exactly as they are (Base directory blank, Build command blank, Publish directory ., and Functions directory netlify/functions).
+
+Click the bright cyan Deploy legacypitch button at the bottom.
+
+Add your Anthropic API key right here:
+
+Alternatively, you can click Add environment variables right above the deploy button before deploying, or set it up right after:
+
+Key: ANTHROPIC_API_KEY
+
+Value: Paste your API key from console.anthropic.com
+
+Once you hit Deploy legacypitch, Netlify will take about 15–30 seconds to publish your site and give you a generated live URL (like chipper-cupcake-123.netlify.app).
+
+Let me know once it finishes deploying!
+
+this is what i see
+
+Congratulations! Your site is officially deployed!
+
+Notice that green dot next to legacypitch.netlify.app—your code is live on Netlify's edge network right now.
+
+Now let's complete the final two steps: adding your Anthropic API key and pointing your custom domain.
+
+Step 3: Add Your Anthropic API Key
+In the left navigation menu on your current Netlify screen, click Project configuration (or Site configuration).
+
+Click Environment variables.
+
+Click Add a variable → Add a single variable.
+
+Key: ANTHROPIC_API_KEY
+
+Value: Paste your API key from console.anthropic.com.
+
+Click Create variable.
+
+Redeploy to apply it:
+
+Click Deploys in the left menu.
+
+Click Trigger deploy → Clear cache and deploy site.
+
+Step 4: Point Your Domain (legacywealthgame.com)
+In that same left menu, click Domain management.
+
+Click Add a domain.
+
+Type legacywealthgame.com and click Verify / Add domain.
+
+Netlify will ask if you want to use Netlify DNS. Click Yes, set up Netlify DNS.
+
+Netlify will show you 4 Name Servers (they look like dns1.p05.nsone.net, dns2..., etc.).
+
+Log into your domain registrar (GoDaddy, Namecheap, Squarespace, etc.), find your domain's DNS / Nameservers settings, and replace the default nameservers with those 4 Netlify nameservers.
+
+Once DNS finishes updating (usually 5 to 15 minutes), Netlify will issue a free SSL certificate automatically, and [legacywealthgame.com/legacy-pitch](https://legacywealthgame.com/legacy-pitch) will be live to the world!
+
+OK I don't have a Anthropic API key Do I need to go create one?
+
+Yes, you do need to create an Anthropic API key.
+
+Because your pitch tool generates live content using Anthropic's backend, the serverless function (pitch.js) relies on that API key to process the requests securely.
+
+Here is the exact step-by-step process to create one:
+
+Step 1: Create an Anthropic API Account
+Go to console.anthropic.com.
+
+Sign up for a free developer account (or log in if you already have one).
+
+Note: This API account is separate from a standard Claude.ai user subscription.
+
+Step 2: Enable Billing & Deposit Initial Credits
+In the console sidebar, click Settings → Billing.
+
+Click Add payment method and enter a card.
+
+Add a small initial balance (e.g., $5 or $10).
+
+API usage is strictly pay-as-you-go per output. Pitch generation calls consume tiny fractions of a cent per run, so a $5 balance will cover hundreds of generated pitches.
+
+Step 3: Generate the Key
+In the sidebar, click API Keys.
+
+Click Create Key.
+
+Name it something clear like legacywealthgame-pitch.
+
+Copy the long secret key string starting with sk-ant-.... (Make sure to copy it immediately—it will only be shown once).
+
+Step 4: Add the Key to Netlify & Trigger Redeploy
+Go back to your Netlify Dashboard for the project.
+
+Go to Site configuration → Environment variables in the left menu.
+
+Click Add a variable → Add a single variable.
+
+Key: ANTHROPIC_API_KEY
+
+Value: Paste your key starting with sk-ant-...
+
+Click Create variable.
+
+Go to the Deploys tab in Netlify and click Trigger deploy → Clear cache and deploy site.
+
+Once that redeploy finishes, your API key will be active, and your pitch tool will generate live pitches!
+
+this is where i am i just copied the api key
+
+Perfect timing! You're sitting on the exact setup screen needed.
+
+Here is how to fill this form out and save it:
+
+Step 1: Fill Out the Form Fields
+Key: Type ANTHROPIC_API_KEY (must be all uppercase, with underscores).
+
+Value / Secret:
+
+Click inside the value text field that appears right below or next to the key.
+
+Paste your copied Anthropic API key starting with sk-ant-....
+
+Check the box for Contains secret values if you want Netlify to mask the key in the dashboard.
+
+Scopes: Leave it set to All scopes.
+
+Step 2: Save the Variable
+Scroll to the bottom of that box and click the Create variable (or Save) button.
+
+Step 3: Trigger a Redeploy (Crucial)
+Netlify needs a quick deploy refresh to attach the new variable to your serverless code:
+
+In the left menu, click Deploys.
+
+Click the Trigger deploy dropdown button near the top right.
+
+Select Clear cache and deploy site.
+
+Once that redeploy finishes in ~15 seconds, your pitch tool on legacypitch.netlify.app will be fully functional and ready to generate pitches!
+
+do i past what i copied in the key type?
+
+No, do not paste your long API key into the "Key" box.
+
+Here is exactly what goes in each field:
+
+In the Key box: Type the text ANTHROPIC_API_KEY (all capital letters with underscores).
+
+In the Value (or Secret) box: Paste the long key you copied from Anthropic (the one starting with sk-ant-...).
+
+Think of Key as the label or variable name that your code looks for, and Value as the actual secret password itself.
+
+Once both fields are filled out, click Create variable at the bottom, then head to Deploys → Trigger deploy → Clear cache and deploy site to activate it!
+
+That yellow warning is totally normal—it's just Netlify letting you know that ANTHROPIC_API_KEY is recognized as a sensitive credential.
+
+Here is what to do next:
+
+Check the box or toggle for "Secret" (if visible below the key input) so Netlify masks the key.
+
+Paste your Anthropic API key (the long string starting with sk-ant-...) into the Value or Secret field right below.
+
+Scroll down and click Create variable (or Save).
+
+Final Step: Trigger a Redeploy
+Once saved, trigger a quick deploy refresh so your serverless function can use the key:
+
+Click Deploys in the left sidebar.
+
+Click Trigger deploy near the top right → Clear cache and deploy site.
+
+Once that deploy finishes (~15 seconds), test your live pitch tool at legacypitch.netlify.app—it will be fully operational!
+
+Paste your Anthropic API key (the string starting with sk-ant-...) directly into the Production field at the top.
+
+Here is what to do for each box:
+
+Production: Paste your API key here (this is the main one Netlify uses for your live site).
+
+Deploy Previews & Branch deploys: You can paste the same API key into these boxes so testing environments work as well.
+
+Save: Scroll to the bottom of the page and click the primary Create variable (or Save) button.
+
+Finish with a Redeploy
+Once saved, trigger a quick deploy refresh so your function picks up the key:
+
+In the left menu, click Deploys.
+
+Click Trigger deploy near the top right → Clear cache and deploy site.
+
+THIS IS WHAT I SEE
+
+You are right at the finish line for the API key!
+
+Make sure the key is also pasted into that Production field at the top (just above where the screenshot cuts off), then follow these final steps:
+
+Click the cyan Create variable button at the bottom left.
+
+In the left navigation menu, click Deploys.
+
+Click the Trigger deploy dropdown near the top right → select Clear cache and deploy site.
+
+Once that redeploy finishes in about 15 seconds, your backend function will have secure access to Anthropic, and the pitch generator will be fully operational on legacypitch.netlify.app!
+
+I see deployed but I don't see clear cACHE
+
+No problem at all! Netlify recently updated their interface layout, so Trigger deploy might just be a single button or located slightly differently depending on your screen size.
+
+Here is how to run the redeploy:
+
+Look near the top-right of your Deploys page for a button that says Trigger deploy or Deploy site.
+
+If it's a dropdown, click it and select Deploy site (or Clear cache and deploy site).
+
+If it is just a plain button that says Trigger deploy, simply click it once.
+
+Shortcut alternative: You can also trigger a fresh deploy by going to Project overview in the left menu, scrolling down to Production deploys, clicking the three dots (...) next to your latest deploy, and selecting Retry deploy.
+
+Once that deploy finishes, head over to legacypitch.netlify.app and test out your pitch generator—it should generate live pitches right away!
+
+There it is! Click "Deploy project without cache".
+
+That's Netlify's updated wording for "Clear cache and deploy site." It forces Netlify to completely rebuild the site from scratch and lock in that new ANTHROPIC_API_KEY environment variable.
+
+Once that deploy finishes in about 10–15 seconds:
+
+Open a new tab and go to legacypitch.netlify.app/legacy-pitch.
+
+Run a test pitch through the tool to make sure it generates properly.
+
+Final Phase: Connect legacywealthgame.com
+When you're ready to link your actual domain:
+
+In the left menu of Netlify, click Domain management.
+
+Click Add a domain and enter legacywealthgame.com.
+
+Netlify will show you 4 Netlify Nameservers (like dns1.p05.nsone.net).
+
+Log into wherever you registered the domain (GoDaddy, Namecheap, Google/Squarespace, etc.) and update your domain's nameservers to those four.
+
+legacywealthgame.com found! To connect it to your site, update your DNS records at your registrar. Open “Pending DNS verification” in the next step for for step-by-step instructions. Your site will work once the changes propagate.
+
+Awesome—Netlify found legacywealthgame.com! You are on the very last step.
+
+Now you just need to point the domain's DNS from your registrar (where you bought the domain, like GoDaddy, Namecheap, or Squarespace/Google Domains) to Netlify.
+
+How to Complete the DNS Update
+Get Netlify's Instructions:
+
+On your Netlify screen, click Pending DNS verification.
+
+Netlify will show you 4 Netlify Nameservers that look something like this:
+
+dns1.p05.nsone.net
+
+dns2.p05.nsone.net
+
+dns3.p05.nsone.net
+
+dns4.p05.nsone.net
+
+Update Your Registrar:
+
+Log into the account where you purchased legacywealthgame.com.
+
+Find your domain settings and look for DNS Management or Nameservers.
+
+Select Custom Nameservers (or "Change Nameservers") and paste the 4 Netlify nameservers into those slots, overwriting whatever default ones were there.
+
+Save changes.
+
+What Happens Next?
+Propagation: It usually takes anywhere from 5 to 30 minutes (though occasionally up to a few hours) for the new DNS settings to spread across the internet.
+
+Automatic SSL: Once Netlify verifies the DNS change, it will automatically issue a free HTTPS security certificate for your site.
+
+Once propagation finishes, typing [legacywealthgame.com/legacy-pitch](https://legacywealthgame.com/legacy-pitch) in any browser will take you straight to your live, fully functional pitch tool!
+
+i bought it through google
+
+Since Google Domains officially migrated all customer accounts and domain registrations to Squarespace Domains, your domain is managed inside Squarespace using your Google login!
+
+Here is how to update your nameservers from there:
+
+Step 1: Log into Squarespace Domains
+Head to account.squarespace.com/domains.
+
+Choose Continue with Google and log in with the exact same Google account you used when purchasing the domain.
+
+Step 2: Add the Netlify Nameservers
+Click on legacywealthgame.com from your domains list.
+
+In the left navigation menu, click DNS.
+
+Click Domain Nameservers (or Advanced Settings).
+
+Choose Use Custom Nameservers.
+
+Paste the 4 Netlify nameservers provided in your Netlify panel (e.g., dns1.p05.nsone.net, dns2.p05.nsone.net, etc.) into the text fields.
+
+Click Save.
+
+Step 3: Sit Back and Let It Propagate
+Once saved, it usually takes anywhere from 5 to 30 minutes for DNS to update across the internet.
+
+Netlify will automatically detect the connection, issue your free SSL security certificate, and turn the Pending DNS verification status green!
+
+I don't see the name servers I only see what I pasted into you.
+
+Ah, got it! You're on the confirmation screen before the domain is officially attached to the project.
+
+Click the bright cyan Add domain button right under that text box!
+
+What happens next:
+Clicking Add domain attaches legacywealthgame.com to Netlify.
+
+The page will refresh and show your domain listed with a warning button that says Pending DNS verification.
+
+Click Pending DNS verification (or Set up Netlify DNS), and that is where Netlify will display the 4 custom nameservers to copy into Squarespace!
+
+Click the Options button next to legacywealthgame.com on that screen, then select Check DNS configuration (or Set up Netlify DNS).
+
+Netlify will display your 4 custom nameservers right there.
+
+Once you have them:
+
+Head over to Squarespace Domains ([account.squarespace.com/domains](https://account.squarespace.com/domains)).
+
+Click on legacywealthgame.com and go to DNS → Domain Nameservers.
+
+Select Use Custom Nameservers and paste those 4 Netlify nameservers in.
+
+Save the changes.
+
+Click Set up Netlify DNS at the bottom of that dropdown menu!
+
+What to do next:
+A popup window or setup wizard will appear. Click Verify or Continue through the prompt.
+
+Netlify will display the 4 Netlify Nameservers (they look like dns1.p05.nsone.net, dns2.p05.nsone.net, etc.).
+
+Copy those 4 addresses.
+
+Go over to Squarespace Domains ([account.squarespace.com/domains](https://account.squarespace.com/domains)), click on legacywealthgame.com, navigate to DNS → Domain Nameservers, select Use Custom Nameservers, and paste them in.
+
+You're right at the threshold!
+
+Click that cyan Add domain button on your screen.
+
+What happens immediately after:
+Netlify will advance to step 2: Activate Netlify DNS.
+
+It will display the 4 Netlify Nameservers on screen (they will look like dns1.p05.nsone.net, dns2..., etc.).
+
+Copy those 4 addresses.
+
+Head to Squarespace Domains ([account.squarespace.com/domains](https://account.squarespace.com/domains)), click legacywealthgame.com, go to DNS → Domain Nameservers, select Use Custom Nameservers, and paste those 4 records in!
+
+You are right at the finish line! Here is how to fill out that popup:
+
+Step 1: Paste Your 4 Netlify Nameservers
+NAMESERVER 1: Paste the first Netlify address (e.g., dns1.p05.nsone.net).
+
+NAMESERVER 2: Paste the second Netlify address (e.g., dns2.p05.nsone.net).
+
+Click ADD NAMESERVER two times to open up slots 3 and 4.
+
+NAMESERVER 3 & 4: Paste the third and fourth Netlify addresses into those new fields.
+
+Step 2: Save and Complete
+Click the SAVE button at the bottom right of the popup.
+
+(If Squarespace asks to confirm that changing nameservers may affect email/services, confirm Save / Continue).
+
+What to Expect Next
+It usually takes 5 to 15 minutes (occasionally up to an hour) for the changes to spread across the web.
+
+Once Netlify detects the update, the Pending DNS verification warnings on Netlify will turn green, and your site will automatically be secured with HTTPS.
+
+Your live pitch app will be accessible at [legacywealthgame.com/legacy-pitch](https://legacywealthgame.com/legacy-pitch)!
+
+Click CONTINUE.
+
+That message appears because DNSSEC (DNS Security Extensions) locks your DNS settings to prevent unauthorized changes. Squarespace needs to disable DNSSEC so it can point your domain to Netlify's nameservers.
+
+What to do next:
+Click CONTINUE.
+
+If the nameserver form pops up again, click SAVE.
+
+You're all set! It will take about 5 to 15 minutes for the DNS changes to process, after which Netlify will handle the HTTPS security certificate automatically and your domain will be live!
+
+So how do I know if it's live and active and going to my legacy website
+
+Here are two quick ways to check if your domain has finished propagating and is pointing to your Netlify site:
+
+Method 1: Check Your Netlify Dashboard (Easiest)
+Go back to your Netlify Dashboard and navigate to Domain management.
+
+Look at the status next to legacywealthgame.com:
+
+If it still says Pending DNS verification: The changes are still traveling across the internet. Give it another 10–15 minutes.
+
+If it shows a green badge or checkmark: The connection is verified and active!
+
+Method 2: Test It Directly in Your Browser
+Open a Private / Incognito Window in your browser (this prevents your browser from showing an old cached version).
+
+Type in your URL: legacywealthgame.com (or [legacywealthgame.com/legacy-pitch](https://legacywealthgame.com/legacy-pitch)).
+
+What to look for:
+
+If your pitch generator page loads and you see a padlock icon next to the address bar, it is 100% live, secure, and fully connected.
+
+If you see a "Site can't be reached" or default Squarespace parking page, the DNS settings are still propagating—just wait a little longer and refresh.
+
+Note: DNS updates usually take about 10 to 30 minutes, but can occasionally take up to a couple of hours depending on your internet provider. Once the padlock appears in Incognito, you are officially live!
+
+Looking at your Netlify projects screen, legacywealthgame.com is officially published and live on Netlify!
+
+Notice the thumbnail image on the left—it currently shows a "Page not found!" preview because Netlify served its default page before the deployment refreshed with your API key.
+
+Here is how to verify and clear it up right now:
+
+Step 1: Open Your Live Site in Incognito
+Open a Private / Incognito browser window (to bypass local browser caching).
+
+Go to: [https://legacywealthgame.com](https://legacywealthgame.com) or [https://legacywealthgame.com/legacy-pitch](https://legacywealthgame.com/legacy-pitch)
+
+If the pitch tool loads, you are 100% good to go!
+
+Step 2: Fix the Thumbnail Preview (Optional)
+If the thumbnail still bothers you or the site shows a 404:
+
+Click directly on legacywealthgame.com in your project list.
+
+Go to Deploys in the left menu.
+
+Click Trigger deploy → Deploy project without cache.
+
+Once that quick build finishes, Netlify will update the preview thumbnail, and your live domain will serve the app cleanly to anyone visiting legacywealthgame.com!
+
+Now my website says page not found
+
+That standard Netlify "Page Not Found" (404) error happens for one of two quick structural reasons: either Netlify doesn't know which file is your homepage, or the sub-route hasn't been redirected properly.
+
+Here is how to fix it depending on how your project files are set up:
+
+Cause 1: Missing Root File (index.html)
+Netlify automatically looks for an index.html file in the root directory to display when someone goes directly to legacywealthgame.com.
+
+If your page file is named legacy-pitch.html: Rename legacy-pitch.html to index.html (or create a copy named index.html). That way, when anyone visits the main domain directly, your pitch generator loads immediately.
+
+Cause 2: Single-Page App / Router Redirects
+If your app uses a framework (like React, Vue, Next.js, or client-side routing) and you are trying to visit [legacywealthgame.com/legacy-pitch](https://legacywealthgame.com/legacy-pitch) directly, Netlify needs a redirect rule to point all traffic back to your main entry point.
+
+The Fix:
+
+Create a plain text file named _redirects (no file extension) in your main project folder (or in your public/dist build folder).
+
+Inside that file, paste this single line:
+
+Plaintext
+/*    /index.html   200
+Save, commit, and redeploy.
+
+Quick Verification Checklist
+Check your project folder: Ensure your main HTML file is named index.html.
+
+Redeploy on Netlify: Go to Deploys → Trigger deploy → Deploy project without cache.
+
+Test in Incognito: Open a fresh Incognito tab and go directly to [https://legacywealthgame.com](https://legacywealthgame.com).
+
+I'm confused now. I never wanted it to be the home page for legacy Wolfgang .com I just wanted it to be like Legacy Wealthgame .com/ leagcy pitch
+
+Ah, that makes total sense! I apologize for the confusion. You want legacywealthgame.com to remain free for your main site/landing page down the road, and [legacywealthgame.com/legacy-pitch](https://legacywealthgame.com/legacy-pitch) to serve this specific tool.
+
+Here is why you saw "Page Not Found":
+
+Netlify serves a project's files starting at the root level (/). Right now, Netlify is hosting only your pitch tool code as an isolated project on that domain, so it expects something to live at the home address (/). Because there is no homepage file uploaded to that Netlify project, visiting legacywealthgame.com throws a 404.
+
+How to Set This Up Cleanly
+You have two simple options depending on how you plan to host the main legacywealthgame.com site:
+
+Option 1: Use a Subdomain (Recommended for separate projects)
+If your main legacywealthgame.com website will eventually be built or hosted on a different platform (like Squarespace, Shopify, or a separate Netlify site), the cleanest standard is to give this pitch tool its own dedicated subdomain.
+
+Example: pitch.legacywealthgame.com
+
+How to do it: In Netlify → Domain management, edit your custom domain to pitch.legacywealthgame.com. Anyone who goes to that link lands directly on the tool, and your main domain legacywealthgame.com remains completely untouched for your main site.
+
+Option 2: Keep both on the same Netlify project
+If you plan to host your main legacywealthgame.com website on Netlify inside this same project:
+
+Place your main homepage file as index.html in the main folder.
+
+Place your pitch generator file inside a folder named legacy-pitch (as legacy-pitch/index.html) or name the file legacy-pitch.html.
+
+Redeploy. Now legacywealthgame.com loads your main homepage, and [legacywealthgame.com/legacy-pitch](https://legacywealthgame.com/legacy-pitch) loads the pitch generator.
+
+Immediate Fix
+If you want to use pitch.legacywealthgame.com so it's clean and doesn't interfere with your main domain:
+
+Go to Netlify → Domain management.
+
+Next to legacywealthgame.com, click Options → Edit domain.
+
+Change it to pitch.legacywealthgame.com.
+
+Save, and you're set!
+
+I don't know where I'm going to host my main website it may be Nella Fi or it may be a different company. So which option should I do and tell me the steps
+
+The best and cleanest option right now is Option 1: Use a Subdomain (e.g., pitch.legacywealthgame.com).
+
+Why this is the best choice:
+Zero Conflicts: It completely separates the pitch tool from your main domain.
+
+Total Flexibility: When you build your main website later—whether you build it on Squarespace, Shopify, WordPress, or Netlify—you can connect legacywealthgame.com directly to it without breaking or disturbing your pitch tool.
+
+Professional Look: Having pitch.legacywealthgame.com immediately loads your pitch generator without needing a homepage at legacywealthgame.com.
+
+Step-by-Step Instructions to Set Up pitch.legacywealthgame.com
+Step 1: Update the Domain in Netlify
+Go to your Netlify Dashboard and click on your legacywealthgame.com project.
+
+In the left navigation menu, click Domain management.
+
+Under Production domains, find legacywealthgame.com.
+
+Click the Options dropdown button next to it and select Edit domain.
+
+Change the text from legacywealthgame.com to pitch.legacywealthgame.com.
+
+Click Save.
+
+Step 2: Add the Subdomain Record in Squarespace
+Because you changed your nameservers to Netlify earlier, Netlify handles your DNS records automatically.
+
+On the same Domain management page in Netlify, click Netlify DNS (or check your DNS panel).
+
+Netlify should automatically generate a CNAME or A record pointing pitch.legacywealthgame.com to your site.
+
+Step 3: Test Your New URL
+Wait 2 to 5 minutes for the update to process.
+
+Open a new Incognito / Private browser tab.
+
+Go to [https://pitch.legacywealthgame.com](https://pitch.legacywealthgame.com).
+
+Your live pitch generator will load instantly at its own dedicated web address, and your root domain legacywealthgame.com remains completely available whenever you are ready to build your main brand website!
+
+Yes but I also want there to be a place where you can click on Legacy Pitch When you're on LegacywealthGame.com. is that possible
+
+Yes, absolutely! That is standard behavior for website navigation.
+
+If you want people visiting legacywealthgame.com to see a link/button they can click to open [legacywealthgame.com/legacy-pitch](https://legacywealthgame.com/legacy-pitch) (or pitch.legacywealthgame.com), you can easily set that up depending on where your main site ends up living:
+
+Scenario A: Your main site lives somewhere else (e.g., Squarespace, Shopify, WordPress)
+When you build your main website on another platform, you simply add a navigation link or button on your homepage:
+
+Button Text: "Legacy Pitch" or "Generate Your Pitch"
+
+Button Link: [https://pitch.legacywealthgame.com](https://pitch.legacywealthgame.com) (or [https://legacywealthgame.com/legacy-pitch](https://legacywealthgame.com/legacy-pitch))
+
+When a user clicks it, the browser opens your Netlify tool cleanly.
+
+Scenario B: Both pages live inside this same Netlify project
+If you want Netlify to host both your homepage AND your pitch tool together under legacywealthgame.com:
+
+In your project's code folder, put your main homepage file as index.html.
+
+Put your pitch generator file inside a folder named legacy-pitch (as legacy-pitch/index.html) or keep it as legacy-pitch.html.
+
+Inside your homepage's navigation bar or body, add a clickable link:
+
+HTML
+<a href="/legacy-pitch">Legacy Pitch</a>
+Deploy the project on Netlify.
+
+When visitors go to legacywealthgame.com, they will see your homepage. Clicking "Legacy Pitch" takes them directly to your live pitch tool!
+
+Since your site deploys automatically from GitHub, setting this up is straightforward! You just need to structure two files in your GitHub repository.
+
+Here is the exact setup so visitors hit a main landing page at legacywealthgame.com and can click a link/button to go to [legacywealthgame.com/legacy-pitch](https://legacywealthgame.com/legacy-pitch):
+
+Step 1: Set Up Your Files in GitHub
+In your GitHub repository for this project (legacypitch), make sure your files are organized like this:
+
+index.html (Root Homepage)
+
+This is what loads when someone visits legacywealthgame.com.
+
+Create or edit index.html in the main/root folder of your repo.
+
+Add a button or link pointing to /legacy-pitch:
+
+HTML
+<a href="/legacy-pitch" class="btn">Go to Legacy Pitch</a>
+legacy-pitch.html (The Pitch Tool)
+
+Name your pitch tool file legacy-pitch.html in the root folder (OR put it inside a folder path like legacy-pitch/index.html).
+
+Netlify automatically maps legacy-pitch.html to the clean URL [legacywealthgame.com/legacy-pitch](https://legacywealthgame.com/legacy-pitch).
+
+Step 2: Push to GitHub
+Commit and push your changes to GitHub.
+
+Netlify will automatically detect the new commit, trigger a fresh build, and deploy within a minute!
+
+Step 3: Test the Flow
+Open an Incognito Window.
+
+Go to legacywealthgame.com → You’ll see your homepage with the "Legacy Pitch" button.
+
+Click the button → It will take you straight to [legacywealthgame.com/legacy-pitch](https://legacywealthgame.com/legacy-pitch) without throwing a 404 error!
+
+That GitHub screenshot makes the issue crystal clear!
+
+Right now, your repository does not have an index.html file at the root level—it only has legacy-pitch.html. Because Netlify automatically looks for index.html when someone visits legacywealthgame.com, it serves that 404 "Page Not Found" error.
+
+Here is the exact fix directly inside GitHub:
+
+Step 1: Add an index.html File
+In your GitHub repository page (the one in your screenshot), click the + button (next to Go to file) and select Create new file.
+
+Name the file: index.html
+
+Paste in a simple placeholder homepage with a link to your pitch generator. You can use this clean template:
+
+HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legacy Wealth Game</title>
+  <link rel="stylesheet" href="assets/css/base.css">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      text-align: center;
+      background: #0f172a;
+      color: #f8fafc;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.8rem 1.8rem;
+      background: #06b6d4;
+      color: #0f172a;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Legacy Wealth Game</h1>
+  <p>Select a tool below to get started:</p>
+  
+  <!-- Button pointing directly to your pitch tool -->
+  <a href="/legacy-pitch" class="btn">Go to Legacy Pitch Generator &rarr;</a>
+</body>
+</html>
