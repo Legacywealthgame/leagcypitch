@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Business Blueprint — Legacy Wealth</title>
+<meta name="description" content="A teaching moment from the Legacy Wealth board game. Build Wealth. Leave a Legacy.">
+<meta name="theme-color" content="#FAF7F0">
+<meta name="robots" content="noindex">
+
+<meta property="og:title" content="Business Blueprint — Legacy Wealth">
+<meta property="og:description" content="A teaching moment from the Legacy Wealth board game.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================
+   Legacy Wealth — QR companion pages
+   Shared stylesheet (Wealth Wisdom + Business Blueprint)
+   ========================================================== */
+
+:root{
+  --cream:#FAF7F0;
+  --gold:#C9A84C;
+  --gold-soft:#E3D4A3;
+  --ink:#07080D;
+  --ink-soft:#3E4048;
+  --rule:rgba(7,8,13,.10);
+  --shadow:0 18px 50px -22px rgba(7,8,13,.45);
+  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+html{-webkit-text-size-adjust:100%;}
+
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* ---------- Masthead ---------- */
+.masthead{text-align:center;padding:26px 22px 16px;}
+.brand{
+  font-size:10px;font-weight:600;letter-spacing:.34em;
+  text-transform:uppercase;color:var(--ink-soft);opacity:.65;
+}
+.masthead h1{
+  font-family:var(--serif);font-weight:600;
+  font-size:clamp(30px,9vw,40px);line-height:1.02;
+  margin:10px 0 0;letter-spacing:-.015em;
+}
+.flourish{
+  width:64px;height:1px;margin:14px auto 0;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+
+/* ---------- Stage + card ---------- */
+.stage{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:8px 18px 26px;}
+.card{
+  width:100%;max-width:560px;background:#fff;
+  border:1px solid var(--rule);border-top:3px solid var(--gold);
+  border-radius:3px;box-shadow:var(--shadow);
+  padding:30px 24px 28px;position:relative;
+  animation:rise .5s cubic-bezier(.2,.7,.3,1) both;
+}
+@keyframes rise{from{opacity:0;transform:translateY(14px) scale(.99);}to{opacity:1;transform:none;}}
+
+.kicker{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+.badge{
+  font-size:9.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink);background:var(--gold-soft);border:1px solid var(--gold);
+  padding:5px 9px;border-radius:2px;white-space:nowrap;
+}
+.cat{
+  font-size:10.5px;font-weight:500;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-soft);opacity:.7;
+}
+
+.statement{
+  font-family:var(--serif);font-size:clamp(21px,5.6vw,26px);
+  line-height:1.34;font-weight:500;margin:0;letter-spacing:-.01em;
+}
+.statement.quoted::before{content:'\201C';}
+.statement.quoted::after{content:'\201D';}
+
+.lesson-title{
+  font-family:var(--serif);font-size:clamp(24px,6.4vw,30px);
+  line-height:1.16;font-weight:600;margin:0 0 16px;letter-spacing:-.015em;
+}
+.lesson-body{font-size:16.5px;line-height:1.66;color:var(--ink-soft);margin:0;}
+
+/* ---------- Flashcard term ---------- */
+.term{
+  font-family:var(--serif);font-size:clamp(30px,8.4vw,42px);
+  line-height:1.08;font-weight:600;margin:0;letter-spacing:-.02em;
+}
+
+/* ---------- Reveal fields (flashcards) ---------- */
+.field-label{
+  font-size:9.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);margin:0 0 7px;
+}
+.field-label.spaced{margin-top:20px;}
+.field-text{font-size:16.5px;line-height:1.6;color:var(--ink-soft);margin:0;}
+
+/* ---------- Choices ---------- */
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:26px;}
+.choices.single{grid-template-columns:1fr;}
+.choice{
+  font-family:var(--sans);font-size:14px;font-weight:600;
+  letter-spacing:.11em;text-transform:uppercase;
+  padding:17px 10px;border:1.5px solid var(--ink);
+  background:transparent;color:var(--ink);border-radius:2px;
+  cursor:pointer;transition:background .16s ease,color .16s ease,transform .12s ease;
+}
+.choice:active{transform:scale(.975);}
+.choice:hover{background:var(--ink);color:var(--cream);}
+.choice:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+
+/* ---------- Reveal ---------- */
+.reveal{
+  margin-top:24px;padding-top:22px;border-top:1px solid var(--rule);
+  animation:fade .42s ease both;
+}
+@keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+.verdict{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;margin-bottom:14px;}
+.verdict-word{
+  font-family:var(--serif);font-size:34px;font-weight:700;
+  line-height:1;letter-spacing:-.02em;
+}
+.verdict-note{
+  font-size:10.5px;font-weight:600;letter-spacing:.17em;
+  text-transform:uppercase;padding:4px 8px;border-radius:2px;
+}
+.right{background:rgba(201,168,76,.16);color:#7C6520;border:1px solid var(--gold);}
+.wrong{background:rgba(7,8,13,.05);color:var(--ink-soft);border:1px solid var(--rule);}
+.explain{font-size:16px;line-height:1.64;color:var(--ink-soft);margin:0;}
+
+/* ---------- Tray ---------- */
+.tray{padding:0 18px 30px;display:flex;justify-content:center;}
+.again{
+  font-family:var(--sans);font-size:12.5px;font-weight:600;
+  letter-spacing:.19em;text-transform:uppercase;
+  background:var(--ink);color:var(--cream);border:none;
+  padding:17px 34px;border-radius:2px;cursor:pointer;
+  width:100%;max-width:560px;
+  transition:opacity .16s ease,transform .12s ease;
+}
+.again:active{transform:scale(.985);}
+.again:hover{opacity:.87;}
+.again:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+.again[hidden]{display:none;}
+
+/* ---------- Fallback / empty states ---------- */
+.fallback{
+  text-align:center;
+}
+.fallback h2{
+  font-family:var(--serif);font-size:24px;font-weight:600;
+  margin:0 0 12px;letter-spacing:-.01em;
+}
+.fallback p{font-size:16px;line-height:1.62;color:var(--ink-soft);margin:0;}
+
+.legal{
+  text-align:center;font-size:10.5px;line-height:1.6;
+  color:var(--ink-soft);opacity:.5;
+  padding:0 26px 26px;max-width:520px;margin:0 auto;
+}
+.legal strong{font-weight:600;}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+@media (min-width:640px){.card{padding:38px 36px 34px;}.masthead{padding-top:44px;}}
+
+</style>
+
+<!-- Analytics: privacy-light, no cookies. Uncomment and set your domain to enable.
+<script defer data-domain="legacywealthgame.com" src="https://plausible.io/js/script.js"></script>
+<script>window.plausible=window.plausible||function(){(window.plausible.q=window.plausible.q||[]).push(arguments)}</script>
+-->
+</head>
+<body>
+
+<header class="masthead">
+  <div class="brand">Legacy Wealth</div>
+  <h1>Business Blueprint</h1>
+  <div class="flourish"></div>
+</header>
+
+<main class="stage">
+  <div class="card" id="card" aria-live="polite">
+    <noscript>
+      <div class="fallback">
+        <h2>Turn on JavaScript</h2>
+        <p>Business Blueprint needs JavaScript enabled to draw a card. Enable it in your browser settings, then reload this page.</p>
+      </div>
+    </noscript>
+  </div>
+</main>
+
+<div class="tray">
+  <button class="again" id="again" type="button">Draw another</button>
+</div>
+
+<p class="legal">
+  <strong>Educational content only.</strong> Business Blueprint is part of the Legacy Wealth board game and is not financial, tax, legal, or investment advice. Consult a qualified professional about your own situation.
+</p>
+
+<script>
+/* ==========================================================
+   Legacy Wealth — BUSINESS BLUEPRINT deck
+   100 concept flashcards across 10 categories.
+
+   Card shape:
+   { t:'fc', c:'Category', s:'TERM', d:'What it is', x:'In practice' }
+
+   Writing rules that keep gameplay fast:
+   - Definition: ONE sentence, plain English, no jargon inside it.
+   - Example:    ONE sentence, real numbers wherever possible.
+   - Target: under 12 seconds read aloud.
+
+   Use \u2019 for apostrophes inside single-quoted strings.
+   ========================================================== */
+
+window.LW_CONFIG = { id: 'business-blueprint', label: 'Business Blueprint' };
+
+window.LW_DECK = [
+
+/* ---------- PROFIT & MARGINS ---------- */
+{t:'fc',c:'Profit & Margins',s:'Gross Margin',d:'What is left from a sale after paying what it cost to make or deliver the product.',x:'A shirt sells for $40 and costs $16 to produce, leaving a gross margin of $24, or 60%.'},
+{t:'fc',c:'Profit & Margins',s:'Net Profit',d:'What the business actually keeps after every single expense is paid.',x:'$500,000 in sales with $460,000 in total costs leaves $40,000 in net profit.'},
+{t:'fc',c:'Profit & Margins',s:'Cost of Goods Sold',d:'The direct cost of producing or buying the specific product being sold.',x:'A bakery\u2019s flour, sugar, and packaging count. The manager\u2019s salary does not.'},
+{t:'fc',c:'Profit & Margins',s:'Operating Expenses',d:'The ongoing costs of running the business that are not tied to making a specific product.',x:'Rent, utilities, insurance, and software subscriptions.'},
+{t:'fc',c:'Profit & Margins',s:'Overhead',d:'The running costs a business pays whether it sells anything that month or not.',x:'A gym owes $8,000 in rent whether 50 members show up or 500.'},
+{t:'fc',c:'Profit & Margins',s:'Markup',d:'The amount added on top of what something cost you to arrive at the selling price.',x:'A part costs $10 and sells for $25 \u2014 a 150% markup.'},
+{t:'fc',c:'Profit & Margins',s:'Break-Even Point',d:'The level of sales where revenue exactly covers total costs, with nothing lost and nothing gained.',x:'With $6,000 in monthly costs and $30 profit per unit, the business breaks even at 200 units.'},
+{t:'fc',c:'Profit & Margins',s:'Fixed Costs',d:'Expenses that stay the same no matter how much you sell.',x:'A $2,500 monthly lease costs exactly the same in the slowest month as the best one.'},
+{t:'fc',c:'Profit & Margins',s:'Variable Costs',d:'Expenses that rise and fall with how much you produce or sell.',x:'A candle maker buys far more wax in December than in February.'},
+{t:'fc',c:'Profit & Margins',s:'Contribution Margin',d:'What each individual sale contributes toward covering fixed costs once variable costs are paid.',x:'A $50 product with $20 in variable costs contributes $30 toward rent and overhead.'},
+
+/* ---------- CASH FLOW & FINANCE ---------- */
+{t:'fc',c:'Cash Flow & Finance',s:'Cash Flow',d:'The actual money moving in and out of a business, which is not the same thing as profit.',x:'A company can show $100,000 in profit on paper and still miss payroll if customers have not paid yet.'},
+{t:'fc',c:'Cash Flow & Finance',s:'Burn Rate',d:'How fast a business spends its cash reserves each month before it becomes profitable.',x:'$120,000 in the bank at $20,000 a month means six months of cash left.'},
+{t:'fc',c:'Cash Flow & Finance',s:'Runway',d:'How many months a business can keep operating before the money runs out.',x:'A founder with nine months of runway must reach profitability or raise more before month ten.'},
+{t:'fc',c:'Cash Flow & Finance',s:'Accounts Receivable',d:'Money customers owe the business for work already delivered.',x:'A contractor finishes a $15,000 job in March but does not get paid until May.'},
+{t:'fc',c:'Cash Flow & Finance',s:'Accounts Payable',d:'Money the business owes its suppliers and vendors.',x:'A restaurant receives $4,000 of produce in January with payment due in February.'},
+{t:'fc',c:'Cash Flow & Finance',s:'Working Capital',d:'The cash a business has available to cover day-to-day operations after short-term bills.',x:'$80,000 in current assets minus $50,000 in current bills leaves $30,000 of working capital.'},
+{t:'fc',c:'Cash Flow & Finance',s:'Line of Credit',d:'A pre-approved pool of money a business can borrow from as needed and repay.',x:'A shop draws $10,000 during a slow month and pays it back when sales recover.'},
+{t:'fc',c:'Cash Flow & Finance',s:'Balance Sheet',d:'A snapshot of what a business owns, what it owes, and what is left over for the owners.',x:'$300,000 in assets minus $180,000 in debts equals $120,000 of owner equity.'},
+{t:'fc',c:'Cash Flow & Finance',s:'Income Statement',d:'A report showing revenue, expenses, and profit across a period of time.',x:'A quarterly statement showing $250,000 in revenue, $210,000 in expenses, and $40,000 in profit.'},
+{t:'fc',c:'Cash Flow & Finance',s:'Reinvestment',d:'Putting profits back into the business instead of taking them out.',x:'An owner spends $30,000 of profit on a second delivery van rather than a personal bonus.'},
+
+/* ---------- STARTING A BUSINESS ---------- */
+{t:'fc',c:'Starting a Business',s:'Sole Proprietorship',d:'The simplest business structure, where the owner and the business are legally the same person.',x:'A freelance photographer who never files any paperwork is one by default.'},
+{t:'fc',c:'Starting a Business',s:'LLC',d:'A structure that creates legal separation between the business and the owner\u2019s personal assets.',x:'If the business gets sued, the owner\u2019s home is generally shielded from the claim.'},
+{t:'fc',c:'Starting a Business',s:'Corporation',d:'A formal structure that exists as its own legal entity and can issue shares of ownership.',x:'A company giving stock to investors and employees is set up as a corporation.'},
+{t:'fc',c:'Starting a Business',s:'EIN',d:'A federal tax ID number for a business, working much like a Social Security number does for a person.',x:'A new bakery needs one to open a business bank account and put employees on payroll.'},
+{t:'fc',c:'Starting a Business',s:'Operating Agreement',d:'The written document defining how a business runs and how the owners share control and profits.',x:'Two partners put a 60/40 profit split in writing before opening the doors.'},
+{t:'fc',c:'Starting a Business',s:'Commingling Funds',d:'Mixing personal and business money, which can destroy the legal protection a business structure provides.',x:'Paying a personal car note from the business account can put the owner\u2019s personal assets back at risk.'},
+{t:'fc',c:'Starting a Business',s:'Business Plan',d:'A written outline of what the business sells, who it serves, and how it will make money.',x:'A bank asks for one before approving a startup loan.'},
+{t:'fc',c:'Starting a Business',s:'Bootstrapping',d:'Building a business using personal savings and its own revenue instead of outside investment.',x:'An owner reinvests every dollar of early profit rather than taking on a loan or investor.'},
+{t:'fc',c:'Starting a Business',s:'Minimum Viable Product',d:'The simplest version of a product you can sell to real customers to test whether demand exists.',x:'Selling 20 hand-made units before spending on a full factory run.'},
+{t:'fc',c:'Starting a Business',s:'Business License',d:'Government permission required to legally operate a certain type of business in a certain place.',x:'A food truck needs one from the city before serving a single customer.'},
+
+/* ---------- FRANCHISES & BUSINESS MODELS ---------- */
+{t:'fc',c:'Franchises & Business Models',s:'Franchisor',d:'The parent company that owns the brand and licenses it out to others.',x:'The corporation behind a national restaurant chain.'},
+{t:'fc',c:'Franchises & Business Models',s:'Franchisee',d:'The individual who buys the right to operate a location under an established brand.',x:'The person who owns and runs the chain restaurant on your corner.'},
+{t:'fc',c:'Franchises & Business Models',s:'Franchise Fee',d:'The one-time upfront cost paid to join a franchise system.',x:'$45,000 paid before opening, separate from the cost of building the location.'},
+{t:'fc',c:'Franchises & Business Models',s:'Royalty Fee',d:'An ongoing percentage of revenue paid to the parent brand, separate from the upfront fee.',x:'A location doing $50,000 a month at a 6% royalty sends $3,000 up \u2014 profitable or not.'},
+{t:'fc',c:'Franchises & Business Models',s:'Franchise Disclosure Document',d:'The legal document a franchisor must provide detailing costs, obligations, and how existing locations perform.',x:'It reveals average revenue per location and how many closed last year.'},
+{t:'fc',c:'Franchises & Business Models',s:'Territory Rights',d:'An agreement giving a franchisee exclusive rights to operate within a defined area.',x:'No second location from the same brand may open within five miles.'},
+{t:'fc',c:'Franchises & Business Models',s:'Turnkey Business',d:'A business sold ready to operate from day one.',x:'Buying an existing laundromat that already has equipment, staff, and regular customers.'},
+{t:'fc',c:'Franchises & Business Models',s:'Business Model',d:'How a company creates something of value and makes money from it.',x:'A gym charges recurring memberships; a bakery sells one item at a time.'},
+{t:'fc',c:'Franchises & Business Models',s:'Recurring Revenue',d:'Income that repeats automatically on a schedule instead of being earned one sale at a time.',x:'400 members at $45 a month is $18,000 of predictable monthly revenue.'},
+{t:'fc',c:'Franchises & Business Models',s:'Licensing',d:'Earning money by letting others use your brand, product, or idea.',x:'An inventor collects 5% of every unit a manufacturer sells.'},
+
+/* ---------- SCALING & GROWTH ---------- */
+{t:'fc',c:'Scaling & Growth',s:'Scaling',d:'Growing revenue significantly faster than costs grow.',x:'Doubling sales while expenses rise only 20% is scaling. Doubling both is just getting bigger.'},
+{t:'fc',c:'Scaling & Growth',s:'Economies of Scale',d:'The cost of each unit falling as you produce more of them.',x:'Ordering 10,000 units drops the price to $3 each, while 500 units cost $7 each.'},
+{t:'fc',c:'Scaling & Growth',s:'Systemization',d:'Turning how work gets done into repeatable processes anyone can follow.',x:'Writing down the closing routine so any employee can run it correctly.'},
+{t:'fc',c:'Scaling & Growth',s:'Delegation',d:'Handing work to other people so the owner can focus on higher-value decisions.',x:'An owner hires a bookkeeper and gets ten hours a month back for selling.'},
+{t:'fc',c:'Scaling & Growth',s:'Bottleneck',d:'The single step that limits how much the entire business can produce.',x:'A company that can sell 100 jobs a month but only install 40 is capped at 40.'},
+{t:'fc',c:'Scaling & Growth',s:'Owner Dependency',d:'When a business cannot operate without the owner personally being there.',x:'A salon where clients only book with the owner cannot grow past the owner\u2019s schedule.'},
+{t:'fc',c:'Scaling & Growth',s:'Capacity',d:'The maximum a business can produce or serve with the resources it currently has.',x:'A 60-seat restaurant cannot serve a 61st guest without adding space or turning tables faster.'},
+{t:'fc',c:'Scaling & Growth',s:'Market Expansion',d:'Growing by selling to new places or new groups of customers.',x:'A regional brand begins shipping nationwide.'},
+{t:'fc',c:'Scaling & Growth',s:'Vertical Integration',d:'Owning more steps of your own supply chain instead of paying someone else for them.',x:'A coffee shop buys its own roastery and stops paying a supplier\u2019s markup.'},
+{t:'fc',c:'Scaling & Growth',s:'Barrier to Entry',d:'Whatever makes it difficult for new competitors to enter your market.',x:'Heavy equipment costs and required licensing keep casual competitors out.'},
+
+/* ---------- MARKETING & CUSTOMERS ---------- */
+{t:'fc',c:'Marketing & Customers',s:'Customer Acquisition Cost',d:'The total marketing and sales spend required to win one new customer.',x:'Spending $5,000 on ads to land 100 customers means each one cost $50.'},
+{t:'fc',c:'Marketing & Customers',s:'Lifetime Value',d:'The total profit a business expects from one customer across the whole relationship.',x:'A member who stays three years at $45 a month is worth far more than one month\u2019s fee.'},
+{t:'fc',c:'Marketing & Customers',s:'Target Market',d:'The specific group of people a business is built to serve.',x:'A meal-prep service aimed at busy parents, not simply everyone who eats.'},
+{t:'fc',c:'Marketing & Customers',s:'Value Proposition',d:'The clear reason a customer should choose you instead of the alternative.',x:'Same-day delivery when every competitor takes three days.'},
+{t:'fc',c:'Marketing & Customers',s:'Positioning',d:'The space your brand occupies in a customer\u2019s mind compared to competitors.',x:'Being known as the premium option rather than the cheap one.'},
+{t:'fc',c:'Marketing & Customers',s:'Brand',d:'The trust and reputation customers attach to a business, which is far more than a logo.',x:'People pay more for a name they already trust to deliver.'},
+{t:'fc',c:'Marketing & Customers',s:'Conversion Rate',d:'The percentage of people who take the action you wanted them to take.',x:'1,000 visitors and 30 purchases is a 3% conversion rate.'},
+{t:'fc',c:'Marketing & Customers',s:'Churn Rate',d:'The percentage of customers who stop buying during a given period.',x:'500 subscribers losing 25 in a month is 5% monthly churn.'},
+{t:'fc',c:'Marketing & Customers',s:'Market Research',d:'Gathering real information about customers and competitors before committing money.',x:'Surveying 200 potential buyers before signing a lease.'},
+{t:'fc',c:'Marketing & Customers',s:'Referral',d:'A new customer who comes from an existing customer recommending you.',x:'Referred customers usually cost the least to acquire and stay the longest.'},
+
+/* ---------- SALES & PRICING ---------- */
+{t:'fc',c:'Sales & Pricing',s:'Pricing Strategy',d:'The deliberate method a business uses to decide what to charge.',x:'Choosing to price above competitors on purpose rather than guessing at a number.'},
+{t:'fc',c:'Sales & Pricing',s:'Cost-Plus Pricing',d:'Setting a price by adding a set markup on top of what the item cost you.',x:'A $20 cost plus a 50% markup gives a $30 price.'},
+{t:'fc',c:'Sales & Pricing',s:'Value-Based Pricing',d:'Setting a price based on what the result is worth to the customer, not what it cost you to deliver.',x:'A consultant charges $10,000 for advice that saves the client $100,000.'},
+{t:'fc',c:'Sales & Pricing',s:'Premium Pricing',d:'Deliberately charging more to signal higher quality.',x:'A luxury brand refuses to discount because the price is part of the message.'},
+{t:'fc',c:'Sales & Pricing',s:'Loss Leader',d:'A product sold at little or no profit to draw in customers who then buy other things.',x:'A grocery store sells milk near cost to fill carts with everything else.'},
+{t:'fc',c:'Sales & Pricing',s:'Price Elasticity',d:'How much demand changes when the price changes.',x:'Raising coffee prices 10% barely affects sales. Raising them 60% empties the shop.'},
+{t:'fc',c:'Sales & Pricing',s:'Upselling',d:'Offering a higher-value version or add-on at the moment of purchase.',x:'Adding a $200 warranty to a $1,500 appliance sale.'},
+{t:'fc',c:'Sales & Pricing',s:'Sales Funnel',d:'The stages a person moves through from first hearing about you to actually buying.',x:'1,000 people see the ad, 200 visit, 40 request a quote, 10 buy.'},
+{t:'fc',c:'Sales & Pricing',s:'Close Rate',d:'The percentage of prospects who become paying customers.',x:'40 quotes sent and 10 accepted is a 25% close rate.'},
+{t:'fc',c:'Sales & Pricing',s:'Objection',d:'The concern a customer raises that stands between them and buying.',x:'\u201CIt costs too much\u201D usually means the value has not been made clear yet.'},
+
+/* ---------- OPERATIONS & SYSTEMS ---------- */
+{t:'fc',c:'Operations & Systems',s:'Standard Operating Procedure',d:'A written step-by-step for how a specific task gets done every single time.',x:'A one-page checklist so every location opens exactly the same way.'},
+{t:'fc',c:'Operations & Systems',s:'Supply Chain',d:'The full path a product travels from raw materials to the customer\u2019s hands.',x:'Cotton, to fabric mill, to factory, to warehouse, to the buyer\u2019s door.'},
+{t:'fc',c:'Operations & Systems',s:'Inventory Turnover',d:'How many times a business sells through and replaces its inventory in a period.',x:'A shop that clears its shelves six times a year has healthier flow than one that clears them once.'},
+{t:'fc',c:'Operations & Systems',s:'Just-in-Time Inventory',d:'Ordering stock only as it is needed so cash is not tied up sitting on shelves.',x:'A restaurant orders produce twice a week instead of storing a month of it.'},
+{t:'fc',c:'Operations & Systems',s:'Lead Time',d:'How long it takes between ordering something and actually receiving it.',x:'A six-week lead time means holiday inventory must be ordered in September.'},
+{t:'fc',c:'Operations & Systems',s:'Quality Control',d:'The checks that make sure what you deliver meets a consistent standard.',x:'Inspecting a sample from every production batch before it ships.'},
+{t:'fc',c:'Operations & Systems',s:'Automation',d:'Using tools or software to handle repetitive work without a person doing it.',x:'Invoices that send themselves and follow up automatically when unpaid.'},
+{t:'fc',c:'Operations & Systems',s:'Outsourcing',d:'Paying an outside company to handle a function instead of doing it in-house.',x:'Hiring an accounting firm rather than employing a full-time bookkeeper.'},
+{t:'fc',c:'Operations & Systems',s:'Vendor',d:'An outside supplier the business depends on in order to operate.',x:'Losing your only packaging vendor can stop shipping entirely.'},
+{t:'fc',c:'Operations & Systems',s:'Key Performance Indicator',d:'The small number of measurements that best show whether the business is winning.',x:'A gym tracks new sign-ups and monthly cancellations above everything else.'},
+
+/* ---------- LEADERSHIP & HIRING ---------- */
+{t:'fc',c:'Leadership & Hiring',s:'Company Culture',d:'The behavior and standards a team actually lives by day to day, not what a poster on the wall says.',x:'If leadership always stays late, the team learns that is the expectation.'},
+{t:'fc',c:'Leadership & Hiring',s:'Onboarding',d:'The process of getting a new hire trained, equipped, and productive.',x:'A structured first two weeks instead of handing someone a login and walking away.'},
+{t:'fc',c:'Leadership & Hiring',s:'Employee vs. Contractor',d:'A legal distinction that determines taxes, benefits, and how much control you have over the work.',x:'Misclassifying a worker can create back taxes and penalties.'},
+{t:'fc',c:'Leadership & Hiring',s:'Payroll Burden',d:'The extra cost above someone\u2019s wage, including taxes, insurance, and benefits.',x:'A $50,000 salary often costs the business closer to $60,000 all-in.'},
+{t:'fc',c:'Leadership & Hiring',s:'Retention',d:'Keeping good employees instead of constantly replacing them.',x:'Strong retention lowers training costs and protects customer relationships.'},
+{t:'fc',c:'Leadership & Hiring',s:'Turnover Cost',d:'The real, often hidden cost of losing an employee and replacing them.',x:'Recruiting, training, and lost productivity can exceed several months of that person\u2019s pay.'},
+{t:'fc',c:'Leadership & Hiring',s:'Accountability',d:'One specific person clearly owning one specific result.',x:'When everyone owns a number, no one does.'},
+{t:'fc',c:'Leadership & Hiring',s:'Org Chart',d:'A map of who is responsible for what and who reports to whom.',x:'Two people believing they own the same decision is how projects stall.'},
+{t:'fc',c:'Leadership & Hiring',s:'Leadership vs. Management',d:'Leadership sets the direction. Management makes the plan actually run.',x:'Deciding to open a second location is leadership. Staffing and running it is management.'},
+{t:'fc',c:'Leadership & Hiring',s:'Abdication',d:'Handing off work and disappearing, rather than delegating with clear expectations and follow-up.',x:'\u201CJust handle it\u201D with no standard set is how good employees get blamed for bad outcomes.'},
+
+/* ---------- OWNERSHIP, EQUITY & EXIT ---------- */
+{t:'fc',c:'Ownership, Equity & Exit',s:'Equity',d:'An ownership share in a business.',x:'Holding 25% equity means owning a quarter of whatever the company is worth.'},
+{t:'fc',c:'Ownership, Equity & Exit',s:'Sweat Equity',d:'Ownership earned through work contributed instead of money invested.',x:'A developer builds the product for free in exchange for 20% of the company.'},
+{t:'fc',c:'Ownership, Equity & Exit',s:'Vesting',d:'Earning ownership gradually over time rather than receiving all of it upfront.',x:'A partner earns their 25% across four years, protecting the business if they leave early.'},
+{t:'fc',c:'Ownership, Equity & Exit',s:'Cap Table',d:'The record of exactly who owns what percentage of a company.',x:'It shows whether the founders still control the business after bringing in investors.'},
+{t:'fc',c:'Ownership, Equity & Exit',s:'Dilution',d:'Existing owners\u2019 percentages shrinking when new shares are issued.',x:'A founder\u2019s 50% becomes 40% after a new investor comes in.'},
+{t:'fc',c:'Ownership, Equity & Exit',s:'Valuation',d:'What a business is judged to be worth.',x:'A company earning $200,000 a year might be valued at three times that, or $600,000.'},
+{t:'fc',c:'Ownership, Equity & Exit',s:'Angel Investor',d:'An individual who invests their own personal money into an early-stage business.',x:'Writing a $50,000 check for a share of ownership before the product even exists.'},
+{t:'fc',c:'Ownership, Equity & Exit',s:'Venture Capital',d:'Professionally managed funds that invest large amounts into high-growth companies in exchange for equity.',x:'A firm invests $2 million for 20%, expecting the company to grow fast or fail trying.'},
+{t:'fc',c:'Ownership, Equity & Exit',s:'Exit Strategy',d:'The plan for how an owner eventually steps away and takes value out of the business.',x:'Selling the company, passing it to family, or being acquired by a competitor.'},
+{t:'fc',c:'Ownership, Equity & Exit',s:'Buy-Sell Agreement',d:'A contract deciding in advance what happens to an owner\u2019s share if they leave, die, or want out.',x:'It prevents a partner\u2019s family from unexpectedly becoming your new business partner.'}
+
+];
+
+</script>
+<script>
+/* ==========================================================
+   Legacy Wealth — QR companion card engine
+   Shared by Wealth Wisdom and Business Blueprint.
+
+   A deck file must set, before this script runs:
+     window.LW_CONFIG = { id:'wealth-wisdom', label:'Wealth Wisdom' }
+     window.LW_DECK   = [ ...cards... ]
+
+   Card shapes:
+     True/False : { t:'tf', c:'Category', s:'Statement', a:true|false, e:'Explanation' }
+     Lesson     : { t:'l',  c:'Category', s:'Title',     e:'Teaching text' }
+     Flashcard  : { t:'fc', c:'Category', s:'TERM', d:'What it is', x:'In practice' }
+   ========================================================== */
+
+(function () {
+  'use strict';
+
+  var CFG   = window.LW_CONFIG || { id: 'deck', label: 'Legacy Wealth' };
+  var DECK  = Array.isArray(window.LW_DECK) ? window.LW_DECK : [];
+  var QKEY  = 'lw_' + CFG.id + '_queue_v1';
+  var CKEY  = 'lw_' + CFG.id + '_current_v1';
+  var STICKY_TTL = 5 * 60 * 1000; // 5 minutes — backstop only
+
+  var cardEl  = document.getElementById('card');
+  var againEl = document.getElementById('again');
+
+  /* ---------- Storage with in-memory fallback ----------
+     Private browsing and locked-down webviews can throw on
+     localStorage. The page must never break because of it.   */
+  var mem = {};
+  var store = {
+    get: function (k) {
+      try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : null; }
+      catch (e) { return mem[k] !== undefined ? mem[k] : null; }
+    },
+    set: function (k, v) {
+      try { localStorage.setItem(k, JSON.stringify(v)); }
+      catch (e) { mem[k] = v; }
+    },
+    del: function (k) {
+      try { localStorage.removeItem(k); } catch (e) { delete mem[k]; }
+    }
+  };
+
+  /* ---------- Analytics (no-op unless a provider is loaded) ----------
+     Privacy-light: fires a named event only. No personal data,
+     no cookies, no identifiers.                                        */
+  function track(event, props) {
+    try {
+      if (typeof window.plausible === 'function') {
+        window.plausible(event, props ? { props: props } : undefined);
+      }
+    } catch (e) { /* analytics must never break the page */ }
+  }
+
+  /* ---------- Fisher-Yates shuffle ---------- */
+  function shuffledIndexes() {
+    var idx = DECK.map(function (_, i) { return i; });
+    for (var i = idx.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = idx[i]; idx[i] = idx[j]; idx[j] = tmp;
+    }
+    return idx;
+  }
+
+  /* ---------- Draw without replacement ---------- */
+  function drawNext() {
+    var queue = store.get(QKEY);
+    var reshuffled = false;
+    if (!Array.isArray(queue) || queue.length === 0) {
+      queue = shuffledIndexes();
+      reshuffled = true;
+    }
+    var pick = queue.shift();
+    store.set(QKEY, queue);
+    if (typeof pick !== 'number' || !DECK[pick]) { pick = 0; }
+    return { index: pick, remaining: queue.length, reshuffled: reshuffled };
+  }
+
+  /* ---------- Should this page load show the previous card? ----------
+     A QR scan is a fresh navigation -> new card.
+     A refresh, back button, or restored tab -> keep the same card,
+     so nobody loses the card they were mid-way through reading.       */
+  function isReturningView() {
+    try {
+      var nav = performance.getEntriesByType('navigation')[0];
+      if (nav && (nav.type === 'reload' || nav.type === 'back_forward')) return true;
+    } catch (e) { /* fall through to TTL check */ }
+    return false;
+  }
+
+  function readSticky() {
+    var s = store.get(CKEY);
+    if (!s || typeof s.index !== 'number' || !DECK[s.index]) return null;
+    if (Date.now() - (s.at || 0) > STICKY_TTL) return null;
+    return s;
+  }
+
+  function writeSticky(index, answered, guess) {
+    store.set(CKEY, { index: index, answered: !!answered, guess: guess, at: Date.now() });
+  }
+
+  /* ---------- Escaping ---------- */
+  function esc(str) {
+    return String(str).replace(/[&<>"']/g, function (ch) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
+    });
+  }
+
+  /* ---------- Render ---------- */
+  function replay(el) {
+    el.style.animation = 'none';
+    void el.offsetWidth;
+    el.style.animation = '';
+  }
+
+  function showEmpty() {
+    cardEl.innerHTML =
+      '<div class="fallback">' +
+        '<h2>Nothing to show yet</h2>' +
+        '<p>This deck has no cards loaded. Check that the deck file is published alongside this page.</p>' +
+      '</div>';
+    againEl.hidden = true;
+  }
+
+  function renderReveal(item, correct) {
+    var rev = document.createElement('div');
+    rev.className = 'reveal';
+    rev.innerHTML =
+      '<div class="verdict">' +
+        '<span class="verdict-word">' + (item.a ? 'True' : 'False') + '</span>' +
+        '<span class="verdict-note ' + (correct ? 'right' : 'wrong') + '">' +
+          (correct ? 'You got it' : 'Not quite') +
+        '</span>' +
+      '</div>' +
+      '<p class="explain">' + esc(item.e) + '</p>';
+    cardEl.appendChild(rev);
+    againEl.textContent = 'Draw another';
+  }
+
+  function render(index, restore) {
+    var item = DECK[index];
+    if (!item) { showEmpty(); return; }
+    replay(cardEl);
+
+    /* --- Lesson --- */
+    if (item.t === 'l') {
+      cardEl.innerHTML =
+        '<div class="kicker"><span class="badge">Wealth Lesson</span>' +
+        '<span class="cat">' + esc(item.c) + '</span></div>' +
+        '<h2 class="lesson-title">' + esc(item.s) + '</h2>' +
+        '<p class="lesson-body">' + esc(item.e) + '</p>';
+      againEl.textContent = 'Draw another';
+      writeSticky(index, true, null);
+      return;
+    }
+
+    /* --- Flashcard: term, then reveal definition + example --- */
+    if (item.t === 'fc') {
+      cardEl.innerHTML =
+        '<div class="kicker"><span class="badge">Business Term</span>' +
+        '<span class="cat">' + esc(item.c) + '</span></div>' +
+        '<h2 class="term">' + esc(item.s) + '</h2>' +
+        '<div class="choices single">' +
+          '<button class="choice" type="button" data-reveal="1">Reveal</button>' +
+        '</div>';
+      againEl.textContent = 'Skip to another';
+
+      var revealBtn = cardEl.querySelector('[data-reveal]');
+      if (revealBtn) {
+        revealBtn.addEventListener('click', function () {
+          revealTerm(index, item);
+        });
+      }
+
+      if (restore && restore.answered) {
+        revealTerm(index, item, true);
+      } else {
+        writeSticky(index, false, null);
+      }
+      return;
+    }
+
+    /* --- True / False --- */
+    cardEl.innerHTML =
+      '<div class="kicker"><span class="badge">True or False</span>' +
+      '<span class="cat">' + esc(item.c) + '</span></div>' +
+      '<p class="statement quoted">' + esc(item.s) + '</p>' +
+      '<div class="choices">' +
+        '<button class="choice" type="button" data-pick="true">True</button>' +
+        '<button class="choice" type="button" data-pick="false">False</button>' +
+      '</div>';
+    againEl.textContent = 'Skip to another';
+
+    Array.prototype.forEach.call(cardEl.querySelectorAll('.choice'), function (btn) {
+      btn.addEventListener('click', function () {
+        var guess = btn.dataset.pick === 'true';
+        answer(index, item, guess);
+      });
+    });
+
+    /* Restoring a card that was already answered before a refresh */
+    if (restore && restore.answered && restore.guess !== null && restore.guess !== undefined) {
+      var choices = cardEl.querySelector('.choices');
+      if (choices) choices.remove();
+      renderReveal(item, restore.guess === item.a);
+    } else {
+      writeSticky(index, false, null);
+    }
+  }
+
+  function revealTerm(index, item, silent) {
+    var choices = cardEl.querySelector('.choices');
+    if (choices) choices.remove();
+
+    var rev = document.createElement('div');
+    rev.className = 'reveal';
+    rev.innerHTML =
+      '<p class="field-label">What it is</p>' +
+      '<p class="field-text">' + esc(item.d) + '</p>' +
+      '<p class="field-label spaced">In practice</p>' +
+      '<p class="field-text">' + esc(item.x) + '</p>';
+    cardEl.appendChild(rev);
+
+    againEl.textContent = 'Draw another';
+    writeSticky(index, true, null);
+    if (!silent) track('Term Revealed', { deck: CFG.label, category: item.c });
+  }
+
+  function answer(index, item, guess) {
+    var correct = guess === item.a;
+    var choices = cardEl.querySelector('.choices');
+    if (choices) choices.remove();
+    renderReveal(item, correct);
+    writeSticky(index, true, guess);
+    track('WW Answer', { deck: CFG.label, category: item.c, correct: correct ? 'yes' : 'no' });
+  }
+
+  /* ---------- Boot ---------- */
+  function boot() {
+    if (!cardEl || !againEl) return;
+    if (DECK.length === 0) { showEmpty(); return; }
+
+    againEl.addEventListener('click', function () {
+      var d = drawNext();
+      store.del(CKEY);
+      render(d.index, null);
+      track('Card Drawn', { deck: CFG.label, source: 'button' });
+      if (d.reshuffled) track('Deck Reshuffled', { deck: CFG.label });
+      try { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+      catch (e) { window.scrollTo(0, 0); }
+    });
+
+    var sticky = isReturningView() ? readSticky() : null;
+    if (sticky) {
+      render(sticky.index, sticky);
+    } else {
+      var d = drawNext();
+      render(d.index, null);
+      track('Card Drawn', { deck: CFG.label, source: 'scan' });
+      if (d.reshuffled) track('Deck Reshuffled', { deck: CFG.label });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
+})();
+
+</script>
+</body>
+</html>

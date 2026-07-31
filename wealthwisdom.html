@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wealth Wisdom — Legacy Wealth</title>
+<meta name="description" content="A teaching moment from the Legacy Wealth board game. Build Wealth. Leave a Legacy.">
+<meta name="theme-color" content="#FAF7F0">
+<meta name="robots" content="noindex">
+
+<meta property="og:title" content="Wealth Wisdom — Legacy Wealth">
+<meta property="og:description" content="A teaching moment from the Legacy Wealth board game.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================
+   Legacy Wealth — QR companion pages
+   Shared stylesheet (Wealth Wisdom + Business Blueprint)
+   ========================================================== */
+
+:root{
+  --cream:#FAF7F0;
+  --gold:#C9A84C;
+  --gold-soft:#E3D4A3;
+  --ink:#07080D;
+  --ink-soft:#3E4048;
+  --rule:rgba(7,8,13,.10);
+  --shadow:0 18px 50px -22px rgba(7,8,13,.45);
+  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+html{-webkit-text-size-adjust:100%;}
+
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* ---------- Masthead ---------- */
+.masthead{text-align:center;padding:26px 22px 16px;}
+.brand{
+  font-size:10px;font-weight:600;letter-spacing:.34em;
+  text-transform:uppercase;color:var(--ink-soft);opacity:.65;
+}
+.masthead h1{
+  font-family:var(--serif);font-weight:600;
+  font-size:clamp(30px,9vw,40px);line-height:1.02;
+  margin:10px 0 0;letter-spacing:-.015em;
+}
+.flourish{
+  width:64px;height:1px;margin:14px auto 0;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+
+/* ---------- Stage + card ---------- */
+.stage{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:8px 18px 26px;}
+.card{
+  width:100%;max-width:560px;background:#fff;
+  border:1px solid var(--rule);border-top:3px solid var(--gold);
+  border-radius:3px;box-shadow:var(--shadow);
+  padding:30px 24px 28px;position:relative;
+  animation:rise .5s cubic-bezier(.2,.7,.3,1) both;
+}
+@keyframes rise{from{opacity:0;transform:translateY(14px) scale(.99);}to{opacity:1;transform:none;}}
+
+.kicker{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+.badge{
+  font-size:9.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink);background:var(--gold-soft);border:1px solid var(--gold);
+  padding:5px 9px;border-radius:2px;white-space:nowrap;
+}
+.cat{
+  font-size:10.5px;font-weight:500;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-soft);opacity:.7;
+}
+
+.statement{
+  font-family:var(--serif);font-size:clamp(21px,5.6vw,26px);
+  line-height:1.34;font-weight:500;margin:0;letter-spacing:-.01em;
+}
+.statement.quoted::before{content:'\201C';}
+.statement.quoted::after{content:'\201D';}
+
+.lesson-title{
+  font-family:var(--serif);font-size:clamp(24px,6.4vw,30px);
+  line-height:1.16;font-weight:600;margin:0 0 16px;letter-spacing:-.015em;
+}
+.lesson-body{font-size:16.5px;line-height:1.66;color:var(--ink-soft);margin:0;}
+
+/* ---------- Flashcard term ---------- */
+.term{
+  font-family:var(--serif);font-size:clamp(30px,8.4vw,42px);
+  line-height:1.08;font-weight:600;margin:0;letter-spacing:-.02em;
+}
+
+/* ---------- Reveal fields (flashcards) ---------- */
+.field-label{
+  font-size:9.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);margin:0 0 7px;
+}
+.field-label.spaced{margin-top:20px;}
+.field-text{font-size:16.5px;line-height:1.6;color:var(--ink-soft);margin:0;}
+
+/* ---------- Choices ---------- */
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:26px;}
+.choices.single{grid-template-columns:1fr;}
+.choice{
+  font-family:var(--sans);font-size:14px;font-weight:600;
+  letter-spacing:.11em;text-transform:uppercase;
+  padding:17px 10px;border:1.5px solid var(--ink);
+  background:transparent;color:var(--ink);border-radius:2px;
+  cursor:pointer;transition:background .16s ease,color .16s ease,transform .12s ease;
+}
+.choice:active{transform:scale(.975);}
+.choice:hover{background:var(--ink);color:var(--cream);}
+.choice:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+
+/* ---------- Reveal ---------- */
+.reveal{
+  margin-top:24px;padding-top:22px;border-top:1px solid var(--rule);
+  animation:fade .42s ease both;
+}
+@keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+.verdict{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;margin-bottom:14px;}
+.verdict-word{
+  font-family:var(--serif);font-size:34px;font-weight:700;
+  line-height:1;letter-spacing:-.02em;
+}
+.verdict-note{
+  font-size:10.5px;font-weight:600;letter-spacing:.17em;
+  text-transform:uppercase;padding:4px 8px;border-radius:2px;
+}
+.right{background:rgba(201,168,76,.16);color:#7C6520;border:1px solid var(--gold);}
+.wrong{background:rgba(7,8,13,.05);color:var(--ink-soft);border:1px solid var(--rule);}
+.explain{font-size:16px;line-height:1.64;color:var(--ink-soft);margin:0;}
+
+/* ---------- Tray ---------- */
+.tray{padding:0 18px 30px;display:flex;justify-content:center;}
+.again{
+  font-family:var(--sans);font-size:12.5px;font-weight:600;
+  letter-spacing:.19em;text-transform:uppercase;
+  background:var(--ink);color:var(--cream);border:none;
+  padding:17px 34px;border-radius:2px;cursor:pointer;
+  width:100%;max-width:560px;
+  transition:opacity .16s ease,transform .12s ease;
+}
+.again:active{transform:scale(.985);}
+.again:hover{opacity:.87;}
+.again:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+.again[hidden]{display:none;}
+
+/* ---------- Fallback / empty states ---------- */
+.fallback{
+  text-align:center;
+}
+.fallback h2{
+  font-family:var(--serif);font-size:24px;font-weight:600;
+  margin:0 0 12px;letter-spacing:-.01em;
+}
+.fallback p{font-size:16px;line-height:1.62;color:var(--ink-soft);margin:0;}
+
+.legal{
+  text-align:center;font-size:10.5px;line-height:1.6;
+  color:var(--ink-soft);opacity:.5;
+  padding:0 26px 26px;max-width:520px;margin:0 auto;
+}
+.legal strong{font-weight:600;}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+@media (min-width:640px){.card{padding:38px 36px 34px;}.masthead{padding-top:44px;}}
+
+</style>
+
+<!-- Analytics: privacy-light, no cookies. Uncomment and set your domain to enable.
+<script defer data-domain="legacywealthgame.com" src="https://plausible.io/js/script.js"></script>
+<script>window.plausible=window.plausible||function(){(window.plausible.q=window.plausible.q||[]).push(arguments)}</script>
+-->
+</head>
+<body>
+
+<header class="masthead">
+  <div class="brand">Legacy Wealth</div>
+  <h1>Wealth Wisdom</h1>
+  <div class="flourish"></div>
+</header>
+
+<main class="stage">
+  <div class="card" id="card" aria-live="polite">
+    <noscript>
+      <div class="fallback">
+        <h2>Turn on JavaScript</h2>
+        <p>Wealth Wisdom needs JavaScript enabled to draw a card. Enable it in your browser settings, then reload this page.</p>
+      </div>
+    </noscript>
+  </div>
+</main>
+
+<div class="tray">
+  <button class="again" id="again" type="button">Draw another</button>
+</div>
+
+<p class="legal">
+  <strong>Educational content only.</strong> Wealth Wisdom is part of the Legacy Wealth board game and is not financial, tax, legal, or investment advice. Consult a qualified professional about your own situation.
+</p>
+
+<script>
+/* ==========================================================
+   Legacy Wealth — WEALTH WISDOM deck
+   100 cards: 70 true/false + 30 lessons.
+
+   TO ADD OR EDIT CONTENT, edit this file only. Nothing else
+   needs to change. Republish and every board in the world is
+   updated instantly.
+
+   True/False : { t:'tf', c:'Category', s:'Statement', a:true|false, e:'Explanation' }
+   Lesson     : { t:'l',  c:'Category', s:'Title',     e:'Teaching text' }
+
+   Use \u2019 for apostrophes inside single-quoted strings.
+   ========================================================== */
+
+window.LW_CONFIG = { id: 'wealth-wisdom', label: 'Wealth Wisdom' };
+
+window.LW_DECK = [
+/* ---------- INVESTING BASICS ---------- */
+{t:'tf',c:'Investing Basics',s:'The stock market always goes up in the short term.',a:false,e:'Markets can swing sharply over days, months, even years. The upward trend historically shows up over the long run, not the short run.'},
+{t:'tf',c:'Investing Basics',s:'You need a lot of money to start investing.',a:false,e:'Many platforms let people start with small, regular amounts. Consistency over time matters more than the size of the first contribution.'},
+{t:'tf',c:'Investing Basics',s:'Index funds are designed to match a market\u2019s overall performance, not beat it.',a:true,e:'They are built to track a benchmark as closely as possible rather than try to outperform it.'},
+{t:'tf',c:'Investing Basics',s:'Higher-risk investments always guarantee higher returns.',a:false,e:'Risk widens the range of possible outcomes. It does not guarantee a better one.'},
+{t:'tf',c:'Investing Basics',s:'A stock\u2019s price reflects what investors believe a company is worth right now, not just its current profit.',a:true,e:'Price is forward-looking. It bakes in expectations about the future, not just today\u2019s numbers.'},
+{t:'tf',c:'Investing Basics',s:'Perfectly timing the market \u2014 buying at the exact low and selling at the exact high \u2014 is a strategy most investors succeed at long-term.',a:false,e:'Consistently timing the market is extremely difficult even for professionals. Time in the market tends to beat timing the market.'},
+{t:'tf',c:'Investing Basics',s:'Bonds are generally considered lower risk than stocks.',a:true,e:'Bonds typically offer more predictable, lower returns with less volatility than stocks, though they still carry risk.'},
+{t:'tf',c:'Investing Basics',s:'Investing and gambling are essentially the same thing.',a:false,e:'Investing means owning a piece of a productive asset expected to generate value over time. Gambling is a short-term, zero-sum bet on chance.'},
+{t:'tf',c:'Investing Basics',s:'A diversified portfolio can never lose money.',a:false,e:'Diversification reduces risk, but does not eliminate it. The whole market can still decline.'},
+{t:'tf',c:'Investing Basics',s:'Dollar-cost averaging means investing the same amount at regular intervals regardless of price.',a:true,e:'This spreads purchases out over time so no single price point makes or breaks the outcome.'},
+
+/* ---------- CREDIT & DEBT ---------- */
+{t:'tf',c:'Credit & Debt',s:'Paying only the minimum on a credit card balance means you avoid all extra costs.',a:false,e:'Interest keeps accruing on whatever balance is left. Minimum payments can stretch a balance out for years.'},
+{t:'tf',c:'Credit & Debt',s:'Closing an old credit card always improves your credit score.',a:false,e:'It can shorten your credit history and raise your utilization ratio, which may actually hurt your score.'},
+{t:'tf',c:'Credit & Debt',s:'Not all debt is bad \u2014 some debt can help build wealth.',a:true,e:'A mortgage or a loan to grow a business are examples of debt that can build long-term value.'},
+{t:'tf',c:'Credit & Debt',s:'Checking your own credit report causes your score to drop.',a:false,e:'Checking your own report is a soft inquiry and does not affect your score.'},
+{t:'tf',c:'Credit & Debt',s:'Payment history is one of the biggest factors in your credit score.',a:true,e:'Paying on time, consistently, is one of the heaviest-weighted factors.'},
+{t:'tf',c:'Credit & Debt',s:'A co-signer on a loan has no responsibility if the borrower does not pay.',a:false,e:'A co-signer is equally legally responsible for the debt.'},
+{t:'tf',c:'Credit & Debt',s:'Debt consolidation is always a good idea.',a:false,e:'It can help in some situations and hurt in others. It depends on the terms and the borrower\u2019s habits.'},
+{t:'tf',c:'Credit & Debt',s:'Credit utilization ratio measures how much of your available credit you are currently using.',a:true,e:'Lower utilization generally reflects better on your credit profile.'},
+{t:'tf',c:'Credit & Debt',s:'Student loans, medical debt, and credit card debt are all treated identically by lenders.',a:false,e:'Different debt types are weighed differently depending on the lender and the type of credit being sought.'},
+{t:'tf',c:'Credit & Debt',s:'It is possible to have no credit history at all and still be seen as a credit risk.',a:true,e:'Having no track record \u2014 sometimes called credit invisible \u2014 can be just as limiting as having a poor one.'},
+
+/* ---------- TAXES ---------- */
+{t:'tf',c:'Taxes',s:'All income is taxed at one flat rate no matter how much a person earns.',a:false,e:'Many tax systems are structured so different portions of income are taxed at different rates.'},
+{t:'tf',c:'Taxes',s:'Contributing to certain retirement accounts can lower taxable income in the year it is contributed.',a:true,e:'Certain account types are specifically structured to offer this benefit.'},
+{t:'tf',c:'Taxes',s:'Tax deductions and tax credits work the exact same way.',a:false,e:'A deduction reduces the income you are taxed on. A credit reduces the tax bill directly, often making credits more valuable dollar-for-dollar.'},
+{t:'tf',c:'Taxes',s:'Business owners can typically deduct many ordinary business expenses before calculating taxable profit.',a:true,e:'This is one of the core financial advantages of running a legitimate business.'},
+{t:'tf',c:'Taxes',s:'Getting a tax refund means the government gave you free money.',a:false,e:'A refund usually just means you overpaid throughout the year. It is your own money being returned.'},
+{t:'tf',c:'Taxes',s:'Capital gains and regular income are always taxed exactly the same way.',a:false,e:'Depending on how long an asset is held, gains are often taxed differently than wages.'},
+{t:'tf',c:'Taxes',s:'Filing taxes late results in the exact same penalty as not paying at all.',a:false,e:'Filing late and paying late are usually treated as separate issues with separate penalties.'},
+{t:'tf',c:'Taxes',s:'Tax laws stay the same year after year.',a:false,e:'Tax rules and rates are regularly updated, which is why ongoing awareness matters.'},
+{t:'tf',c:'Taxes',s:'A tax professional can often identify deductions or strategies a person might miss on their own.',a:true,e:'Specialized knowledge can uncover savings that are not obvious to a non-expert.'},
+{t:'tf',c:'Taxes',s:'Only wealthy people need to think about tax planning.',a:false,e:'Thoughtful tax planning benefits people at every income level.'},
+
+/* ---------- INSURANCE & PROTECTION ---------- */
+{t:'tf',c:'Insurance & Protection',s:'Health insurance and life insurance serve the same basic purpose.',a:false,e:'Health insurance covers medical costs while you are alive. Life insurance provides for others after you are gone.'},
+{t:'tf',c:'Insurance & Protection',s:'Umbrella insurance provides extra liability coverage beyond what a standard policy offers.',a:true,e:'It is designed to kick in once other policy limits are exhausted.'},
+{t:'tf',c:'Insurance & Protection',s:'Once you buy an insurance policy, you are covered for absolutely everything.',a:false,e:'Every policy has exclusions, limits, and conditions.'},
+{t:'tf',c:'Insurance & Protection',s:'The cheapest insurance policy is always the best choice.',a:false,e:'A cheap policy that does not cover what you actually need can cost far more later.'},
+{t:'tf',c:'Insurance & Protection',s:'Disability insurance protects income if you are unable to work due to injury or illness.',a:true,e:'It is designed to replace a portion of lost income during that time.'},
+{t:'tf',c:'Insurance & Protection',s:'Renters do not need insurance because the landlord\u2019s policy covers their belongings.',a:false,e:'A landlord\u2019s policy typically covers the building, not a tenant\u2019s personal possessions.'},
+{t:'tf',c:'Insurance & Protection',s:'Business insurance is optional and provides no real financial protection.',a:false,e:'It can protect a business from claims, damages, or losses that could otherwise be financially devastating.'},
+{t:'tf',c:'Insurance & Protection',s:'Insurance is a tool for managing risk, not necessarily for making money.',a:true,e:'Its core purpose is to transfer risk, not generate investment returns.'},
+{t:'tf',c:'Insurance & Protection',s:'Liability coverage protects you if you are found responsible for someone else\u2019s injury or damaged property.',a:true,e:'That is the core function of liability protection.'},
+{t:'tf',c:'Insurance & Protection',s:'Insurance premiums are based only on a person\u2019s age.',a:false,e:'Premiums typically reflect multiple risk factors, not just age.'},
+
+/* ---------- BUSINESS & ENTREPRENEURSHIP ---------- */
+{t:'tf',c:'Business & Entrepreneurship',s:'Most successful businesses succeed purely because of one brilliant idea.',a:false,e:'Execution, adaptability, and consistency tend to matter more than the idea alone.'},
+{t:'tf',c:'Business & Entrepreneurship',s:'Cash flow and profit are the exact same thing.',a:false,e:'A business can be profitable on paper and still run out of cash if money is not coming in on time.'},
+{t:'tf',c:'Business & Entrepreneurship',s:'A business plan should evolve as new market information comes in.',a:true,e:'Rigid plans that never adapt tend to fall behind changing conditions.'},
+{t:'tf',c:'Business & Entrepreneurship',s:'Every entrepreneur needs a large amount of outside investment to start.',a:false,e:'Many businesses are built gradually with personal savings and reinvested revenue.'},
+{t:'tf',c:'Business & Entrepreneurship',s:'Understanding your target customer is more important than having the most features.',a:true,e:'Products win by solving a real problem for a real person, not by having the longest feature list.'},
+{t:'tf',c:'Business & Entrepreneurship',s:'Business partnerships never need written agreements if the partners trust each other.',a:false,e:'Written agreements protect relationships precisely because expectations can shift over time.'},
+{t:'tf',c:'Business & Entrepreneurship',s:'A brand is just a logo and a name.',a:false,e:'A brand is the overall trust and reputation customers associate with a business.'},
+{t:'tf',c:'Business & Entrepreneurship',s:'Recurring revenue models tend to provide more predictable cash flow than one-time sales.',a:true,e:'Predictable, repeating income makes planning and growth far more manageable.'},
+{t:'tf',c:'Business & Entrepreneurship',s:'Franchise ownership means total creative freedom over how the business operates.',a:false,e:'Franchises typically require following an established system and brand standards.'},
+{t:'tf',c:'Business & Entrepreneurship',s:'Failure early in a business venture always means the entrepreneur should quit entirely.',a:false,e:'Many successful entrepreneurs pivoted or rebuilt after an early failure.'},
+
+/* ---------- REAL ESTATE ---------- */
+{t:'tf',c:'Real Estate',s:'Owning real estate is the only way to build wealth.',a:false,e:'It is one of several potential paths, not the only one.'},
+{t:'tf',c:'Real Estate',s:'Real estate value can go down as well as up.',a:true,e:'Property values respond to markets, location trends, and broader economic conditions.'},
+{t:'tf',c:'Real Estate',s:'A down payment is the only upfront cost when buying a home.',a:false,e:'Closing costs, inspections, and fees typically add to the upfront total.'},
+{t:'tf',c:'Real Estate',s:'Rental property income is one possible form of passive income.',a:true,e:'Though passive often still involves ongoing management or oversight.'},
+{t:'tf',c:'Real Estate',s:'Location is one of the most significant factors influencing property value.',a:true,e:'Location affects demand in ways that are hard for other factors to offset.'},
+{t:'tf',c:'Real Estate',s:'A landlord has zero financial responsibility once tenants move in.',a:false,e:'Maintenance, taxes, insurance, and repairs continue throughout ownership.'},
+{t:'tf',c:'Real Estate',s:'Real estate investing always requires buying property outright with cash.',a:false,e:'Financing and leverage are common tools used in real estate investing.'},
+{t:'tf',c:'Real Estate',s:'Property taxes are a one-time cost paid only at purchase.',a:false,e:'Property taxes are typically an ongoing, recurring obligation.'},
+{t:'tf',c:'Real Estate',s:'A fixer-upper property can offer opportunity but also hidden costs.',a:true,e:'The potential upside often comes with real, sometimes unpredictable, expenses.'},
+{t:'tf',c:'Real Estate',s:'Commercial and residential real estate carry identical risk profiles.',a:false,e:'They behave differently and respond to different market forces.'},
+
+/* ---------- RETIREMENT & LONG-TERM PLANNING ---------- */
+{t:'tf',c:'Retirement & Long-Term Planning',s:'It is possible to start saving for retirement too early.',a:false,e:'Starting earlier generally gives compounding more time to work in your favor.'},
+{t:'tf',c:'Retirement & Long-Term Planning',s:'Employer retirement matching, when offered, is essentially extra compensation left unused if skipped.',a:true,e:'Not contributing enough to capture a match is often described as leaving free money on the table.'},
+{t:'tf',c:'Retirement & Long-Term Planning',s:'Public retirement benefits alone are typically enough to fully fund a comfortable retirement.',a:false,e:'They are generally designed to supplement other personal savings, not replace them.'},
+{t:'tf',c:'Retirement & Long-Term Planning',s:'The earlier someone starts saving for retirement, the less they generally need to contribute monthly to reach the same goal.',a:true,e:'More time allows compounding to do more of the work.'},
+{t:'tf',c:'Retirement & Long-Term Planning',s:'A retirement account and a regular savings account are functionally identical.',a:false,e:'Retirement accounts often carry distinct tax treatment and withdrawal rules.'},
+{t:'tf',c:'Retirement & Long-Term Planning',s:'Estate planning is only necessary for the very wealthy.',a:false,e:'Anyone with assets, dependents, or wishes for how things are handled can benefit from a plan.'},
+{t:'tf',c:'Retirement & Long-Term Planning',s:'Having a diversified mix of assets becomes less important the closer someone gets to retirement.',a:false,e:'The mix often shifts, but staying diversified generally remains important.'},
+{t:'tf',c:'Retirement & Long-Term Planning',s:'People commonly underestimate how long their retirement savings need to last.',a:true,e:'Longer lifespans mean savings often need to stretch further than expected.'},
+{t:'tf',c:'Retirement & Long-Term Planning',s:'A financial plan should be created once and never revisited.',a:false,e:'Life changes. Plans generally need periodic review and adjustment.'},
+{t:'tf',c:'Retirement & Long-Term Planning',s:'Generational wealth transfer only involves passing down money.',a:false,e:'It also includes passing down financial knowledge, values, and know-how.'},
+
+/* ---------- LESSONS: MONEY PSYCHOLOGY ---------- */
+{t:'l',c:'Money Psychology',s:'Lifestyle Creep',e:'As income rises, spending quietly rises to match it \u2014 a nicer car, a bigger place, pricier habits. Before long, a raise disappears and nothing is left over. The people who build real wealth are not always the highest earners. They are the ones who keep their lifestyle a step behind their income.'},
+{t:'l',c:'Money Psychology',s:'Scarcity Mindset',e:'A scarcity mindset treats money as something that is always about to run out, which can push people toward hoarding, fear-based decisions, or avoiding smart risks entirely. A healthier approach treats money as a tool to be managed with intention, not a threat to react to.'},
+{t:'l',c:'Money Psychology',s:'Loss Aversion',e:'People tend to feel the pain of losing money more sharply than the pleasure of gaining the same amount. This can cause otherwise smart people to hold onto bad investments too long, or avoid good opportunities out of fear of a small loss.'},
+{t:'l',c:'Money Psychology',s:'Present Bias',e:'The brain is wired to value a reward today over a bigger reward later, even when the math clearly favors waiting. Recognizing this bias is often the first step toward making decisions your future self will thank you for.'},
+{t:'l',c:'Money Psychology',s:'Social Comparison',e:'Spending decisions are often shaped less by personal needs and more by what everyone else seems to have. Wealth built to keep up with others rarely leads anywhere. Wealth built around personal goals usually does.'},
+{t:'l',c:'Money Psychology',s:'The Sunk Cost Trap',e:'Continuing to invest time or money into something simply because you have already invested in it, even after it is clearly not working, is one of the most common decision-making traps. Good decisions are made based on what happens next, not what has already been spent.'},
+{t:'l',c:'Money Psychology',s:'Anchoring',e:'The first number you see tends to shape how you judge everything that follows, even when that number was arbitrary. Being aware of this helps people negotiate, shop, and invest based on real value rather than whatever number showed up first.'},
+{t:'l',c:'Money Psychology',s:'Mental Accounting',e:'People often treat money differently depending on where it came from. A bonus gets spent freely while a paycheck gets budgeted carefully, even though a dollar is a dollar no matter its source. Recognizing this habit leads to more consistent financial decisions.'},
+{t:'l',c:'Money Psychology',s:'Fear of Missing Out',e:'Jumping into an investment purely because everyone else seems to be making money on it is one of the fastest ways to buy in at the top. Sound decisions are built on research and a plan, not on the fear of missing out.'},
+{t:'l',c:'Money Psychology',s:'Delayed Gratification',e:'The ability to wait for a bigger reward instead of grabbing a smaller one now is one of the most consistent traits found in people who build lasting wealth. It is a skill, and like any skill, it strengthens with practice.'},
+
+/* ---------- LESSONS: PROTECTION & LEGACY ---------- */
+{t:'l',c:'Protection & Legacy',s:'Term vs. Whole Life Insurance',e:'Term life insurance covers a set number of years and exists purely to protect loved ones financially if something happens. Whole life insurance lasts a lifetime and builds cash value, but costs significantly more. Many financial planners suggest term coverage paired with separate investing, rather than paying extra for lifelong coverage.'},
+{t:'l',c:'Protection & Legacy',s:'What a Trust Actually Does',e:'A trust is a legal arrangement that holds assets on behalf of beneficiaries, often allowing an estate to avoid the public, sometimes lengthy probate process that a simple will does not avoid. Trusts can also control exactly how and when assets are distributed.'},
+{t:'l',c:'Protection & Legacy',s:'Wills vs. Trusts',e:'A will states who gets what after death, but typically still goes through probate. A trust can transfer assets directly, often faster and more privately. Many complete estate plans use both, each serving a different purpose.'},
+{t:'l',c:'Protection & Legacy',s:'Beneficiary Designations',e:'Retirement accounts, life insurance policies, and some other assets pass directly to whoever is named as beneficiary, regardless of what a will says. Forgetting to update these after a major life change is one of the most common estate-planning mistakes.'},
+{t:'l',c:'Protection & Legacy',s:'Power of Attorney',e:'This is a legal document that lets someone else make financial or medical decisions on your behalf if you are unable to. Having one in place before it is needed protects both the person and their family from confusion during a crisis.'},
+{t:'l',c:'Protection & Legacy',s:'Estate Planning Basics',e:'Estate planning is not just for the wealthy. It is the process of deciding who gets what, who makes decisions if you cannot, and how to minimize stress and cost for the people left behind. Even a basic plan is better than none.'},
+{t:'l',c:'Protection & Legacy',s:'The Emergency Fund as Protection',e:'An emergency fund is not an investment. It is protection. Its job is to absorb a job loss, medical bill, or repair without forcing debt or the sale of long-term investments at a bad time.'},
+{t:'l',c:'Protection & Legacy',s:'Umbrella Coverage for Growing Wealth',e:'As someone\u2019s assets grow, so does what they stand to lose in a lawsuit. Umbrella liability coverage extends protection beyond standard policy limits, which becomes more important the more there is to protect.'},
+{t:'l',c:'Protection & Legacy',s:'Business Succession Planning',e:'Many business owners build something valuable but never plan for what happens to it if they step away, retire, or pass away. A succession plan protects the business, the employees, and the family\u2019s financial interest in it.'},
+{t:'l',c:'Protection & Legacy',s:'Teaching the Next Generation',e:'Passing down money without passing down financial knowledge often leads to that money disappearing within a generation. Real generational wealth includes teaching the habits and thinking that built it in the first place.'},
+
+/* ---------- LESSONS: PRACTICAL MONEY WISDOM ---------- */
+{t:'l',c:'Practical Money Wisdom',s:'Pay Yourself First',e:'Before paying bills or spending on wants, set aside a portion of every dollar earned for savings or investing, even a small amount. Treating savings like a non-negotiable expense, rather than whatever is left over, is one of the simplest habits that separates people who build wealth from people who just get by.'},
+{t:'l',c:'Practical Money Wisdom',s:'The Emergency Fund Cushion',e:'Life reliably throws unexpected costs at everyone \u2014 a car repair, a medical bill, a slow month. A cash cushion set aside specifically for these moments prevents small surprises from turning into long-term debt.'},
+{t:'l',c:'Practical Money Wisdom',s:'Debt That Builds vs. Debt That Drains',e:'Debt used to build something \u2014 a home, an education, a business \u2014 can be a tool. Debt used to fund a lifestyle beyond what income supports tends to quietly erode financial freedom over time.'},
+{t:'l',c:'Practical Money Wisdom',s:'Track Before You Budget',e:'Most people cannot successfully budget until they know where money is actually going. A week or two of honest tracking often reveals surprising patterns before a single budget rule is even set.'},
+{t:'l',c:'Practical Money Wisdom',s:'A Budget Is a Plan, Not a Punishment',e:'A good budget is not about restriction. It is about deciding in advance where money goes, so decisions are not made under pressure or guilt in the moment.'},
+{t:'l',c:'Practical Money Wisdom',s:'Negotiate Before You Accept',e:'Whether it is a salary, a bill, or a big purchase, the first number offered is rarely the only number available. Asking is often the only step separating people from a better deal.'},
+{t:'l',c:'Practical Money Wisdom',s:'Do Not Invest in What You Do Not Understand',e:'If an investment cannot be explained simply, that is a signal to learn more before committing money to it, not a reason to trust it blindly because someone else seems confident.'},
+{t:'l',c:'Practical Money Wisdom',s:'Automate the Habit',e:'Willpower runs out. Automation does not. Setting up automatic transfers to savings or investments removes the daily decision and makes consistency effortless.'},
+{t:'l',c:'Practical Money Wisdom',s:'Opportunity Cost',e:'Every dollar spent or invested one way is a dollar that cannot be used somewhere else. Good financial decisions weigh not just the choice in front of you, but what you are giving up by choosing it.'},
+{t:'l',c:'Practical Money Wisdom',s:'Neither Fear Nor Greed',e:'Some of the costliest financial decisions come from panic during a downturn or overconfidence during a boom. Steady, informed decisions, made without either emotion driving the wheel, tend to outperform reactive ones over time.'}
+];
+
+</script>
+<script>
+/* ==========================================================
+   Legacy Wealth — QR companion card engine
+   Shared by Wealth Wisdom and Business Blueprint.
+
+   A deck file must set, before this script runs:
+     window.LW_CONFIG = { id:'wealth-wisdom', label:'Wealth Wisdom' }
+     window.LW_DECK   = [ ...cards... ]
+
+   Card shapes:
+     True/False : { t:'tf', c:'Category', s:'Statement', a:true|false, e:'Explanation' }
+     Lesson     : { t:'l',  c:'Category', s:'Title',     e:'Teaching text' }
+     Flashcard  : { t:'fc', c:'Category', s:'TERM', d:'What it is', x:'In practice' }
+   ========================================================== */
+
+(function () {
+  'use strict';
+
+  var CFG   = window.LW_CONFIG || { id: 'deck', label: 'Legacy Wealth' };
+  var DECK  = Array.isArray(window.LW_DECK) ? window.LW_DECK : [];
+  var QKEY  = 'lw_' + CFG.id + '_queue_v1';
+  var CKEY  = 'lw_' + CFG.id + '_current_v1';
+  var STICKY_TTL = 5 * 60 * 1000; // 5 minutes — backstop only
+
+  var cardEl  = document.getElementById('card');
+  var againEl = document.getElementById('again');
+
+  /* ---------- Storage with in-memory fallback ----------
+     Private browsing and locked-down webviews can throw on
+     localStorage. The page must never break because of it.   */
+  var mem = {};
+  var store = {
+    get: function (k) {
+      try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : null; }
+      catch (e) { return mem[k] !== undefined ? mem[k] : null; }
+    },
+    set: function (k, v) {
+      try { localStorage.setItem(k, JSON.stringify(v)); }
+      catch (e) { mem[k] = v; }
+    },
+    del: function (k) {
+      try { localStorage.removeItem(k); } catch (e) { delete mem[k]; }
+    }
+  };
+
+  /* ---------- Analytics (no-op unless a provider is loaded) ----------
+     Privacy-light: fires a named event only. No personal data,
+     no cookies, no identifiers.                                        */
+  function track(event, props) {
+    try {
+      if (typeof window.plausible === 'function') {
+        window.plausible(event, props ? { props: props } : undefined);
+      }
+    } catch (e) { /* analytics must never break the page */ }
+  }
+
+  /* ---------- Fisher-Yates shuffle ---------- */
+  function shuffledIndexes() {
+    var idx = DECK.map(function (_, i) { return i; });
+    for (var i = idx.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = idx[i]; idx[i] = idx[j]; idx[j] = tmp;
+    }
+    return idx;
+  }
+
+  /* ---------- Draw without replacement ---------- */
+  function drawNext() {
+    var queue = store.get(QKEY);
+    var reshuffled = false;
+    if (!Array.isArray(queue) || queue.length === 0) {
+      queue = shuffledIndexes();
+      reshuffled = true;
+    }
+    var pick = queue.shift();
+    store.set(QKEY, queue);
+    if (typeof pick !== 'number' || !DECK[pick]) { pick = 0; }
+    return { index: pick, remaining: queue.length, reshuffled: reshuffled };
+  }
+
+  /* ---------- Should this page load show the previous card? ----------
+     A QR scan is a fresh navigation -> new card.
+     A refresh, back button, or restored tab -> keep the same card,
+     so nobody loses the card they were mid-way through reading.       */
+  function isReturningView() {
+    try {
+      var nav = performance.getEntriesByType('navigation')[0];
+      if (nav && (nav.type === 'reload' || nav.type === 'back_forward')) return true;
+    } catch (e) { /* fall through to TTL check */ }
+    return false;
+  }
+
+  function readSticky() {
+    var s = store.get(CKEY);
+    if (!s || typeof s.index !== 'number' || !DECK[s.index]) return null;
+    if (Date.now() - (s.at || 0) > STICKY_TTL) return null;
+    return s;
+  }
+
+  function writeSticky(index, answered, guess) {
+    store.set(CKEY, { index: index, answered: !!answered, guess: guess, at: Date.now() });
+  }
+
+  /* ---------- Escaping ---------- */
+  function esc(str) {
+    return String(str).replace(/[&<>"']/g, function (ch) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
+    });
+  }
+
+  /* ---------- Render ---------- */
+  function replay(el) {
+    el.style.animation = 'none';
+    void el.offsetWidth;
+    el.style.animation = '';
+  }
+
+  function showEmpty() {
+    cardEl.innerHTML =
+      '<div class="fallback">' +
+        '<h2>Nothing to show yet</h2>' +
+        '<p>This deck has no cards loaded. Check that the deck file is published alongside this page.</p>' +
+      '</div>';
+    againEl.hidden = true;
+  }
+
+  function renderReveal(item, correct) {
+    var rev = document.createElement('div');
+    rev.className = 'reveal';
+    rev.innerHTML =
+      '<div class="verdict">' +
+        '<span class="verdict-word">' + (item.a ? 'True' : 'False') + '</span>' +
+        '<span class="verdict-note ' + (correct ? 'right' : 'wrong') + '">' +
+          (correct ? 'You got it' : 'Not quite') +
+        '</span>' +
+      '</div>' +
+      '<p class="explain">' + esc(item.e) + '</p>';
+    cardEl.appendChild(rev);
+    againEl.textContent = 'Draw another';
+  }
+
+  function render(index, restore) {
+    var item = DECK[index];
+    if (!item) { showEmpty(); return; }
+    replay(cardEl);
+
+    /* --- Lesson --- */
+    if (item.t === 'l') {
+      cardEl.innerHTML =
+        '<div class="kicker"><span class="badge">Wealth Lesson</span>' +
+        '<span class="cat">' + esc(item.c) + '</span></div>' +
+        '<h2 class="lesson-title">' + esc(item.s) + '</h2>' +
+        '<p class="lesson-body">' + esc(item.e) + '</p>';
+      againEl.textContent = 'Draw another';
+      writeSticky(index, true, null);
+      return;
+    }
+
+    /* --- Flashcard: term, then reveal definition + example --- */
+    if (item.t === 'fc') {
+      cardEl.innerHTML =
+        '<div class="kicker"><span class="badge">Business Term</span>' +
+        '<span class="cat">' + esc(item.c) + '</span></div>' +
+        '<h2 class="term">' + esc(item.s) + '</h2>' +
+        '<div class="choices single">' +
+          '<button class="choice" type="button" data-reveal="1">Reveal</button>' +
+        '</div>';
+      againEl.textContent = 'Skip to another';
+
+      var revealBtn = cardEl.querySelector('[data-reveal]');
+      if (revealBtn) {
+        revealBtn.addEventListener('click', function () {
+          revealTerm(index, item);
+        });
+      }
+
+      if (restore && restore.answered) {
+        revealTerm(index, item, true);
+      } else {
+        writeSticky(index, false, null);
+      }
+      return;
+    }
+
+    /* --- True / False --- */
+    cardEl.innerHTML =
+      '<div class="kicker"><span class="badge">True or False</span>' +
+      '<span class="cat">' + esc(item.c) + '</span></div>' +
+      '<p class="statement quoted">' + esc(item.s) + '</p>' +
+      '<div class="choices">' +
+        '<button class="choice" type="button" data-pick="true">True</button>' +
+        '<button class="choice" type="button" data-pick="false">False</button>' +
+      '</div>';
+    againEl.textContent = 'Skip to another';
+
+    Array.prototype.forEach.call(cardEl.querySelectorAll('.choice'), function (btn) {
+      btn.addEventListener('click', function () {
+        var guess = btn.dataset.pick === 'true';
+        answer(index, item, guess);
+      });
+    });
+
+    /* Restoring a card that was already answered before a refresh */
+    if (restore && restore.answered && restore.guess !== null && restore.guess !== undefined) {
+      var choices = cardEl.querySelector('.choices');
+      if (choices) choices.remove();
+      renderReveal(item, restore.guess === item.a);
+    } else {
+      writeSticky(index, false, null);
+    }
+  }
+
+  function revealTerm(index, item, silent) {
+    var choices = cardEl.querySelector('.choices');
+    if (choices) choices.remove();
+
+    var rev = document.createElement('div');
+    rev.className = 'reveal';
+    rev.innerHTML =
+      '<p class="field-label">What it is</p>' +
+      '<p class="field-text">' + esc(item.d) + '</p>' +
+      '<p class="field-label spaced">In practice</p>' +
+      '<p class="field-text">' + esc(item.x) + '</p>';
+    cardEl.appendChild(rev);
+
+    againEl.textContent = 'Draw another';
+    writeSticky(index, true, null);
+    if (!silent) track('Term Revealed', { deck: CFG.label, category: item.c });
+  }
+
+  function answer(index, item, guess) {
+    var correct = guess === item.a;
+    var choices = cardEl.querySelector('.choices');
+    if (choices) choices.remove();
+    renderReveal(item, correct);
+    writeSticky(index, true, guess);
+    track('WW Answer', { deck: CFG.label, category: item.c, correct: correct ? 'yes' : 'no' });
+  }
+
+  /* ---------- Boot ---------- */
+  function boot() {
+    if (!cardEl || !againEl) return;
+    if (DECK.length === 0) { showEmpty(); return; }
+
+    againEl.addEventListener('click', function () {
+      var d = drawNext();
+      store.del(CKEY);
+      render(d.index, null);
+      track('Card Drawn', { deck: CFG.label, source: 'button' });
+      if (d.reshuffled) track('Deck Reshuffled', { deck: CFG.label });
+      try { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+      catch (e) { window.scrollTo(0, 0); }
+    });
+
+    var sticky = isReturningView() ? readSticky() : null;
+    if (sticky) {
+      render(sticky.index, sticky);
+    } else {
+      var d = drawNext();
+      render(d.index, null);
+      track('Card Drawn', { deck: CFG.label, source: 'scan' });
+      if (d.reshuffled) track('Deck Reshuffled', { deck: CFG.label });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
+})();
+
+</script>
+</body>
+</html>
