@@ -104,6 +104,10 @@ body{
   font-family:var(--serif);font-size:clamp(30px,8.4vw,42px);
   line-height:1.08;font-weight:600;margin:0;letter-spacing:-.02em;
 }
+.term-ctx{
+  font-size:0.52em;font-weight:500;color:var(--ink-soft);
+  letter-spacing:0;
+}
 
 /* ---------- Reveal fields (flashcards) ---------- */
 .field-label{
@@ -112,6 +116,15 @@ body{
 }
 .field-label.spaced{margin-top:20px;}
 .field-text{font-size:16.5px;line-height:1.6;color:var(--ink-soft);margin:0;}
+
+/* ---------- Reward line (flashcards) ---------- */
+.reward-line{
+  margin-top:22px;padding:14px 16px;
+  background:rgba(201,168,76,.12);border:1px solid var(--gold);
+  border-radius:2px;
+  font-size:14.5px;font-weight:600;color:#7C6520;
+  text-align:center;
+}
 
 /* ---------- Choices ---------- */
 .choices{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:26px;}
@@ -219,19 +232,19 @@ body{
 <script>
 /* ==========================================================
    Legacy Wealth — WEALTH WISDOM deck
-   100 cards: 70 true/false + 30 lessons.
+   100 cards, ALL true/false. Fully actionable — every card
+   requires a guess before the explanation is revealed.
 
    TO ADD OR EDIT CONTENT, edit this file only. Nothing else
    needs to change. Republish and every board in the world is
    updated instantly.
 
-   True/False : { t:'tf', c:'Category', s:'Statement', a:true|false, e:'Explanation' }
-   Lesson     : { t:'l',  c:'Category', s:'Title',     e:'Teaching text' }
+   Card shape: { t:'tf', c:'Category', s:'Statement', a:true|false, e:'Explanation' }
 
    Use \u2019 for apostrophes inside single-quoted strings.
    ========================================================== */
 
-window.LW_CONFIG = { id: 'wealth-wisdom', label: 'Wealth Wisdom' };
+window.LW_CONFIG = { id: 'wealth-wisdom', label: 'Wealth Wisdom', reward: 10000 };
 
 window.LW_DECK = [
 /* ---------- INVESTING BASICS ---------- */
@@ -318,41 +331,41 @@ window.LW_DECK = [
 {t:'tf',c:'Retirement & Long-Term Planning',s:'A financial plan should be created once and never revisited.',a:false,e:'Life changes. Plans generally need periodic review and adjustment.'},
 {t:'tf',c:'Retirement & Long-Term Planning',s:'Generational wealth transfer only involves passing down money.',a:false,e:'It also includes passing down financial knowledge, values, and know-how.'},
 
-/* ---------- LESSONS: MONEY PSYCHOLOGY ---------- */
-{t:'l',c:'Money Psychology',s:'Lifestyle Creep',e:'As income rises, spending quietly rises to match it \u2014 a nicer car, a bigger place, pricier habits. Before long, a raise disappears and nothing is left over. The people who build real wealth are not always the highest earners. They are the ones who keep their lifestyle a step behind their income.'},
-{t:'l',c:'Money Psychology',s:'Scarcity Mindset',e:'A scarcity mindset treats money as something that is always about to run out, which can push people toward hoarding, fear-based decisions, or avoiding smart risks entirely. A healthier approach treats money as a tool to be managed with intention, not a threat to react to.'},
-{t:'l',c:'Money Psychology',s:'Loss Aversion',e:'People tend to feel the pain of losing money more sharply than the pleasure of gaining the same amount. This can cause otherwise smart people to hold onto bad investments too long, or avoid good opportunities out of fear of a small loss.'},
-{t:'l',c:'Money Psychology',s:'Present Bias',e:'The brain is wired to value a reward today over a bigger reward later, even when the math clearly favors waiting. Recognizing this bias is often the first step toward making decisions your future self will thank you for.'},
-{t:'l',c:'Money Psychology',s:'Social Comparison',e:'Spending decisions are often shaped less by personal needs and more by what everyone else seems to have. Wealth built to keep up with others rarely leads anywhere. Wealth built around personal goals usually does.'},
-{t:'l',c:'Money Psychology',s:'The Sunk Cost Trap',e:'Continuing to invest time or money into something simply because you have already invested in it, even after it is clearly not working, is one of the most common decision-making traps. Good decisions are made based on what happens next, not what has already been spent.'},
-{t:'l',c:'Money Psychology',s:'Anchoring',e:'The first number you see tends to shape how you judge everything that follows, even when that number was arbitrary. Being aware of this helps people negotiate, shop, and invest based on real value rather than whatever number showed up first.'},
-{t:'l',c:'Money Psychology',s:'Mental Accounting',e:'People often treat money differently depending on where it came from. A bonus gets spent freely while a paycheck gets budgeted carefully, even though a dollar is a dollar no matter its source. Recognizing this habit leads to more consistent financial decisions.'},
-{t:'l',c:'Money Psychology',s:'Fear of Missing Out',e:'Jumping into an investment purely because everyone else seems to be making money on it is one of the fastest ways to buy in at the top. Sound decisions are built on research and a plan, not on the fear of missing out.'},
-{t:'l',c:'Money Psychology',s:'Delayed Gratification',e:'The ability to wait for a bigger reward instead of grabbing a smaller one now is one of the most consistent traits found in people who build lasting wealth. It is a skill, and like any skill, it strengthens with practice.'},
+/* ---------- MONEY PSYCHOLOGY ---------- */
+{t:'tf',c:'Money Psychology',s:'Lifestyle creep means that as income goes up, spending tends to quietly rise with it unless a person is intentional about saving.',a:true,e:'A raise disappearing into a nicer car or bigger apartment is a classic example. People who build wealth are often the ones who keep spending a step behind their income.'},
+{t:'tf',c:'Money Psychology',s:'A scarcity mindset always leads to smarter, more careful financial decisions.',a:false,e:'A scarcity mindset can push people toward hoarding, fear-based decisions, or avoiding good opportunities out of unnecessary panic. Treating money as a tool, not a threat, tends to lead to better decisions.'},
+{t:'tf',c:'Money Psychology',s:'People generally feel the pain of a financial loss more intensely than the pleasure of an equal gain.',a:true,e:'This is called loss aversion. It can cause people to hold onto bad investments too long, or avoid smart risks out of fear of a small loss.'},
+{t:'tf',c:'Money Psychology',s:'Most people are naturally wired to value a smaller reward today over a larger reward in the future.',a:true,e:'This is called present bias. Recognizing it is often the first step toward making decisions your future self will thank you for.'},
+{t:'tf',c:'Money Psychology',s:'Basing spending decisions on what other people have tends to lead to stronger long-term financial outcomes.',a:false,e:'Spending to keep up with others rarely builds real wealth. Wealth built around personal goals, not comparison, tends to last.'},
+{t:'tf',c:'Money Psychology',s:'Continuing to invest in something because money has already been spent on it, even after it stops working, usually leads to better outcomes.',a:false,e:'This is called the sunk cost trap. Good decisions are based on what happens next, not on what has already been spent.'},
+{t:'tf',c:'Money Psychology',s:'The very first number a person sees tends to influence how they judge every price or number that follows.',a:true,e:'This is called anchoring. Being aware of it helps people negotiate and shop based on real value instead of an arbitrary starting point.'},
+{t:'tf',c:'Money Psychology',s:'Most people treat a bonus and a regular paycheck exactly the same way when deciding how to spend it.',a:false,e:'People often spend a bonus more freely than a paycheck, even though a dollar is a dollar no matter where it came from. This is called mental accounting.'},
+{t:'tf',c:'Money Psychology',s:'Jumping into an investment because everyone else seems to be making money on it is generally a sound strategy.',a:false,e:'This is one of the fastest ways to buy in at the top. Sound investing is built on research and a plan, not the fear of missing out.'},
+{t:'tf',c:'Money Psychology',s:'The ability to wait for a bigger reward instead of taking a smaller one immediately is a skill that can be strengthened with practice.',a:true,e:'Delayed gratification is one of the most consistent traits found in people who build lasting wealth.'},
 
-/* ---------- LESSONS: PROTECTION & LEGACY ---------- */
-{t:'l',c:'Protection & Legacy',s:'Term vs. Whole Life Insurance',e:'Term life insurance covers a set number of years and exists purely to protect loved ones financially if something happens. Whole life insurance lasts a lifetime and builds cash value, but costs significantly more. Many financial planners suggest term coverage paired with separate investing, rather than paying extra for lifelong coverage.'},
-{t:'l',c:'Protection & Legacy',s:'What a Trust Actually Does',e:'A trust is a legal arrangement that holds assets on behalf of beneficiaries, often allowing an estate to avoid the public, sometimes lengthy probate process that a simple will does not avoid. Trusts can also control exactly how and when assets are distributed.'},
-{t:'l',c:'Protection & Legacy',s:'Wills vs. Trusts',e:'A will states who gets what after death, but typically still goes through probate. A trust can transfer assets directly, often faster and more privately. Many complete estate plans use both, each serving a different purpose.'},
-{t:'l',c:'Protection & Legacy',s:'Beneficiary Designations',e:'Retirement accounts, life insurance policies, and some other assets pass directly to whoever is named as beneficiary, regardless of what a will says. Forgetting to update these after a major life change is one of the most common estate-planning mistakes.'},
-{t:'l',c:'Protection & Legacy',s:'Power of Attorney',e:'This is a legal document that lets someone else make financial or medical decisions on your behalf if you are unable to. Having one in place before it is needed protects both the person and their family from confusion during a crisis.'},
-{t:'l',c:'Protection & Legacy',s:'Estate Planning Basics',e:'Estate planning is not just for the wealthy. It is the process of deciding who gets what, who makes decisions if you cannot, and how to minimize stress and cost for the people left behind. Even a basic plan is better than none.'},
-{t:'l',c:'Protection & Legacy',s:'The Emergency Fund as Protection',e:'An emergency fund is not an investment. It is protection. Its job is to absorb a job loss, medical bill, or repair without forcing debt or the sale of long-term investments at a bad time.'},
-{t:'l',c:'Protection & Legacy',s:'Umbrella Coverage for Growing Wealth',e:'As someone\u2019s assets grow, so does what they stand to lose in a lawsuit. Umbrella liability coverage extends protection beyond standard policy limits, which becomes more important the more there is to protect.'},
-{t:'l',c:'Protection & Legacy',s:'Business Succession Planning',e:'Many business owners build something valuable but never plan for what happens to it if they step away, retire, or pass away. A succession plan protects the business, the employees, and the family\u2019s financial interest in it.'},
-{t:'l',c:'Protection & Legacy',s:'Teaching the Next Generation',e:'Passing down money without passing down financial knowledge often leads to that money disappearing within a generation. Real generational wealth includes teaching the habits and thinking that built it in the first place.'},
+/* ---------- PROTECTION & LEGACY ---------- */
+{t:'tf',c:'Protection & Legacy',s:'Term life insurance generally costs significantly less than whole life insurance for the same death benefit.',a:true,e:'Term covers a set number of years and exists purely for protection. Whole life lasts a lifetime and builds cash value, but costs far more.'},
+{t:'tf',c:'Protection & Legacy',s:'A trust can often let an estate avoid the public probate process that a simple will typically does not avoid.',a:true,e:'Trusts hold assets on behalf of beneficiaries and can control exactly how and when assets are distributed, often more privately than a will.'},
+{t:'tf',c:'Protection & Legacy',s:'A will and a trust accomplish exactly the same thing, so having both is unnecessary.',a:false,e:'A will typically still goes through probate, while a trust can transfer assets directly. Many complete estate plans use both.'},
+{t:'tf',c:'Protection & Legacy',s:'Retirement accounts and life insurance policies pass to whoever is named as beneficiary, regardless of what a will says.',a:true,e:'Forgetting to update these after a major life change is one of the most common estate-planning mistakes.'},
+{t:'tf',c:'Protection & Legacy',s:'A power of attorney only matters after a person has already passed away.',a:false,e:'It lets someone make financial or medical decisions on your behalf while you are alive but unable to, protecting you and your family during a crisis.'},
+{t:'tf',c:'Protection & Legacy',s:'Estate planning is only necessary for people with significant wealth.',a:false,e:'Anyone with assets, dependents, or wishes for how things are handled can benefit from even a basic plan.'},
+{t:'tf',c:'Protection & Legacy',s:'An emergency fund should be treated as an investment meant to grow as much as possible.',a:false,e:'An emergency fund\u2019s job is protection, not growth \u2014 absorbing a job loss or repair without forcing debt or a bad-time asset sale.'},
+{t:'tf',c:'Protection & Legacy',s:'As a person\u2019s assets grow, the potential financial loss from a lawsuit generally grows with them.',a:true,e:'Umbrella liability coverage extends protection beyond standard policy limits, which becomes more important the more there is to protect.'},
+{t:'tf',c:'Protection & Legacy',s:'Most business owners have a clear, documented plan for what happens to their business if they step away or pass away.',a:false,e:'Many build something valuable but never plan for what happens next. A succession plan protects the business, employees, and the family\u2019s financial interest.'},
+{t:'tf',c:'Protection & Legacy',s:'Passing down money without passing down financial knowledge tends to preserve wealth across generations.',a:false,e:'Real generational wealth includes teaching the habits and thinking that built it. Money alone often disappears within a generation.'},
 
-/* ---------- LESSONS: PRACTICAL MONEY WISDOM ---------- */
-{t:'l',c:'Practical Money Wisdom',s:'Pay Yourself First',e:'Before paying bills or spending on wants, set aside a portion of every dollar earned for savings or investing, even a small amount. Treating savings like a non-negotiable expense, rather than whatever is left over, is one of the simplest habits that separates people who build wealth from people who just get by.'},
-{t:'l',c:'Practical Money Wisdom',s:'The Emergency Fund Cushion',e:'Life reliably throws unexpected costs at everyone \u2014 a car repair, a medical bill, a slow month. A cash cushion set aside specifically for these moments prevents small surprises from turning into long-term debt.'},
-{t:'l',c:'Practical Money Wisdom',s:'Debt That Builds vs. Debt That Drains',e:'Debt used to build something \u2014 a home, an education, a business \u2014 can be a tool. Debt used to fund a lifestyle beyond what income supports tends to quietly erode financial freedom over time.'},
-{t:'l',c:'Practical Money Wisdom',s:'Track Before You Budget',e:'Most people cannot successfully budget until they know where money is actually going. A week or two of honest tracking often reveals surprising patterns before a single budget rule is even set.'},
-{t:'l',c:'Practical Money Wisdom',s:'A Budget Is a Plan, Not a Punishment',e:'A good budget is not about restriction. It is about deciding in advance where money goes, so decisions are not made under pressure or guilt in the moment.'},
-{t:'l',c:'Practical Money Wisdom',s:'Negotiate Before You Accept',e:'Whether it is a salary, a bill, or a big purchase, the first number offered is rarely the only number available. Asking is often the only step separating people from a better deal.'},
-{t:'l',c:'Practical Money Wisdom',s:'Do Not Invest in What You Do Not Understand',e:'If an investment cannot be explained simply, that is a signal to learn more before committing money to it, not a reason to trust it blindly because someone else seems confident.'},
-{t:'l',c:'Practical Money Wisdom',s:'Automate the Habit',e:'Willpower runs out. Automation does not. Setting up automatic transfers to savings or investments removes the daily decision and makes consistency effortless.'},
-{t:'l',c:'Practical Money Wisdom',s:'Opportunity Cost',e:'Every dollar spent or invested one way is a dollar that cannot be used somewhere else. Good financial decisions weigh not just the choice in front of you, but what you are giving up by choosing it.'},
-{t:'l',c:'Practical Money Wisdom',s:'Neither Fear Nor Greed',e:'Some of the costliest financial decisions come from panic during a downturn or overconfidence during a boom. Steady, informed decisions, made without either emotion driving the wheel, tend to outperform reactive ones over time.'}
+/* ---------- PRACTICAL MONEY WISDOM ---------- */
+{t:'tf',c:'Practical Money Wisdom',s:'Saving whatever is left over after all spending is generally more effective than saving first.',a:false,e:'Treating savings like a non-negotiable expense, rather than whatever is left over, is one of the simplest habits separating people who build wealth from people who just get by.'},
+{t:'tf',c:'Practical Money Wisdom',s:'Having cash set aside specifically for unexpected costs can prevent small surprises from becoming long-term debt.',a:true,e:'A car repair, a medical bill, or a slow month can turn into real debt without this cushion in place.'},
+{t:'tf',c:'Practical Money Wisdom',s:'All debt has essentially the same effect on a person\u2019s long-term financial freedom.',a:false,e:'Debt used to build something like a home or a business can be a tool. Debt used to fund a lifestyle beyond what income supports tends to erode freedom over time.'},
+{t:'tf',c:'Practical Money Wisdom',s:'Most people can successfully build a budget without first tracking where their money actually goes.',a:false,e:'A week or two of honest tracking often reveals surprising spending patterns before a single budget rule is even set.'},
+{t:'tf',c:'Practical Money Wisdom',s:'A good budget is primarily about restricting spending as much as possible.',a:false,e:'A budget is about deciding in advance where money goes, so decisions are not made under pressure or guilt later.'},
+{t:'tf',c:'Practical Money Wisdom',s:'The first number offered in a salary negotiation, bill, or big purchase is usually the only number available.',a:false,e:'Asking is often the only step separating people from a better deal.'},
+{t:'tf',c:'Practical Money Wisdom',s:'If an investment cannot be explained simply, that is a signal to learn more before committing money to it.',a:true,e:'Trusting an investment blindly because someone else seems confident is a common and costly mistake.'},
+{t:'tf',c:'Practical Money Wisdom',s:'Relying on willpower alone is generally more effective than automating savings.',a:false,e:'Willpower runs out, automation does not. Setting up automatic transfers removes the daily decision and makes consistency effortless.'},
+{t:'tf',c:'Practical Money Wisdom',s:'Every dollar spent or invested one way could have been used somewhere else instead.',a:true,e:'This is called opportunity cost. Good financial decisions weigh not just the choice in front of you, but what you are giving up by choosing it.'},
+{t:'tf',c:'Practical Money Wisdom',s:'Some of the costliest financial decisions come from panic during downturns or overconfidence during booms.',a:true,e:'Steady, informed decisions made without either emotion driving the wheel tend to outperform reactive ones over time.'}
 ];
 
 </script>
@@ -485,7 +498,7 @@ window.LW_DECK = [
   function renderReveal(item, correct) {
     var rev = document.createElement('div');
     rev.className = 'reveal';
-    rev.innerHTML =
+    var html =
       '<div class="verdict">' +
         '<span class="verdict-word">' + (item.a ? 'True' : 'False') + '</span>' +
         '<span class="verdict-note ' + (correct ? 'right' : 'wrong') + '">' +
@@ -493,6 +506,11 @@ window.LW_DECK = [
         '</span>' +
       '</div>' +
       '<p class="explain">' + esc(item.e) + '</p>';
+    if (correct && CFG.reward) {
+      html += '<div class="reward-line">Collect $' +
+        Number(CFG.reward).toLocaleString('en-US') + ' from the bank.</div>';
+    }
+    rev.innerHTML = html;
     cardEl.appendChild(rev);
     againEl.textContent = 'Draw another';
   }
@@ -514,14 +532,14 @@ window.LW_DECK = [
       return;
     }
 
-    /* --- Flashcard: term, then reveal definition + example --- */
+    /* --- Flashcard: term as a question, then reveal all fields + reward --- */
     if (item.t === 'fc') {
       cardEl.innerHTML =
         '<div class="kicker"><span class="badge">Business Term</span>' +
         '<span class="cat">' + esc(item.c) + '</span></div>' +
-        '<h2 class="term">' + esc(item.s) + '</h2>' +
+        '<h2 class="term">What is ' + esc(item.s) + (item.ctx ? ' <span class="term-ctx">' + esc(item.ctx) + '</span>' : '') + '?</h2>' +
         '<div class="choices single">' +
-          '<button class="choice" type="button" data-reveal="1">Reveal</button>' +
+          '<button class="choice" type="button" data-reveal="1">Reveal Answer</button>' +
         '</div>';
       againEl.textContent = 'Skip to another';
 
@@ -574,11 +592,20 @@ window.LW_DECK = [
 
     var rev = document.createElement('div');
     rev.className = 'reveal';
-    rev.innerHTML =
-      '<p class="field-label">What it is</p>' +
+    var html =
+      '<p class="field-label">Definition</p>' +
       '<p class="field-text">' + esc(item.d) + '</p>' +
-      '<p class="field-label spaced">In practice</p>' +
-      '<p class="field-text">' + esc(item.x) + '</p>';
+      '<p class="field-label spaced">Why It Matters</p>' +
+      '<p class="field-text">' + esc(item.w) + '</p>' +
+      '<p class="field-label spaced">Business Example</p>' +
+      '<p class="field-text">' + esc(item.x) + '</p>' +
+      '<p class="field-label spaced">Quick Tip</p>' +
+      '<p class="field-text">' + esc(item.tip) + '</p>';
+    if (CFG.reward) {
+      html += '<div class="reward-line">Got it right? Collect $' +
+        Number(CFG.reward).toLocaleString('en-US') + ' from the bank.</div>';
+    }
+    rev.innerHTML = html;
     cardEl.appendChild(rev);
 
     againEl.textContent = 'Draw another';
