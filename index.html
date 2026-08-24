@@ -1,62 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Legacy Wealth Game</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: #0f172a;
-      color: #ffffff;
-      text-align: center;
-      padding: 20px;
-    }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 12px;
-      color: #f8fafc;
-    }
-    p {
-      font-size: 1.1rem;
-      color: #94a3b8;
-      margin-bottom: 28px;
-    }
-    .btn {
-      display: inline-block;
-      padding: 14px 28px;
-      background-color: #06b6d4;
-      color: #0f172a;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1rem;
-      border-radius: 8px;
-      transition: background-color 0.2s ease;
-      margin-bottom: 14px;
-    }
-    .btn:hover {
-      background-color: #22d3ee;
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Join the Waitlist | Legacy Wealth</title>
+<meta name="description" content="Be the first to know when Legacy Wealth opens for pre-order. Build Wealth. Leave a Legacy.">
+<meta name="theme-color" content="#FAF7F0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF7F0; --cream-deep:#F1EBDD; --gold:#C9A84C; --gold-soft:#E3D4A3;
+    --ink:#07080D; --ink-soft:#3E4048; --rule:rgba(7,8,13,.10);
+    --shadow:0 18px 50px -22px rgba(7,8,13,.45);
+    --serif:'Playfair Display',Georgia,serif; --sans:'Inter',system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--cream); color:var(--ink); font-family:var(--sans);
+    -webkit-font-smoothing:antialiased; min-height:100svh; display:flex; flex-direction:column;
+    padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+  .masthead{text-align:center; padding:44px 22px 8px;}
+  .brand{font-family:var(--serif); font-size:clamp(30px,7vw,42px); font-weight:600; letter-spacing:.01em; color:var(--ink); opacity:1;}
+  .flourish{width:64px; height:1px; margin:16px auto 0; background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+  .stage{flex:1; display:flex; align-items:center; justify-content:center; padding:20px 18px 40px;}
+  .card{
+    width:100%; max-width:520px; background:#fff; border:1px solid var(--rule);
+    border-top:3px solid var(--gold); border-radius:3px; box-shadow:var(--shadow);
+    padding:44px 34px 40px; text-align:center;
+    animation:rise .5s cubic-bezier(.2,.7,.3,1) both;
+  }
+  @keyframes rise{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:none;}}
+  h1{
+    font-family:var(--serif); font-size:clamp(28px,6vw,36px); line-height:1.15;
+    font-weight:600; margin:0 0 14px; letter-spacing:-.015em;
+  }
+  .tagline{
+    font-family:var(--serif); font-style:italic; font-size:16px; color:var(--gold);
+    margin:0 0 22px;
+  }
+  .desc{font-size:15.5px; line-height:1.6; color:var(--ink-soft); margin:0 0 30px;}
+  form{display:flex; flex-direction:column; gap:12px;}
+  input[type=email], input[type=text]{
+    width:100%; padding:15px 16px; font-size:16px; font-family:var(--sans);
+    border:1px solid var(--rule); border-radius:2px; background:var(--cream);
+    color:var(--ink); outline:none; transition:border-color .2s;
+  }
+  input[type=email]:focus, input[type=text]:focus{border-color:var(--gold);}
+  button{
+    padding:15px 16px; font-size:14px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    color:#fff; background:var(--ink); border:none; border-radius:2px; cursor:pointer;
+    transition:background .2s;
+  }
+  button:hover{background:#000;}
+  .fineprint{font-size:12px; color:var(--ink-soft); opacity:.6; margin-top:18px; line-height:1.5;}
+  .success{display:none;}
+  .success.show{display:block;}
+  .success h1{color:var(--gold);}
+</style>
 </head>
 <body>
+<header class="masthead">
+  <div class="brand">Legacy Wealth</div>
+  <div class="flourish"></div>
+</header>
+<main class="stage">
+  <div class="card" id="formCard">
+    <h1>Be First to Know</h1>
+    <p class="tagline">Build Wealth. Leave a Legacy.</p>
+    <p class="desc">Legacy Wealth is the first premium financial and business education board game built around creating generational wealth. Join the waitlist and we'll notify you the moment pre-orders open.</p>
 
-  <h1>Legacy Wealth Game</h1>
-  <p>Select a tool below to get started:</p>
+    <form name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="waitlistForm">
+      <input type="hidden" name="form-name" value="waitlist" />
+      <p style="display:none;">
+        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+      </p>
+      <input type="text" name="name" placeholder="Full name" required />
+      <input type="email" name="email" placeholder="Email address" required />
+      <button type="submit">Join the Waitlist</button>
+    </form>
 
-  <a href="/legacypitch" class="btn">Go to Legacy Pitch Generator &rarr;</a>
-  <a href="/wealthwisdom" class="btn">Go to Wealth Wisdom &rarr;</a>
-  <a href="/businessblueprint" class="btn">Go to Business Blueprint &rarr;</a>
+    <p class="fineprint">No spam, ever. Just one email when pre-orders go live.</p>
+  </div>
 
+  <div class="card success" id="successCard">
+    <h1>You're On the List</h1>
+    <p class="desc">Thanks for joining. We'll email you the moment Legacy Wealth opens for pre-order, and you'll be first in line.</p>
+  </div>
+</main>
+
+<script>
+  const form = document.getElementById('waitlistForm');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(form);
+    fetch('/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString()
+    })
+    .then(() => {
+      document.getElementById('formCard').style.display = 'none';
+      document.getElementById('successCard').classList.add('show');
+    })
+    .catch((error) => {
+      alert('Something went wrong. Please try again or email us directly.');
+      console.error(error);
+    });
+  });
+</script>
 </body>
 </html>
