@@ -104,6 +104,10 @@ body{
   font-family:var(--serif);font-size:clamp(30px,8.4vw,42px);
   line-height:1.08;font-weight:600;margin:0;letter-spacing:-.02em;
 }
+.term-ctx{
+  font-size:0.52em;font-weight:500;color:var(--ink-soft);
+  letter-spacing:0;
+}
 
 /* ---------- Reveal fields (flashcards) ---------- */
 .field-label{
@@ -112,6 +116,15 @@ body{
 }
 .field-label.spaced{margin-top:20px;}
 .field-text{font-size:16.5px;line-height:1.6;color:var(--ink-soft);margin:0;}
+
+/* ---------- Reward line (flashcards) ---------- */
+.reward-line{
+  margin-top:22px;padding:14px 16px;
+  background:rgba(201,168,76,.12);border:1px solid var(--gold);
+  border-radius:2px;
+  font-size:14.5px;font-weight:600;color:#7C6520;
+  text-align:center;
+}
 
 /* ---------- Choices ---------- */
 .choices{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:26px;}
@@ -218,143 +231,153 @@ body{
 
 <script>
 /* ==========================================================
-   Legacy Wealth — BUSINESS BLUEPRINT deck
-   100 concept flashcards across 10 categories.
+   Legacy Wealth — BUSINESS BLUEPRINT deck (v2)
+   100 concept cards across 10 categories.
+   Format: question -> guess out loud -> reveal 4 fields + reward.
 
    Card shape:
-   { t:'fc', c:'Category', s:'TERM', d:'What it is', x:'In practice' }
+   { t:'fc', c:'Category', s:'TERM',
+     d:'Definition', w:'Why It Matters',
+     x:'Real-World Example', tip:'Quick Tip' }
 
    Writing rules that keep gameplay fast:
-   - Definition: ONE sentence, plain English, no jargon inside it.
-   - Example:    ONE sentence, real numbers wherever possible.
-   - Target: under 12 seconds read aloud.
+   - Each field: ONE sentence, plain English.
+   - Target: under 20 seconds read aloud for the full reveal.
+
+   REWARD is the flat amount collected from the bank on a
+   correct guess. Change it here to change it everywhere.
 
    Use \u2019 for apostrophes inside single-quoted strings.
    ========================================================== */
 
-window.LW_CONFIG = { id: 'business-blueprint', label: 'Business Blueprint' };
+window.LW_CONFIG = { id: 'business-blueprint', label: 'Business Blueprint', reward: 20000 };
 
 window.LW_DECK = [
 
 /* ---------- PROFIT & MARGINS ---------- */
-{t:'fc',c:'Profit & Margins',s:'Gross Margin',d:'What is left from a sale after paying what it cost to make or deliver the product.',x:'A shirt sells for $40 and costs $16 to produce, leaving a gross margin of $24, or 60%.'},
-{t:'fc',c:'Profit & Margins',s:'Net Profit',d:'What the business actually keeps after every single expense is paid.',x:'$500,000 in sales with $460,000 in total costs leaves $40,000 in net profit.'},
-{t:'fc',c:'Profit & Margins',s:'Cost of Goods Sold',d:'The direct cost of producing or buying the specific product being sold.',x:'A bakery\u2019s flour, sugar, and packaging count. The manager\u2019s salary does not.'},
-{t:'fc',c:'Profit & Margins',s:'Operating Expenses',d:'The ongoing costs of running the business that are not tied to making a specific product.',x:'Rent, utilities, insurance, and software subscriptions.'},
-{t:'fc',c:'Profit & Margins',s:'Overhead',d:'The running costs a business pays whether it sells anything that month or not.',x:'A gym owes $8,000 in rent whether 50 members show up or 500.'},
-{t:'fc',c:'Profit & Margins',s:'Markup',d:'The amount added on top of what something cost you to arrive at the selling price.',x:'A part costs $10 and sells for $25 \u2014 a 150% markup.'},
-{t:'fc',c:'Profit & Margins',s:'Break-Even Point',d:'The level of sales where revenue exactly covers total costs, with nothing lost and nothing gained.',x:'With $6,000 in monthly costs and $30 profit per unit, the business breaks even at 200 units.'},
-{t:'fc',c:'Profit & Margins',s:'Fixed Costs',d:'Expenses that stay the same no matter how much you sell.',x:'A $2,500 monthly lease costs exactly the same in the slowest month as the best one.'},
-{t:'fc',c:'Profit & Margins',s:'Variable Costs',d:'Expenses that rise and fall with how much you produce or sell.',x:'A candle maker buys far more wax in December than in February.'},
-{t:'fc',c:'Profit & Margins',s:'Contribution Margin',d:'What each individual sale contributes toward covering fixed costs once variable costs are paid.',x:'A $50 product with $20 in variable costs contributes $30 toward rent and overhead.'},
+{t:'fc',c:'Profit & Margins',s:'Gross Margin',d:'What is left from a sale after paying what it cost to make or deliver the product.',w:'It shows whether the core product itself is actually profitable before any other costs are considered.',x:'A shirt sells for $40 and costs $16 to produce, leaving a gross margin of $24, or 60%.',tip:'Check this number before assuming a big sale was actually a good deal.'},
+{t:'fc',c:'Profit & Margins',s:'Net Profit',d:'What the business actually keeps after every single expense is paid.',w:'It is the real, bottom-line truth of whether the business made money at all.',x:'$500,000 in sales with $460,000 in total costs leaves $40,000 in net profit.',tip:'Judge a business by this number, not by how much revenue it brings in.'},
+{t:'fc',c:'Profit & Margins',s:'Cost of Goods Sold',d:'The direct cost of producing or buying the specific product being sold.',w:'Knowing it precisely is the only way to price a product without accidentally selling at a loss.',x:'A bakery\u2019s flour, sugar, and packaging count. The manager\u2019s salary does not.',tip:'Recalculate this whenever a supplier price changes, not just once a year.'},
+{t:'fc',c:'Profit & Margins',s:'Operating Expenses',d:'The ongoing costs of running the business that are not tied to making a specific product.',w:'These costs run every month whether sales are strong or slow, so they shape how much cushion a business has.',x:'Rent, utilities, insurance, and software subscriptions.',tip:'Review these once a quarter to catch subscriptions nobody is using anymore.'},
+{t:'fc',c:'Profit & Margins',s:'Overhead',d:'The running costs a business pays whether it sells anything that month or not.',w:'It sets the minimum a business must sell just to keep the lights on before any profit exists.',x:'A gym owes $8,000 in rent whether 50 members show up or 500.',tip:'Keep overhead as low as possible until sales prove it is safe to raise it.'},
+{t:'fc',c:'Profit & Margins',s:'Markup',ctx:'when it comes to business',d:'The amount added on top of what something cost you to arrive at the selling price.',w:'It is the simplest lever a business has for controlling profit on every single sale.',x:'A part costs $10 and sells for $25 \u2014 a 150% markup.',tip:'Test raising it slightly on one product before rolling it out everywhere.'},
+{t:'fc',c:'Profit & Margins',s:'Break-Even Point',d:'The level of sales where revenue exactly covers total costs, with nothing lost and nothing gained.',w:'Knowing this number tells an owner exactly how much risk they are taking on before they turn a profit.',x:'With $6,000 in monthly costs and $30 profit per unit, the business breaks even at 200 units.',tip:'Calculate this before launching, not after the money is already spent.'},
+{t:'fc',c:'Profit & Margins',s:'Fixed Costs',d:'Expenses that stay the same no matter how much you sell.',w:'These costs must be paid regardless of performance, so they define the baseline risk of running the business.',x:'A $2,500 monthly lease costs exactly the same in the slowest month as the best one.',tip:'Keep these as low as possible until sales are consistent enough to support them.'},
+{t:'fc',c:'Profit & Margins',s:'Variable Costs',d:'Expenses that rise and fall with how much you produce or sell.',w:'Because these scale with sales, understanding them is key to knowing if growth will actually be profitable.',x:'A candle maker buys far more wax in December than in February.',tip:'Negotiate better supplier pricing once volume grows, instead of accepting the same rate forever.'},
+{t:'fc',c:'Profit & Margins',s:'Return on Investment',d:'A measure of how much profit an investment generated compared to what it cost.',w:'It lets an owner compare completely different opportunities using one simple, common measurement.',x:'Spending $10,000 on new equipment that generates $4,000 extra profit a year is a 40% return.',tip:'Calculate this before committing money, not just afterward to see how it turned out.'},
 
 /* ---------- CASH FLOW & FINANCE ---------- */
-{t:'fc',c:'Cash Flow & Finance',s:'Cash Flow',d:'The actual money moving in and out of a business, which is not the same thing as profit.',x:'A company can show $100,000 in profit on paper and still miss payroll if customers have not paid yet.'},
-{t:'fc',c:'Cash Flow & Finance',s:'Burn Rate',d:'How fast a business spends its cash reserves each month before it becomes profitable.',x:'$120,000 in the bank at $20,000 a month means six months of cash left.'},
-{t:'fc',c:'Cash Flow & Finance',s:'Runway',d:'How many months a business can keep operating before the money runs out.',x:'A founder with nine months of runway must reach profitability or raise more before month ten.'},
-{t:'fc',c:'Cash Flow & Finance',s:'Accounts Receivable',d:'Money customers owe the business for work already delivered.',x:'A contractor finishes a $15,000 job in March but does not get paid until May.'},
-{t:'fc',c:'Cash Flow & Finance',s:'Accounts Payable',d:'Money the business owes its suppliers and vendors.',x:'A restaurant receives $4,000 of produce in January with payment due in February.'},
-{t:'fc',c:'Cash Flow & Finance',s:'Working Capital',d:'The cash a business has available to cover day-to-day operations after short-term bills.',x:'$80,000 in current assets minus $50,000 in current bills leaves $30,000 of working capital.'},
-{t:'fc',c:'Cash Flow & Finance',s:'Line of Credit',d:'A pre-approved pool of money a business can borrow from as needed and repay.',x:'A shop draws $10,000 during a slow month and pays it back when sales recover.'},
-{t:'fc',c:'Cash Flow & Finance',s:'Balance Sheet',d:'A snapshot of what a business owns, what it owes, and what is left over for the owners.',x:'$300,000 in assets minus $180,000 in debts equals $120,000 of owner equity.'},
-{t:'fc',c:'Cash Flow & Finance',s:'Income Statement',d:'A report showing revenue, expenses, and profit across a period of time.',x:'A quarterly statement showing $250,000 in revenue, $210,000 in expenses, and $40,000 in profit.'},
-{t:'fc',c:'Cash Flow & Finance',s:'Reinvestment',d:'Putting profits back into the business instead of taking them out.',x:'An owner spends $30,000 of profit on a second delivery van rather than a personal bonus.'},
+{t:'fc',c:'Cash Flow & Finance',s:'Cash Flow',d:'The actual money moving in and out of a business, which is not the same thing as profit.',w:'A business can be profitable and still fail if cash is not available when bills come due.',x:'A company can show $100,000 in profit on paper and still miss payroll if customers have not paid yet.',tip:'Track this weekly, not just monthly, once a business starts growing fast.'},
+{t:'fc',c:'Cash Flow & Finance',s:'Burn Rate',d:'How fast a business spends its cash reserves each month before it becomes profitable.',w:'It tells a founder exactly how much time they have left to become profitable or raise more funding.',x:'$120,000 in the bank at $20,000 a month means six months of cash left.',tip:'Cut this number the moment it starts rising faster than revenue.'},
+{t:'fc',c:'Cash Flow & Finance',s:'Runway',ctx:'when it comes to business',d:'How many months a business can keep operating before the money runs out.',w:'It is the honest countdown that forces founders to make decisions before it is too late.',x:'A founder with nine months of runway must reach profitability or raise more before month ten.',tip:'Start raising money or cutting costs well before this number gets close to zero.'},
+{t:'fc',c:'Cash Flow & Finance',s:'Seed Capital',d:'The first money that gets a new business off the ground, often before any formal investors are involved.',w:'Having enough of it determines whether an idea ever makes it to a real, sellable product.',x:'A founder uses $15,000 of personal savings to build the first version of the product.',tip:'Know exactly how far this money needs to stretch before more funding is needed.'},
+{t:'fc',c:'Cash Flow & Finance',s:'OPM',ctx:'when it comes to business',d:'Short for Other People\u2019s Money, meaning using investors\u2019, partners\u2019, or lenders\u2019 capital instead of only your own.',w:'It allows a business to grow faster than personal savings alone would ever allow.',x:'A real estate investor buys a property using mostly bank financing instead of their own cash.',tip:'Understand exactly what the money-provider expects in return before accepting it.'},
+{t:'fc',c:'Cash Flow & Finance',s:'Accounts Receivable',d:'Money customers owe the business for work already delivered.',w:'Money owed is not the same as money in hand, and that gap can quietly starve a business of cash.',x:'A contractor finishes a $15,000 job in March but does not get paid until May.',tip:'Follow up on unpaid invoices immediately instead of waiting for customers to remember.'},
+{t:'fc',c:'Cash Flow & Finance',s:'Accounts Payable',d:'Money the business owes its suppliers and vendors.',w:'Managing what you owe carefully protects relationships with vendors the business depends on.',x:'A restaurant receives $4,000 of produce in January with payment due in February.',tip:'Pay on time, but never earlier than necessary, to protect your own cash position.'},
+{t:'fc',c:'Cash Flow & Finance',s:'Working Capital',d:'The cash a business has available to cover day-to-day operations after short-term bills.',w:'It measures whether a business can actually cover its near-term obligations, not just whether it is profitable on paper.',x:'$80,000 in current assets minus $50,000 in current bills leaves $30,000 of working capital.',tip:'Keep a buffer here before taking on a big new expense or opportunity.'},
+{t:'fc',c:'Cash Flow & Finance',s:'Line of Credit',d:'A pre-approved pool of money a business can borrow from as needed and repay.',w:'It gives a business breathing room to handle cash gaps without panicking or missing payroll.',x:'A shop draws $10,000 during a slow month and pays it back when sales recover.',tip:'Set one up before it is needed, since it is much harder to get approved during a cash crunch.'},
+{t:'fc',c:'Cash Flow & Finance',s:'Balance Sheet',d:'A snapshot of what a business owns, what it owes, and what is left over for the owners.',w:'It shows the true financial position of a business at a single point in time, not just recent activity.',x:'$300,000 in assets minus $180,000 in debts equals $120,000 of owner equity.',tip:'Review this alongside the income statement, since either one alone can be misleading.'},
+{t:'fc',c:'Cash Flow & Finance',s:'Income Statement',d:'A report showing revenue, expenses, and profit across a period of time.',w:'It reveals whether operations are actually generating profit over time, not just moving money around.',x:'A quarterly statement showing $250,000 in revenue, $210,000 in expenses, and $40,000 in profit.',tip:'Compare this quarter to the last one, not just to the total for the year.'},
+{t:'fc',c:'Cash Flow & Finance',s:'Reinvestment',d:'Putting profits back into the business instead of taking them out.',w:'Businesses that reinvest wisely tend to grow faster than those that pull out every dollar of profit.',x:'An owner spends $30,000 of profit on a second delivery van rather than a personal bonus.',tip:'Reinvest with a specific growth goal in mind, not just because cash is available.'},
 
 /* ---------- STARTING A BUSINESS ---------- */
-{t:'fc',c:'Starting a Business',s:'Sole Proprietorship',d:'The simplest business structure, where the owner and the business are legally the same person.',x:'A freelance photographer who never files any paperwork is one by default.'},
-{t:'fc',c:'Starting a Business',s:'LLC',d:'A structure that creates legal separation between the business and the owner\u2019s personal assets.',x:'If the business gets sued, the owner\u2019s home is generally shielded from the claim.'},
-{t:'fc',c:'Starting a Business',s:'Corporation',d:'A formal structure that exists as its own legal entity and can issue shares of ownership.',x:'A company giving stock to investors and employees is set up as a corporation.'},
-{t:'fc',c:'Starting a Business',s:'EIN',d:'A federal tax ID number for a business, working much like a Social Security number does for a person.',x:'A new bakery needs one to open a business bank account and put employees on payroll.'},
-{t:'fc',c:'Starting a Business',s:'Operating Agreement',d:'The written document defining how a business runs and how the owners share control and profits.',x:'Two partners put a 60/40 profit split in writing before opening the doors.'},
-{t:'fc',c:'Starting a Business',s:'Commingling Funds',d:'Mixing personal and business money, which can destroy the legal protection a business structure provides.',x:'Paying a personal car note from the business account can put the owner\u2019s personal assets back at risk.'},
-{t:'fc',c:'Starting a Business',s:'Business Plan',d:'A written outline of what the business sells, who it serves, and how it will make money.',x:'A bank asks for one before approving a startup loan.'},
-{t:'fc',c:'Starting a Business',s:'Bootstrapping',d:'Building a business using personal savings and its own revenue instead of outside investment.',x:'An owner reinvests every dollar of early profit rather than taking on a loan or investor.'},
-{t:'fc',c:'Starting a Business',s:'Minimum Viable Product',d:'The simplest version of a product you can sell to real customers to test whether demand exists.',x:'Selling 20 hand-made units before spending on a full factory run.'},
-{t:'fc',c:'Starting a Business',s:'Business License',d:'Government permission required to legally operate a certain type of business in a certain place.',x:'A food truck needs one from the city before serving a single customer.'},
+{t:'fc',c:'Starting a Business',s:'Sole Proprietorship',d:'The simplest business structure, where the owner and the business are legally the same person.',w:'It is the easiest way to start, but it also means personal assets are exposed to business risk.',x:'A freelance photographer who never files any paperwork is one by default.',tip:'Look into forming an LLC once real money or real risk enters the picture.'},
+{t:'fc',c:'Starting a Business',s:'LLC',d:'A structure that creates legal separation between the business and the owner\u2019s personal assets.',w:'It protects personal assets from business debts and lawsuits, which matters the moment things go wrong.',x:'If the business gets sued, the owner\u2019s home is generally shielded from the claim.',tip:'Open a dedicated business bank account the same day the LLC is formed.'},
+{t:'fc',c:'Starting a Business',s:'Corporation',d:'A formal structure that exists as its own legal entity and can issue shares of ownership.',w:'It allows a business to raise money by selling ownership shares, which most other structures cannot do.',x:'A company giving stock to investors and employees is set up as a corporation.',tip:'Only take this on once the business genuinely needs to raise outside investment.'},
+{t:'fc',c:'Starting a Business',s:'EIN',d:'A federal tax ID number for a business, working much like a Social Security number does for a person.',w:'Most banks and payroll systems require one before a business can legally hire or open an account.',x:'A new bakery needs one to open a business bank account and put employees on payroll.',tip:'Apply for this as one of the very first steps when forming a business.'},
+{t:'fc',c:'Starting a Business',s:'Operating Agreement',d:'The written document defining how a business runs and how the owners share control and profits.',w:'It prevents disputes by settling, in writing, exactly who decides what before disagreements happen.',x:'Two partners put a 60/40 profit split in writing before opening the doors.',tip:'Write this before the business opens, not after the first disagreement happens.'},
+{t:'fc',c:'Starting a Business',s:'Commingling Funds',d:'Mixing personal and business money, which can destroy the legal protection a business structure provides.',w:'Avoiding it is what actually keeps an LLC\u2019s legal protection intact.',x:'Paying a personal car note from the business account can put the owner\u2019s personal assets back at risk.',tip:'Use a separate business account for every transaction, no exceptions.'},
+{t:'fc',c:'Starting a Business',s:'Business Plan',d:'A written outline of what the business sells, who it serves, and how it will make money.',w:'It forces an idea to be tested with real numbers before real money is spent.',x:'A bank asks for one before approving a startup loan.',tip:'Revisit and update it every few months instead of writing it once and filing it away.'},
+{t:'fc',c:'Starting a Business',s:'Bootstrapping',ctx:'when it comes to business',d:'Building a business using personal savings and its own revenue instead of outside investment.',w:'It lets founders keep full control and ownership without answering to outside investors.',x:'An owner reinvests every dollar of early profit rather than taking on a loan or investor.',tip:'Keep personal expenses lean early on so the business has more room to breathe.'},
+{t:'fc',c:'Starting a Business',s:'Personal Guarantee',ctx:'when it comes to business',d:'A promise by a business owner to personally repay a business debt if the business itself cannot.',w:'It can quietly cancel out the personal-asset protection an LLC or corporation is supposed to provide.',x:'A bank approves a $50,000 business loan only after the owner personally guarantees to repay it.',tip:'Read loan paperwork carefully to see whether a personal guarantee is hidden in the fine print.'},
+{t:'fc',c:'Starting a Business',s:'Trademark',ctx:'when it comes to business',d:'Legal protection for a business\u2019s name, logo, or slogan.',w:'Without one, another business could legally use a similar name and confuse your customers.',x:'A coffee shop trademarks its name so no other shop nearby can legally use it.',tip:'Search existing trademarks before settling on a name to avoid a costly conflict later.'},
+{t:'fc',c:'Starting a Business',s:'Business License',d:'Government permission required to legally operate a certain type of business in a certain place.',w:'Operating without one can lead to fines or an outright shutdown, even if the business is otherwise doing well.',x:'A food truck needs one from the city before serving a single customer.',tip:'Check requirements at the city, county, and state level, since they often differ.'},
 
 /* ---------- FRANCHISES & BUSINESS MODELS ---------- */
-{t:'fc',c:'Franchises & Business Models',s:'Franchisor',d:'The parent company that owns the brand and licenses it out to others.',x:'The corporation behind a national restaurant chain.'},
-{t:'fc',c:'Franchises & Business Models',s:'Franchisee',d:'The individual who buys the right to operate a location under an established brand.',x:'The person who owns and runs the chain restaurant on your corner.'},
-{t:'fc',c:'Franchises & Business Models',s:'Franchise Fee',d:'The one-time upfront cost paid to join a franchise system.',x:'$45,000 paid before opening, separate from the cost of building the location.'},
-{t:'fc',c:'Franchises & Business Models',s:'Royalty Fee',d:'An ongoing percentage of revenue paid to the parent brand, separate from the upfront fee.',x:'A location doing $50,000 a month at a 6% royalty sends $3,000 up \u2014 profitable or not.'},
-{t:'fc',c:'Franchises & Business Models',s:'Franchise Disclosure Document',d:'The legal document a franchisor must provide detailing costs, obligations, and how existing locations perform.',x:'It reveals average revenue per location and how many closed last year.'},
-{t:'fc',c:'Franchises & Business Models',s:'Territory Rights',d:'An agreement giving a franchisee exclusive rights to operate within a defined area.',x:'No second location from the same brand may open within five miles.'},
-{t:'fc',c:'Franchises & Business Models',s:'Turnkey Business',d:'A business sold ready to operate from day one.',x:'Buying an existing laundromat that already has equipment, staff, and regular customers.'},
-{t:'fc',c:'Franchises & Business Models',s:'Business Model',d:'How a company creates something of value and makes money from it.',x:'A gym charges recurring memberships; a bakery sells one item at a time.'},
-{t:'fc',c:'Franchises & Business Models',s:'Recurring Revenue',d:'Income that repeats automatically on a schedule instead of being earned one sale at a time.',x:'400 members at $45 a month is $18,000 of predictable monthly revenue.'},
-{t:'fc',c:'Franchises & Business Models',s:'Licensing',d:'Earning money by letting others use your brand, product, or idea.',x:'An inventor collects 5% of every unit a manufacturer sells.'},
+{t:'fc',c:'Franchises & Business Models',s:'Franchisor',d:'The parent company that owns the brand and licenses it out to others.',w:'Understanding their role clarifies exactly what support and control a franchisee is actually signing up for.',x:'The corporation behind a national restaurant chain.',tip:'Ask current franchisees directly how responsive the franchisor actually is.'},
+{t:'fc',c:'Franchises & Business Models',s:'Franchisee',d:'The individual who buys the right to operate a location under an established brand.',w:'Buying into a franchise trades some independence for a proven system and existing brand trust.',x:'The person who owns and runs the chain restaurant on your corner.',tip:'Talk to several existing franchisees before signing anything.'},
+{t:'fc',c:'Franchises & Business Models',s:'Franchise Fee',d:'The one-time upfront cost paid to join a franchise system.',w:'It is a real cost of entry that must be factored into how long it takes to become profitable.',x:'$45,000 paid before opening, separate from the cost of building the location.',tip:'Budget for this plus build-out costs, not just this number alone.'},
+{t:'fc',c:'Franchises & Business Models',s:'Royalty Fee',d:'An ongoing percentage of revenue paid to the parent brand, separate from the upfront fee.',w:'It is owed whether the location is thriving or struggling, so it directly affects real profitability.',x:'A location doing $50,000 a month at a 6% royalty sends $3,000 up \u2014 profitable or not.',tip:'Factor this into pricing from day one instead of treating it as an afterthought.'},
+{t:'fc',c:'Franchises & Business Models',s:'Franchise Disclosure Document',d:'The legal document a franchisor must provide detailing costs, obligations, and how existing locations perform.',w:'It is the clearest way to see how existing locations are actually performing before buying in.',x:'It reveals average revenue per location and how many closed last year.',tip:'Have a professional review this document before signing anything.'},
+{t:'fc',c:'Franchises & Business Models',s:'Territory Rights',ctx:'when it comes to business',d:'An agreement giving a franchisee exclusive rights to operate within a defined area.',w:'They protect a franchisee\u2019s customer base from being split by a competing location nearby.',x:'No second location from the same brand may open within five miles.',tip:'Confirm the exact protected radius in writing before signing.'},
+{t:'fc',c:'Franchises & Business Models',s:'Turnkey Business',d:'A business sold ready to operate from day one.',w:'It can shortcut months of setup time by starting from something already operational.',x:'Buying an existing laundromat that already has equipment, staff, and regular customers.',tip:'Verify the real financial records before trusting that it is truly ready to run.'},
+{t:'fc',c:'Franchises & Business Models',s:'Business Model',d:'How a company creates something of value and makes money from it.',w:'It determines how money actually flows in, which shapes every other decision the business makes.',x:'A gym charges recurring memberships; a bakery sells one item at a time.',tip:'Write out exactly how the business makes money before building anything else.'},
+{t:'fc',c:'Franchises & Business Models',s:'Recurring Revenue',d:'Income that repeats automatically on a schedule instead of being earned one sale at a time.',w:'Predictable income makes planning, hiring, and growth far less risky than one-time sales.',x:'400 members at $45 a month is $18,000 of predictable monthly revenue.',tip:'Look for ways to turn even a few one-time customers into repeat, recurring ones.'},
+{t:'fc',c:'Franchises & Business Models',s:'Licensing',d:'Earning money by letting others use your brand, product, or idea.',w:'It allows an idea or brand to earn money without the owner having to manufacture or sell it directly.',x:'An inventor collects 5% of every unit a manufacturer sells.',tip:'Get any licensing terms reviewed by a professional before signing.'},
 
 /* ---------- SCALING & GROWTH ---------- */
-{t:'fc',c:'Scaling & Growth',s:'Scaling',d:'Growing revenue significantly faster than costs grow.',x:'Doubling sales while expenses rise only 20% is scaling. Doubling both is just getting bigger.'},
-{t:'fc',c:'Scaling & Growth',s:'Economies of Scale',d:'The cost of each unit falling as you produce more of them.',x:'Ordering 10,000 units drops the price to $3 each, while 500 units cost $7 each.'},
-{t:'fc',c:'Scaling & Growth',s:'Systemization',d:'Turning how work gets done into repeatable processes anyone can follow.',x:'Writing down the closing routine so any employee can run it correctly.'},
-{t:'fc',c:'Scaling & Growth',s:'Delegation',d:'Handing work to other people so the owner can focus on higher-value decisions.',x:'An owner hires a bookkeeper and gets ten hours a month back for selling.'},
-{t:'fc',c:'Scaling & Growth',s:'Bottleneck',d:'The single step that limits how much the entire business can produce.',x:'A company that can sell 100 jobs a month but only install 40 is capped at 40.'},
-{t:'fc',c:'Scaling & Growth',s:'Owner Dependency',d:'When a business cannot operate without the owner personally being there.',x:'A salon where clients only book with the owner cannot grow past the owner\u2019s schedule.'},
-{t:'fc',c:'Scaling & Growth',s:'Capacity',d:'The maximum a business can produce or serve with the resources it currently has.',x:'A 60-seat restaurant cannot serve a 61st guest without adding space or turning tables faster.'},
-{t:'fc',c:'Scaling & Growth',s:'Market Expansion',d:'Growing by selling to new places or new groups of customers.',x:'A regional brand begins shipping nationwide.'},
-{t:'fc',c:'Scaling & Growth',s:'Vertical Integration',d:'Owning more steps of your own supply chain instead of paying someone else for them.',x:'A coffee shop buys its own roastery and stops paying a supplier\u2019s markup.'},
-{t:'fc',c:'Scaling & Growth',s:'Barrier to Entry',d:'Whatever makes it difficult for new competitors to enter your market.',x:'Heavy equipment costs and required licensing keep casual competitors out.'},
+{t:'fc',c:'Scaling & Growth',s:'Scaling',ctx:'when it comes to business',d:'Growing revenue significantly faster than costs grow.',w:'It is the difference between a business getting bigger and a business actually becoming more efficient as it grows.',x:'Doubling sales while expenses rise only 20% is scaling. Doubling both is just getting bigger.',tip:'Fix inefficient systems before pouring more money into growth.'},
+{t:'fc',c:'Scaling & Growth',s:'Economies of Scale',d:'The cost of each unit falling as you produce more of them.',w:'It is a major reason larger competitors can often afford to charge lower prices.',x:'Ordering 10,000 units drops the price to $3 each, while 500 units cost $7 each.',tip:'Negotiate better pricing with suppliers once order volume increases.'},
+{t:'fc',c:'Scaling & Growth',s:'Systemization',d:'Turning how work gets done into repeatable processes anyone can follow.',w:'It allows a business to run consistently even when the owner is not personally there.',x:'Writing down the closing routine so any employee can run it correctly.',tip:'Document a process the first time it is done well, not after it becomes a habit.'},
+{t:'fc',c:'Scaling & Growth',s:'Delegation',d:'Handing work to other people so the owner can focus on higher-value decisions.',w:'It frees up an owner\u2019s time for the decisions only they can make.',x:'An owner hires a bookkeeper and gets ten hours a month back for selling.',tip:'Delegate the task, but also delegate the authority to make decisions about it.'},
+{t:'fc',c:'Scaling & Growth',s:'Bottleneck',ctx:'when it comes to business',d:'The single step that limits how much the entire business can produce.',w:'Fixing the actual bottleneck does more for growth than improving any other part of the business.',x:'A company that can sell 100 jobs a month but only install 40 is capped at 40.',tip:'Find the real bottleneck before investing money anywhere else in the business.'},
+{t:'fc',c:'Scaling & Growth',s:'Owner Dependency',d:'When a business cannot operate without the owner personally being there.',w:'A business that cannot run without its owner is far harder to sell, scale, or step away from.',x:'A salon where clients only book with the owner cannot grow past the owner\u2019s schedule.',tip:'Try stepping away for a full week and see what actually breaks.'},
+{t:'fc',c:'Scaling & Growth',s:'Capacity',d:'The maximum a business can produce or serve with the resources it currently has.',w:'Knowing true capacity prevents overpromising to customers the business cannot actually serve well.',x:'A 60-seat restaurant cannot serve a 61st guest without adding space or turning tables faster.',tip:'Plan for added capacity before demand actually requires it, not after.'},
+{t:'fc',c:'Scaling & Growth',s:'Market Expansion',d:'Growing by selling to new places or new groups of customers.',w:'New markets can unlock major growth, but they also come with new risks the original market did not have.',x:'A regional brand begins shipping nationwide.',tip:'Test a new market on a small scale before committing fully.'},
+{t:'fc',c:'Scaling & Growth',s:'Vertical Integration',d:'Owning more steps of your own supply chain instead of paying someone else for them.',w:'Owning more of the supply chain can boost margins and control, but only if it is managed well.',x:'A coffee shop buys its own roastery and stops paying a supplier\u2019s markup.',tip:'Only integrate a step once outsourcing it has become a real, proven bottleneck.'},
+{t:'fc',c:'Scaling & Growth',s:'Barrier to Entry',d:'Whatever makes it difficult for new competitors to enter your market.',w:'A strong barrier protects a business from competitors copying its success too easily.',x:'Heavy equipment costs and required licensing keep casual competitors out.',tip:'Build a genuine advantage competitors cannot easily copy, not just a head start.'},
+{t:'fc',c:'Scaling & Growth',s:'Leverage',ctx:'when it comes to business',d:'Using borrowed money or resources to increase the potential return on an investment.',w:'It can multiply gains, but it multiplies losses just as easily if things go wrong.',x:'Buying a $200,000 property with a $40,000 down payment lets a small amount of cash control a much larger asset.',tip:'Never take on more leverage than the business could comfortably survive losing.'},
 
 /* ---------- MARKETING & CUSTOMERS ---------- */
-{t:'fc',c:'Marketing & Customers',s:'Customer Acquisition Cost',d:'The total marketing and sales spend required to win one new customer.',x:'Spending $5,000 on ads to land 100 customers means each one cost $50.'},
-{t:'fc',c:'Marketing & Customers',s:'Lifetime Value',d:'The total profit a business expects from one customer across the whole relationship.',x:'A member who stays three years at $45 a month is worth far more than one month\u2019s fee.'},
-{t:'fc',c:'Marketing & Customers',s:'Target Market',d:'The specific group of people a business is built to serve.',x:'A meal-prep service aimed at busy parents, not simply everyone who eats.'},
-{t:'fc',c:'Marketing & Customers',s:'Value Proposition',d:'The clear reason a customer should choose you instead of the alternative.',x:'Same-day delivery when every competitor takes three days.'},
-{t:'fc',c:'Marketing & Customers',s:'Positioning',d:'The space your brand occupies in a customer\u2019s mind compared to competitors.',x:'Being known as the premium option rather than the cheap one.'},
-{t:'fc',c:'Marketing & Customers',s:'Brand',d:'The trust and reputation customers attach to a business, which is far more than a logo.',x:'People pay more for a name they already trust to deliver.'},
-{t:'fc',c:'Marketing & Customers',s:'Conversion Rate',d:'The percentage of people who take the action you wanted them to take.',x:'1,000 visitors and 30 purchases is a 3% conversion rate.'},
-{t:'fc',c:'Marketing & Customers',s:'Churn Rate',d:'The percentage of customers who stop buying during a given period.',x:'500 subscribers losing 25 in a month is 5% monthly churn.'},
-{t:'fc',c:'Marketing & Customers',s:'Market Research',d:'Gathering real information about customers and competitors before committing money.',x:'Surveying 200 potential buyers before signing a lease.'},
-{t:'fc',c:'Marketing & Customers',s:'Referral',d:'A new customer who comes from an existing customer recommending you.',x:'Referred customers usually cost the least to acquire and stay the longest.'},
+{t:'fc',c:'Marketing & Customers',s:'Customer Acquisition Cost',d:'The total marketing and sales spend required to win one new customer.',w:'If this number is higher than what a customer is actually worth, the business is losing money on every sale.',x:'Spending $5,000 on ads to land 100 customers means each one cost $50.',tip:'Calculate this regularly, since it can quietly climb as competition increases.'},
+{t:'fc',c:'Marketing & Customers',s:'Lifetime Value',d:'The total profit a business expects from one customer across the whole relationship.',w:'It shows the true value of a customer relationship, not just the value of one transaction.',x:'A member who stays three years at $45 a month is worth far more than one month\u2019s fee.',tip:'Compare this number directly against acquisition cost before scaling ad spend.'},
+{t:'fc',c:'Marketing & Customers',s:'Target Market',d:'The specific group of people a business is built to serve.',w:'Trying to serve everyone usually means serving no one particularly well.',x:'A meal-prep service aimed at busy parents, not simply everyone who eats.',tip:'Get specific enough that marketing could speak directly to one real kind of person.'},
+{t:'fc',c:'Marketing & Customers',s:'Value Proposition',d:'The clear reason a customer should choose you instead of the alternative.',w:'Without a clear one, customers default to comparing on price alone.',x:'Same-day delivery when every competitor takes three days.',tip:'Say it in one sentence a customer could repeat back without help.'},
+{t:'fc',c:'Marketing & Customers',s:'Positioning',ctx:'when it comes to business',d:'The space your brand occupies in a customer\u2019s mind compared to competitors.',w:'It shapes what customers expect to pay and who they compare the business against.',x:'Being known as the premium option rather than the cheap one.',tip:'Pick one clear position rather than trying to appeal to everyone at once.'},
+{t:'fc',c:'Marketing & Customers',s:'Brand',ctx:'when it comes to business',d:'The trust and reputation customers attach to a business, which is far more than a logo.',w:'A strong brand lets a business charge more and win repeat customers without competing purely on price.',x:'People pay more for a name they already trust to deliver.',tip:'Protect it by making sure every customer experience matches the promise being made.'},
+{t:'fc',c:'Marketing & Customers',s:'Conversion Rate',ctx:'when it comes to business',d:'The percentage of people who take the action you wanted them to take.',w:'Improving it can grow revenue without spending a single extra dollar on marketing.',x:'1,000 visitors and 30 purchases is a 3% conversion rate.',tip:'Fix this number before spending more money driving additional traffic.'},
+{t:'fc',c:'Marketing & Customers',s:'Churn Rate',d:'The percentage of customers who stop buying during a given period.',w:'High churn can quietly undo the value of every new customer being acquired.',x:'500 subscribers losing 25 in a month is 5% monthly churn.',tip:'Ask customers who leave exactly why, instead of guessing.'},
+{t:'fc',c:'Marketing & Customers',s:'Market Research',d:'Gathering real information about customers and competitors before committing money.',w:'It replaces guessing with real evidence before money is spent building or launching something.',x:'Surveying 200 potential buyers before signing a lease.',tip:'Talk to real potential customers before assuming what they want.'},
+{t:'fc',c:'Marketing & Customers',s:'Referral',d:'A new customer who comes from an existing customer recommending you.',w:'Referred customers usually cost less to acquire and tend to stay loyal longer.',x:'Referred customers usually cost the least to acquire and stay the longest.',tip:'Make it easy and rewarding for happy customers to actually refer someone.'},
 
 /* ---------- SALES & PRICING ---------- */
-{t:'fc',c:'Sales & Pricing',s:'Pricing Strategy',d:'The deliberate method a business uses to decide what to charge.',x:'Choosing to price above competitors on purpose rather than guessing at a number.'},
-{t:'fc',c:'Sales & Pricing',s:'Cost-Plus Pricing',d:'Setting a price by adding a set markup on top of what the item cost you.',x:'A $20 cost plus a 50% markup gives a $30 price.'},
-{t:'fc',c:'Sales & Pricing',s:'Value-Based Pricing',d:'Setting a price based on what the result is worth to the customer, not what it cost you to deliver.',x:'A consultant charges $10,000 for advice that saves the client $100,000.'},
-{t:'fc',c:'Sales & Pricing',s:'Premium Pricing',d:'Deliberately charging more to signal higher quality.',x:'A luxury brand refuses to discount because the price is part of the message.'},
-{t:'fc',c:'Sales & Pricing',s:'Loss Leader',d:'A product sold at little or no profit to draw in customers who then buy other things.',x:'A grocery store sells milk near cost to fill carts with everything else.'},
-{t:'fc',c:'Sales & Pricing',s:'Price Elasticity',d:'How much demand changes when the price changes.',x:'Raising coffee prices 10% barely affects sales. Raising them 60% empties the shop.'},
-{t:'fc',c:'Sales & Pricing',s:'Upselling',d:'Offering a higher-value version or add-on at the moment of purchase.',x:'Adding a $200 warranty to a $1,500 appliance sale.'},
-{t:'fc',c:'Sales & Pricing',s:'Sales Funnel',d:'The stages a person moves through from first hearing about you to actually buying.',x:'1,000 people see the ad, 200 visit, 40 request a quote, 10 buy.'},
-{t:'fc',c:'Sales & Pricing',s:'Close Rate',d:'The percentage of prospects who become paying customers.',x:'40 quotes sent and 10 accepted is a 25% close rate.'},
-{t:'fc',c:'Sales & Pricing',s:'Objection',d:'The concern a customer raises that stands between them and buying.',x:'\u201CIt costs too much\u201D usually means the value has not been made clear yet.'},
+{t:'fc',c:'Sales & Pricing',s:'Pricing Strategy',d:'The deliberate method a business uses to decide what to charge.',w:'The right strategy shapes who buys, how much they buy, and how profitable each sale really is.',x:'Choosing to price above competitors on purpose rather than guessing at a number.',tip:'Revisit pricing every year instead of setting it once and forgetting it.'},
+{t:'fc',c:'Sales & Pricing',s:'Cost-Plus Pricing',d:'Setting a price by adding a set markup on top of what the item cost you.',w:'It guarantees a margin on paper, which makes it simple and safe to calculate.',x:'A $20 cost plus a 50% markup gives a $30 price.',tip:'Double-check that the resulting price still matches what customers expect to pay.'},
+{t:'fc',c:'Sales & Pricing',s:'Value-Based Pricing',d:'Setting a price based on what the result is worth to the customer, not what it cost you to deliver.',w:'It captures far more revenue than cost-based pricing when the value delivered is genuinely high.',x:'A consultant charges $10,000 for advice that saves the client $100,000.',tip:'Lead with the result the customer gets, not with how the price was calculated.'},
+{t:'fc',c:'Sales & Pricing',s:'Premium Pricing',d:'Deliberately charging more to signal higher quality.',w:'It signals quality and can build a brand that customers trust more, not less.',x:'A luxury brand refuses to discount because the price is part of the message.',tip:'Only use this if the product or service can genuinely back up the higher price.'},
+{t:'fc',c:'Sales & Pricing',s:'Loss Leader',d:'A product sold at little or no profit to draw in customers who then buy other things.',w:'It can bring in customers who spend more overall, even if the first item barely breaks even.',x:'A grocery store sells milk near cost to fill carts with everything else.',tip:'Make sure the next purchase actually happens, or this strategy just loses money.'},
+{t:'fc',c:'Sales & Pricing',s:'Price Elasticity',d:'How much demand changes when the price changes.',w:'Understanding it helps a business raise prices confidently without guessing how customers will react.',x:'Raising coffee prices 10% barely affects sales. Raising them 60% empties the shop.',tip:'Test small price increases before assuming a large one is safe.'},
+{t:'fc',c:'Sales & Pricing',s:'Upselling',d:'Offering a higher-value version or add-on at the moment of purchase.',w:'It increases revenue from customers already committed to buying, which is often easier than finding new customers.',x:'Adding a $200 warranty to a $1,500 appliance sale.',tip:'Offer the upsell as genuinely helpful, not as pressure to spend more.'},
+{t:'fc',c:'Sales & Pricing',s:'Sales Funnel',d:'The stages a person moves through from first hearing about you to actually buying.',w:'Understanding it reveals exactly where potential customers are being lost.',x:'1,000 people see the ad, 200 visit, 40 request a quote, 10 buy.',tip:'Fix the stage with the biggest drop-off before worrying about the others.'},
+{t:'fc',c:'Sales & Pricing',s:'Close Rate',ctx:'when it comes to business',d:'The percentage of prospects who become paying customers.',w:'Improving it means turning more of the same effort into actual revenue.',x:'40 quotes sent and 10 accepted is a 25% close rate.',tip:'Practice handling the specific objections that come up most often.'},
+{t:'fc',c:'Sales & Pricing',s:'Objection',ctx:'when it comes to business',d:'The concern a customer raises that stands between them and buying.',w:'Understanding common objections in advance lets a business prepare answers instead of losing the sale on the spot.',x:'\u201CIt costs too much\u201D usually means the value has not been made clear yet.',tip:'Write down the top objections heard and prepare a clear answer for each.'},
 
 /* ---------- OPERATIONS & SYSTEMS ---------- */
-{t:'fc',c:'Operations & Systems',s:'Standard Operating Procedure',d:'A written step-by-step for how a specific task gets done every single time.',x:'A one-page checklist so every location opens exactly the same way.'},
-{t:'fc',c:'Operations & Systems',s:'Supply Chain',d:'The full path a product travels from raw materials to the customer\u2019s hands.',x:'Cotton, to fabric mill, to factory, to warehouse, to the buyer\u2019s door.'},
-{t:'fc',c:'Operations & Systems',s:'Inventory Turnover',d:'How many times a business sells through and replaces its inventory in a period.',x:'A shop that clears its shelves six times a year has healthier flow than one that clears them once.'},
-{t:'fc',c:'Operations & Systems',s:'Just-in-Time Inventory',d:'Ordering stock only as it is needed so cash is not tied up sitting on shelves.',x:'A restaurant orders produce twice a week instead of storing a month of it.'},
-{t:'fc',c:'Operations & Systems',s:'Lead Time',d:'How long it takes between ordering something and actually receiving it.',x:'A six-week lead time means holiday inventory must be ordered in September.'},
-{t:'fc',c:'Operations & Systems',s:'Quality Control',d:'The checks that make sure what you deliver meets a consistent standard.',x:'Inspecting a sample from every production batch before it ships.'},
-{t:'fc',c:'Operations & Systems',s:'Automation',d:'Using tools or software to handle repetitive work without a person doing it.',x:'Invoices that send themselves and follow up automatically when unpaid.'},
-{t:'fc',c:'Operations & Systems',s:'Outsourcing',d:'Paying an outside company to handle a function instead of doing it in-house.',x:'Hiring an accounting firm rather than employing a full-time bookkeeper.'},
-{t:'fc',c:'Operations & Systems',s:'Vendor',d:'An outside supplier the business depends on in order to operate.',x:'Losing your only packaging vendor can stop shipping entirely.'},
-{t:'fc',c:'Operations & Systems',s:'Key Performance Indicator',d:'The small number of measurements that best show whether the business is winning.',x:'A gym tracks new sign-ups and monthly cancellations above everything else.'},
+{t:'fc',c:'Operations & Systems',s:'Standard Operating Procedure',d:'A written step-by-step for how a specific task gets done every single time.',w:'It is what allows a business to deliver the same quality no matter who is doing the work.',x:'A one-page checklist so every location opens exactly the same way.',tip:'Write this down the first time a task is done correctly, not months later.'},
+{t:'fc',c:'Operations & Systems',s:'Supply Chain',d:'The full path a product travels from raw materials to the customer\u2019s hands.',w:'A disruption anywhere along it can stop a business from delivering, even if everything else is running fine.',x:'Cotton, to fabric mill, to factory, to warehouse, to the buyer\u2019s door.',tip:'Identify a backup option for every critical link in the chain.'},
+{t:'fc',c:'Operations & Systems',s:'Inventory Turnover',d:'How many times a business sells through and replaces its inventory in a period.',w:'Faster turnover generally means healthier cash flow, since money is not sitting idle on a shelf.',x:'A shop that clears its shelves six times a year has healthier flow than one that clears them once.',tip:'Watch for slow-moving stock and discount it before it ties up cash indefinitely.'},
+{t:'fc',c:'Operations & Systems',s:'Just-in-Time Inventory',d:'Ordering stock only as it is needed so cash is not tied up sitting on shelves.',w:'It frees up cash that would otherwise sit unused in unsold stock.',x:'A restaurant orders produce twice a week instead of storing a month of it.',tip:'Keep a small safety buffer in case a supplier delivery runs late.'},
+{t:'fc',c:'Operations & Systems',s:'Lead Time',d:'How long it takes between ordering something and actually receiving it.',w:'Underestimating it is one of the most common ways businesses run out of stock at the worst moment.',x:'A six-week lead time means holiday inventory must be ordered in September.',tip:'Order earlier than feels necessary, since lead times often grow over time.'},
+{t:'fc',c:'Operations & Systems',s:'Quality Control',d:'The checks that make sure what you deliver meets a consistent standard.',w:'Consistent quality is often what keeps customers coming back more than price does.',x:'Inspecting a sample from every production batch before it ships.',tip:'Check quality throughout production, not only at the very end.'},
+{t:'fc',c:'Operations & Systems',s:'Automation',d:'Using tools or software to handle repetitive work without a person doing it.',w:'It frees up time and reduces costly human error on repetitive tasks.',x:'Invoices that send themselves and follow up automatically when unpaid.',tip:'Automate a process only after it is already working well manually.'},
+{t:'fc',c:'Operations & Systems',s:'Outsourcing',d:'Paying an outside company to handle a function instead of doing it in-house.',w:'It lets a business access expertise it could not afford to hire in-house full-time.',x:'Hiring an accounting firm rather than employing a full-time bookkeeper.',tip:'Outsource the tasks outside your expertise, but keep your core strength in-house.'},
+{t:'fc',c:'Operations & Systems',s:'Vendor',ctx:'when it comes to business',d:'An outside supplier the business depends on in order to operate.',w:'Strong vendor relationships often mean better pricing, priority service, and more flexibility when things go wrong.',x:'Losing your only packaging vendor can stop shipping entirely.',tip:'Build a backup vendor relationship before you actually need one.'},
+{t:'fc',c:'Operations & Systems',s:'Key Performance Indicator',d:'The small number of measurements that best show whether the business is winning.',w:'Tracking the right few numbers keeps a business focused on what actually matters.',x:'A gym tracks new sign-ups and monthly cancellations above everything else.',tip:'Pick three numbers that matter most and check them every single week.'},
 
 /* ---------- LEADERSHIP & HIRING ---------- */
-{t:'fc',c:'Leadership & Hiring',s:'Company Culture',d:'The behavior and standards a team actually lives by day to day, not what a poster on the wall says.',x:'If leadership always stays late, the team learns that is the expectation.'},
-{t:'fc',c:'Leadership & Hiring',s:'Onboarding',d:'The process of getting a new hire trained, equipped, and productive.',x:'A structured first two weeks instead of handing someone a login and walking away.'},
-{t:'fc',c:'Leadership & Hiring',s:'Employee vs. Contractor',d:'A legal distinction that determines taxes, benefits, and how much control you have over the work.',x:'Misclassifying a worker can create back taxes and penalties.'},
-{t:'fc',c:'Leadership & Hiring',s:'Payroll Burden',d:'The extra cost above someone\u2019s wage, including taxes, insurance, and benefits.',x:'A $50,000 salary often costs the business closer to $60,000 all-in.'},
-{t:'fc',c:'Leadership & Hiring',s:'Retention',d:'Keeping good employees instead of constantly replacing them.',x:'Strong retention lowers training costs and protects customer relationships.'},
-{t:'fc',c:'Leadership & Hiring',s:'Turnover Cost',d:'The real, often hidden cost of losing an employee and replacing them.',x:'Recruiting, training, and lost productivity can exceed several months of that person\u2019s pay.'},
-{t:'fc',c:'Leadership & Hiring',s:'Accountability',d:'One specific person clearly owning one specific result.',x:'When everyone owns a number, no one does.'},
-{t:'fc',c:'Leadership & Hiring',s:'Org Chart',d:'A map of who is responsible for what and who reports to whom.',x:'Two people believing they own the same decision is how projects stall.'},
-{t:'fc',c:'Leadership & Hiring',s:'Leadership vs. Management',d:'Leadership sets the direction. Management makes the plan actually run.',x:'Deciding to open a second location is leadership. Staffing and running it is management.'},
-{t:'fc',c:'Leadership & Hiring',s:'Abdication',d:'Handing off work and disappearing, rather than delegating with clear expectations and follow-up.',x:'\u201CJust handle it\u201D with no standard set is how good employees get blamed for bad outcomes.'},
+{t:'fc',c:'Leadership & Hiring',s:'Company Culture',d:'The behavior and standards a team actually lives by day to day, not what a poster on the wall says.',w:'It shapes how people actually behave when no one is watching, which affects everything else.',x:'If leadership always stays late, the team learns that is the expectation.',tip:'Model the behavior you want the team to have, since they will copy it either way.'},
+{t:'fc',c:'Leadership & Hiring',s:'Onboarding',ctx:'when it comes to business',d:'The process of getting a new hire trained, equipped, and productive.',w:'A strong start helps new hires become productive faster and stay longer.',x:'A structured first two weeks instead of handing someone a login and walking away.',tip:'Build a simple checklist for the first week instead of improvising it each time.'},
+{t:'fc',c:'Leadership & Hiring',s:'Employee vs. Contractor',d:'A legal distinction that determines taxes, benefits, and how much control you have over the work.',w:'Getting this classification right avoids serious legal and tax consequences down the road.',x:'Misclassifying a worker can create back taxes and penalties.',tip:'Confirm the correct classification with a professional before hiring, not after.'},
+{t:'fc',c:'Leadership & Hiring',s:'Payroll Burden',d:'The extra cost above someone\u2019s wage, including taxes, insurance, and benefits.',w:'Understanding it prevents a business from underestimating what a new hire truly costs.',x:'A $50,000 salary often costs the business closer to $60,000 all-in.',tip:'Budget for the fully loaded cost of a hire, not just the salary number.'},
+{t:'fc',c:'Leadership & Hiring',s:'Retention',ctx:'when it comes to business',d:'Keeping good employees instead of constantly replacing them.',w:'Keeping good people protects institutional knowledge and customer relationships that are hard to rebuild.',x:'Strong retention lowers training costs and protects customer relationships.',tip:'Check in regularly with good employees instead of waiting until they want to leave.'},
+{t:'fc',c:'Leadership & Hiring',s:'Turnover Cost',d:'The real, often hidden cost of losing an employee and replacing them.',w:'Recognizing the true cost of losing someone makes investing in retention look far more worthwhile.',x:'Recruiting, training, and lost productivity can exceed several months of that person\u2019s pay.',tip:'Compare this cost against what it would take to keep someone happy instead.'},
+{t:'fc',c:'Leadership & Hiring',s:'Accountability',d:'One specific person clearly owning one specific result.',w:'Clear ownership is what actually gets things done, rather than just discussed.',x:'When everyone owns a number, no one does.',tip:'Assign one clear owner to every important task, not a group.'},
+{t:'fc',c:'Leadership & Hiring',s:'Org Chart',d:'A map of who is responsible for what and who reports to whom.',w:'A clear structure prevents confusion about who makes which decisions.',x:'Two people believing they own the same decision is how projects stall.',tip:'Update this every time the team grows or roles shift.'},
+{t:'fc',c:'Leadership & Hiring',s:'Leadership vs. Management',d:'Leadership sets the direction. Management makes the plan actually run.',w:'A business needs both, and confusing the two roles can leave direction or execution missing.',x:'Deciding to open a second location is leadership. Staffing and running it is management.',tip:'Notice which one is actually missing when something in the business feels stuck.'},
+{t:'fc',c:'Leadership & Hiring',s:'Abdication',ctx:'when it comes to business',d:'Handing off work and disappearing, rather than delegating with clear expectations and follow-up.',w:'Recognizing the difference from real delegation protects both the employee and the outcome.',x:'\u201CJust handle it\u201D with no standard set is how good employees get blamed for bad outcomes.',tip:'Set clear expectations and check in, instead of walking away entirely.'},
 
 /* ---------- OWNERSHIP, EQUITY & EXIT ---------- */
-{t:'fc',c:'Ownership, Equity & Exit',s:'Equity',d:'An ownership share in a business.',x:'Holding 25% equity means owning a quarter of whatever the company is worth.'},
-{t:'fc',c:'Ownership, Equity & Exit',s:'Sweat Equity',d:'Ownership earned through work contributed instead of money invested.',x:'A developer builds the product for free in exchange for 20% of the company.'},
-{t:'fc',c:'Ownership, Equity & Exit',s:'Vesting',d:'Earning ownership gradually over time rather than receiving all of it upfront.',x:'A partner earns their 25% across four years, protecting the business if they leave early.'},
-{t:'fc',c:'Ownership, Equity & Exit',s:'Cap Table',d:'The record of exactly who owns what percentage of a company.',x:'It shows whether the founders still control the business after bringing in investors.'},
-{t:'fc',c:'Ownership, Equity & Exit',s:'Dilution',d:'Existing owners\u2019 percentages shrinking when new shares are issued.',x:'A founder\u2019s 50% becomes 40% after a new investor comes in.'},
-{t:'fc',c:'Ownership, Equity & Exit',s:'Valuation',d:'What a business is judged to be worth.',x:'A company earning $200,000 a year might be valued at three times that, or $600,000.'},
-{t:'fc',c:'Ownership, Equity & Exit',s:'Angel Investor',d:'An individual who invests their own personal money into an early-stage business.',x:'Writing a $50,000 check for a share of ownership before the product even exists.'},
-{t:'fc',c:'Ownership, Equity & Exit',s:'Venture Capital',d:'Professionally managed funds that invest large amounts into high-growth companies in exchange for equity.',x:'A firm invests $2 million for 20%, expecting the company to grow fast or fail trying.'},
-{t:'fc',c:'Ownership, Equity & Exit',s:'Exit Strategy',d:'The plan for how an owner eventually steps away and takes value out of the business.',x:'Selling the company, passing it to family, or being acquired by a competitor.'},
-{t:'fc',c:'Ownership, Equity & Exit',s:'Buy-Sell Agreement',d:'A contract deciding in advance what happens to an owner\u2019s share if they leave, die, or want out.',x:'It prevents a partner\u2019s family from unexpectedly becoming your new business partner.'}
+{t:'fc',c:'Ownership, Equity & Exit',s:'Equity',ctx:'when it comes to business',d:'An ownership share in a business.',w:'It represents real, long-term value, not just a title or a role in the company.',x:'Holding 25% equity means owning a quarter of whatever the company is worth.',tip:'Treat every percentage given away as a real, permanent decision.'},
+{t:'fc',c:'Ownership, Equity & Exit',s:'Sweat Equity',d:'Ownership earned through work contributed instead of money invested.',w:'It lets people without capital still become real owners by contributing their skills and time.',x:'A developer builds the product for free in exchange for 20% of the company.',tip:'Put the exact terms of this arrangement in writing before the work begins.'},
+{t:'fc',c:'Ownership, Equity & Exit',s:'Vesting',ctx:'when it comes to business',d:'Earning ownership gradually over time rather than receiving all of it upfront.',w:'It protects a business from losing equity to someone who leaves early without contributing long-term.',x:'A partner earns their 25% across four years, protecting the business if they leave early.',tip:'Use a vesting schedule for any equity given to a partner or early employee.'},
+{t:'fc',c:'Ownership, Equity & Exit',s:'Cap Table',d:'The record of exactly who owns what percentage of a company.',w:'It shows exactly who controls the company, which becomes critical as more people gain ownership.',x:'It shows whether the founders still control the business after bringing in investors.',tip:'Keep this updated every single time ownership changes, even slightly.'},
+{t:'fc',c:'Ownership, Equity & Exit',s:'Dilution',ctx:'when it comes to business',d:'Existing owners\u2019 percentages shrinking when new shares are issued.',w:'Understanding it helps founders think carefully before giving away more ownership than necessary.',x:'A founder\u2019s 50% becomes 40% after a new investor comes in.',tip:'Ask exactly how much dilution a deal causes before agreeing to it.'},
+{t:'fc',c:'Ownership, Equity & Exit',s:'Due Diligence',ctx:'when it comes to business',d:'Carefully investigating a business or deal before committing money to it.',w:'Skipping it is one of the most common reasons people overpay for a business or investment that was not what it seemed.',x:'Reviewing three years of financial records before agreeing to buy an existing company.',tip:'Never rely only on what a seller tells you. Verify it with real documents.'},
+{t:'fc',c:'Ownership, Equity & Exit',s:'Valuation',d:'What a business is judged to be worth.',w:'It determines how much ownership must be given away to raise a certain amount of money.',x:'A company earning $200,000 a year might be valued at three times that, or $600,000.',tip:'Get a professional opinion before accepting or proposing a number.'},
+{t:'fc',c:'Ownership, Equity & Exit',s:'Angel Investor',d:'An individual who invests their own personal money into an early-stage business.',w:'Their money often comes with valuable experience and connections, not just capital.',x:'Writing a $50,000 check for a share of ownership before the product even exists.',tip:'Choose an investor for their experience and fit, not just for the check.'},
+{t:'fc',c:'Ownership, Equity & Exit',s:'Venture Capital',d:'Professionally managed funds that invest large amounts into high-growth companies in exchange for equity.',w:'It can fund fast, ambitious growth that would be impossible to self-fund.',x:'A firm invests $2 million for 20%, expecting the company to grow fast or fail trying.',tip:'Only pursue this if the business genuinely wants to grow as fast as it demands.'},
+{t:'fc',c:'Ownership, Equity & Exit',s:'Exit Strategy',d:'The plan for how an owner eventually steps away and takes value out of the business.',w:'Planning one early shapes smarter decisions throughout the life of the business, not just at the end.',x:'Selling the company, passing it to family, or being acquired by a competitor.',tip:'Think about this on day one, not just when you are ready to leave.'},
+{t:'fc',c:'Ownership, Equity & Exit',s:'Buy-Sell Agreement',d:'A contract deciding in advance what happens to an owner\u2019s share if they leave, die, or want out.',w:'It protects the business and remaining owners from unexpected chaos if a partner leaves unexpectedly.',x:'It prevents a partner\u2019s family from unexpectedly becoming your new business partner.',tip:'Put this agreement in place the moment a business has more than one owner.'}
 
 ];
 
@@ -488,7 +511,7 @@ window.LW_DECK = [
   function renderReveal(item, correct) {
     var rev = document.createElement('div');
     rev.className = 'reveal';
-    rev.innerHTML =
+    var html =
       '<div class="verdict">' +
         '<span class="verdict-word">' + (item.a ? 'True' : 'False') + '</span>' +
         '<span class="verdict-note ' + (correct ? 'right' : 'wrong') + '">' +
@@ -496,6 +519,11 @@ window.LW_DECK = [
         '</span>' +
       '</div>' +
       '<p class="explain">' + esc(item.e) + '</p>';
+    if (correct && CFG.reward) {
+      html += '<div class="reward-line">Collect $' +
+        Number(CFG.reward).toLocaleString('en-US') + ' from the bank.</div>';
+    }
+    rev.innerHTML = html;
     cardEl.appendChild(rev);
     againEl.textContent = 'Draw another';
   }
@@ -517,14 +545,14 @@ window.LW_DECK = [
       return;
     }
 
-    /* --- Flashcard: term, then reveal definition + example --- */
+    /* --- Flashcard: term as a question, then reveal all fields + reward --- */
     if (item.t === 'fc') {
       cardEl.innerHTML =
         '<div class="kicker"><span class="badge">Business Term</span>' +
         '<span class="cat">' + esc(item.c) + '</span></div>' +
-        '<h2 class="term">' + esc(item.s) + '</h2>' +
+        '<h2 class="term">What is ' + esc(item.s) + (item.ctx ? ' <span class="term-ctx">' + esc(item.ctx) + '</span>' : '') + '?</h2>' +
         '<div class="choices single">' +
-          '<button class="choice" type="button" data-reveal="1">Reveal</button>' +
+          '<button class="choice" type="button" data-reveal="1">Reveal Answer</button>' +
         '</div>';
       againEl.textContent = 'Skip to another';
 
@@ -577,11 +605,20 @@ window.LW_DECK = [
 
     var rev = document.createElement('div');
     rev.className = 'reveal';
-    rev.innerHTML =
-      '<p class="field-label">What it is</p>' +
+    var html =
+      '<p class="field-label">Definition</p>' +
       '<p class="field-text">' + esc(item.d) + '</p>' +
-      '<p class="field-label spaced">In practice</p>' +
-      '<p class="field-text">' + esc(item.x) + '</p>';
+      '<p class="field-label spaced">Why It Matters</p>' +
+      '<p class="field-text">' + esc(item.w) + '</p>' +
+      '<p class="field-label spaced">Business Example</p>' +
+      '<p class="field-text">' + esc(item.x) + '</p>' +
+      '<p class="field-label spaced">Quick Tip</p>' +
+      '<p class="field-text">' + esc(item.tip) + '</p>';
+    if (CFG.reward) {
+      html += '<div class="reward-line">Got it right? Collect $' +
+        Number(CFG.reward).toLocaleString('en-US') + ' from the bank.</div>';
+    }
+    rev.innerHTML = html;
     cardEl.appendChild(rev);
 
     againEl.textContent = 'Draw another';
