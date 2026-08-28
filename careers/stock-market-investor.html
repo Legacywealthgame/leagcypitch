@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stock Market Investor — Career Deep Dive | Legacy Wealth</title>
+<meta name="description" content="Real access to one of the best wealth building tools ever created, but returns entirely capped by market performance and by the investor’s own discipline.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --ledger:#0E2019;
+  --panel:#15332686;
+  --panel-solid:#153326;
+  --panel-raise:#1C4234;
+  --brass:#B8874A;
+  --brass-bright:#E7C078;
+  --brass-dim:#8A6A3E;
+  --parchment:#F2EAD3;
+  --parchment-dim:#CBC2A3;
+  --sage:#83A491;
+  --line:rgba(231,192,120,0.22);
+  --line-strong:rgba(231,192,120,0.42);
+  --shadow: 0 20px 60px rgba(0,0,0,0.45);
+  --radius: 4px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background-color:var(--ledger);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(231,192,120,0.05) 1px, transparent 0);
+  background-size: 22px 22px;
+  color:var(--parchment);
+  font-family:'Newsreader', Georgia, serif;
+  font-size:17px;
+  line-height:1.68;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{ background:var(--brass); color:#0E2019; }
+a{ color:var(--brass-bright); }
+
+.wrap{
+  max-width:760px;
+  margin:0 auto;
+  padding:0 24px 80px;
+}
+.top-rule{
+  max-width:760px;
+  margin:0 auto;
+  padding:22px 24px 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-family:'Space Mono', monospace;
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--sage);
+}
+.top-rule .quadrant-chip{
+  border:1px solid var(--line-strong);
+  border-radius:2px;
+  padding:4px 9px;
+  color:var(--brass-bright);
+}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;
+  padding:38px 0 30px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:40px;
+}
+.hero-grid{
+  display:flex;
+  align-items:flex-start;
+  gap:28px;
+}
+.hero-text{ flex:1; min-width:0; }
+.eyebrow{
+  font-family:'Space Mono', monospace;
+  font-size:12px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--brass);
+  margin:0 0 14px;
+}
+.eyebrow.alt{ color:var(--sage); }
+h1.hook{
+  font-family:'Fraunces', Georgia, serif;
+  font-optical-sizing:auto;
+  font-weight:600;
+  font-size:clamp(30px, 5.4vw, 44px);
+  line-height:1.08;
+  letter-spacing:-0.01em;
+  color:var(--brass-bright);
+  margin:0 0 16px;
+}
+.subhook{
+  font-family:'Newsreader', serif;
+  font-style:italic;
+  font-size:19px;
+  line-height:1.55;
+  color:var(--parchment-dim);
+  margin:0;
+  max-width:60ch;
+}
+
+/* ---------- SEAL (signature element) ---------- */
+.seal-wrap{ flex-shrink:0; width:118px; }
+.seal{
+  position:relative;
+  width:112px; height:112px;
+  border-radius:50%;
+  transform:rotate(-7deg);
+  background: var(--panel-solid);
+  border:2px solid var(--brass);
+  box-shadow: inset 0 0 0 5px rgba(14,32,25,0.9), inset 0 0 0 6px var(--line-strong);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.seal::before{
+  content:"";
+  position:absolute;
+  inset:14px;
+  border:1px dashed var(--line-strong);
+  border-radius:50%;
+}
+.seal-inner{
+  font-family:'Space Mono', monospace;
+  color:var(--brass-bright);
+  line-height:1.25;
+}
+.seal-inner .abbr{
+  display:block;
+  font-family:'Fraunces', serif;
+  font-weight:700;
+  font-size:22px;
+  letter-spacing:.02em;
+}
+.seal-inner .full{
+  display:block;
+  font-size:7.5px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  margin-top:2px;
+  color:var(--parchment-dim);
+}
+.seal-caption{
+  margin-top:10px;
+  text-align:center;
+  font-family:'Space Mono', monospace;
+  font-size:9.5px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--sage);
+  line-height:1.5;
+}
+
+/* ---------- LEDGER STAT BLOCK ---------- */
+.ledger{
+  border:1px solid var(--line-strong);
+  border-radius:var(--radius);
+  background:linear-gradient(180deg, rgba(231,192,120,0.05), rgba(231,192,120,0) 40%), var(--panel-solid);
+  margin:0 0 44px;
+  overflow:hidden;
+}
+.ledger-head{
+  font-family:'Space Mono', monospace;
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--brass);
+  padding:14px 20px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+}
+.ledger-row{
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+  padding:13px 20px;
+  border-bottom:1px solid var(--line);
+}
+.ledger-row:last-child{ border-bottom:none; }
+.ledger-label{
+  font-family:'Space Mono', monospace;
+  font-size:12.5px;
+  color:var(--parchment-dim);
+  letter-spacing:.01em;
+}
+.ledger-dots{
+  flex:1;
+  border-bottom:1px dotted var(--line-strong);
+  transform:translateY(-4px);
+  min-width:16px;
+}
+.ledger-value{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+  font-size:16.5px;
+  color:var(--brass-bright);
+  white-space:nowrap;
+  text-align:right;
+}
+
+/* ---------- SECTIONS ---------- */
+section.block{ margin:0 0 44px; }
+.section-label{
+  font-family:'Space Mono', monospace;
+  font-size:12px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--sage);
+  margin:0 0 18px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.section-label::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:var(--line);
+}
+.section-label.turn{ color:var(--brass); }
+.section-label.turn::before{
+  content:"\2666";
+  color:var(--brass);
+  font-size:10px;
+}
+
+.prose p{
+  margin:0 0 18px;
+  color:var(--parchment);
+}
+.prose p:last-child{ margin-bottom:0; }
+
+.dropcap p:first-of-type::first-letter{
+  font-family:'Fraunces', serif;
+  font-weight:700;
+  font-size:64px;
+  line-height:0.78;
+  float:left;
+  padding:6px 10px 0 0;
+  color:var(--brass-bright);
+}
+
+.optimization-panel{
+  border-left:2px solid var(--brass);
+  background:linear-gradient(90deg, rgba(231,192,120,0.07), transparent 60%);
+  padding:22px 24px;
+  border-radius:0 var(--radius) var(--radius) 0;
+}
+.optimization-panel p{ color:var(--parchment); }
+.optimization-panel p:last-child{ margin-bottom:0; }
+
+/* ---------- GAME CARD (Back to the Board) ---------- */
+.board-section{
+  border-top:1px solid var(--line);
+  padding-top:40px;
+}
+.board-flex{
+  display:flex;
+  gap:26px;
+  align-items:flex-start;
+  flex-wrap:wrap;
+}
+.game-card{
+  flex:0 0 220px;
+  width:220px;
+  border:1.5px solid var(--brass);
+  border-radius:12px;
+  padding:18px 16px;
+  background:
+    radial-gradient(circle at 1.4px 1.4px, rgba(231,192,120,0.06) 1px, transparent 0) 0 0/8px 8px,
+    var(--panel-raise);
+  box-shadow:var(--shadow);
+  position:relative;
+}
+.game-card::before{
+  content:"";
+  position:absolute;
+  inset:6px;
+  border:1px solid var(--line-strong);
+  border-radius:8px;
+  pointer-events:none;
+}
+.game-card-quadrant{
+  font-family:'Space Mono', monospace;
+  font-size:9.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--sage);
+  margin-bottom:6px;
+}
+.game-card-title{
+  font-family:'Fraunces', serif;
+  font-weight:700;
+  font-size:22px;
+  color:var(--brass-bright);
+  margin:0 0 14px;
+  line-height:1.1;
+}
+.game-card ul{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.game-card li{
+  font-family:'Newsreader', serif;
+  font-size:13.5px;
+  line-height:1.45;
+  color:var(--parchment-dim);
+  padding:8px 0;
+  border-top:1px dotted var(--line);
+}
+.game-card li:first-child{ border-top:none; }
+.game-card li::before{
+  content:"\2666  ";
+  color:var(--brass);
+}
+.game-card-foot{
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+  font-family:'Space Mono', monospace;
+  font-size:8.5px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--brass-dim);
+  text-align:center;
+}
+.board-text{ flex:1; min-width:260px; }
+.board-text p{ margin:0; color:var(--parchment); }
+
+/* ---------- FOOTER ---------- */
+footer{
+  margin-top:60px;
+  padding-top:26px;
+  border-top:1px solid var(--line);
+  text-align:center;
+}
+.wordmark{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  letter-spacing:.04em;
+  font-size:18px;
+  color:var(--brass-bright);
+}
+.tagline{
+  font-family:'Space Mono', monospace;
+  font-size:10.5px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--sage);
+  margin-top:6px;
+}
+.site-url{
+  margin-top:14px;
+  font-family:'Space Mono', monospace;
+  font-size:10.5px;
+  color:var(--brass-dim);
+}
+.nav-back{
+  display:inline-block;
+  margin-top:24px;
+  font-family:'Space Mono', monospace;
+  font-size:11px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--brass);
+  text-decoration:none;
+  border-bottom:1px solid var(--line-strong);
+  padding-bottom:2px;
+}
+
+@media (max-width:600px){
+  .hero-grid{ flex-direction:column-reverse; }
+  .seal-wrap{ width:100%; display:flex; justify-content:flex-start; }
+  body{ font-size:16.5px; }
+  .game-card{ width:100%; flex-basis:100%; }
+  .ledger-row{ flex-wrap:wrap; row-gap:4px; }
+  .ledger-label{ flex-basis:100%; }
+  .ledger-dots{ display:none; }
+  .ledger-value{ margin-left:auto; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="top-rule">
+  <span>Legacy Wealth &middot; Career Deep Dive</span>
+  <span class="quadrant-chip">Investor</span>
+</div>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <p class="eyebrow">Stock Market Investor</p>
+        <h1 class="hook">Growing Your Own Money Is Good. Getting Paid to Grow Everyone Else’s Is Different.</h1>
+        <p class="subhook">Real access to one of the best wealth building tools ever created, but returns entirely capped by market performance and by the investor’s own discipline.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="ledger">
+    <div class="ledger-head"><span>By the Numbers</span><span>Real World</span></div>
+    <div class="ledger-row"><span class="ledger-label">S&amp;P 500 historical average return</span><span class="ledger-dots"></span><span class="ledger-value">~10% / yr</span></div>
+    <div class="ledger-row"><span class="ledger-label">Average individual investor return</span><span class="ledger-dots"></span><span class="ledger-value">Consistently well below the market</span></div>
+    <div class="ledger-row"><span class="ledger-label">Standard hedge fund fee structure</span><span class="ledger-dots"></span><span class="ledger-value">2% of AUM + 20% of profits</span></div>
+    <div class="ledger-row"><span class="ledger-label">Top hedge fund manager earnings</span><span class="ledger-dots"></span><span class="ledger-value">$1 billion+ in a single year</span></div>
+  </div>
+
+  <section class="block">
+    <p class="section-label">The Real Path</p>
+    <div class="prose dropcap">
+      <p>Becoming a stock market investor requires no degree, no license, and no permission from anyone. Anyone with a brokerage account and some savings can start buying shares of a company today.</p>
+      <p>Once invested, the historical numbers are genuinely good, if a person actually stays invested. The S&amp;P 500 has averaged around 10 percent a year over its full history, and someone who simply buys a broad index fund and holds it for decades has captured real, compounding wealth with almost no effort. But there’s a catch most individual investors never overcome. Studies have repeatedly found that the average individual investor earns far less than the market itself, because most people buy and sell at the wrong moments, chase hot stocks, and trade far more than a simple buy and hold strategy would ever require.</p>
+      <p>That’s the stock market investor at face value. Real access to one of the best wealth building tools ever created, genuinely available to anyone, but the returns are entirely capped by market performance and by the investor’s own discipline, and the money only ever comes from the investor’s own capital growing.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="section-label turn">The Optimization</p>
+    <div class="optimization-panel prose">
+      <p>The optimization is managing other people’s money on top of your own. A person who becomes skilled enough at investing can start a fund and raise capital from outside investors, and that’s where the income structure changes entirely. Hedge fund managers typically charge a 2 percent annual management fee on all the assets they oversee, plus 20 percent of any profits above an agreed threshold, a structure known across the industry as two and twenty. A manager overseeing just $500 million who delivers a solid year can earn tens of millions of dollars in fees alone, not from their own capital going up, but from other people’s capital that they’re being paid to grow. At the very top of the industry, the highest earning hedge fund managers have taken home over a billion dollars in a single year, managing money that mostly isn’t even theirs. Same skill, same market, same instinct for reading opportunity, but now the income comes from a percentage of everyone else’s capital instead of just the growth of one person’s own account.</p>
+    </div>
+  </section>
+
+  <section class="block board-section">
+    <p class="section-label">Back to the Board</p>
+    <div class="board-flex">
+      <div class="game-card">
+        <div class="game-card-quadrant">Investor Quadrant</div>
+        <div class="game-card-title">Stock Market Investor</div>
+        <ul>
+          <li>Dividend collected every lap</li>
+          <li>10% off Investment assets</li>
+          <li>1.3x permanent income on Investment assets</li>
+        </ul>
+        <div class="game-card-foot">Legacy Wealth &middot; Career Card</div>
+      </div>
+      <div class="board-text">
+        <p>The Stock Market Investor card reflects the face value version: strong starting cash, a dividend collected every lap instead of a salary, a 10 percent discount on Investment assets, and a 1.3x permanent income multiplier on every Investment asset owned. The ownership move, raising and managing other people’s capital instead of only growing your own, is the natural next step this same person could take on the board.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wordmark">LEGACY WEALTH</div>
+    <div class="tagline">Build Wealth. Leave a Legacy.</div>
+    <div class="site-url">legacywealthgame.com/careers/stock-market-investor</div>
+    <a class="nav-back" href="/">&larr; Back to Legacy Wealth</a>
+  </footer>
+
+</div>
+</body>
+</html>

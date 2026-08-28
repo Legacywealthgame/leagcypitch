@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Private Equity Investor — Career Deep Dive | Legacy Wealth</title>
+<meta name="description" content="Real ownership, real operational control, strong returns on a single deal, but growth limited by how many businesses one person can personally find, finance, and turn around.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --ledger:#0E2019;
+  --panel:#15332686;
+  --panel-solid:#153326;
+  --panel-raise:#1C4234;
+  --brass:#B8874A;
+  --brass-bright:#E7C078;
+  --brass-dim:#8A6A3E;
+  --parchment:#F2EAD3;
+  --parchment-dim:#CBC2A3;
+  --sage:#83A491;
+  --line:rgba(231,192,120,0.22);
+  --line-strong:rgba(231,192,120,0.42);
+  --shadow: 0 20px 60px rgba(0,0,0,0.45);
+  --radius: 4px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background-color:var(--ledger);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(231,192,120,0.05) 1px, transparent 0);
+  background-size: 22px 22px;
+  color:var(--parchment);
+  font-family:'Newsreader', Georgia, serif;
+  font-size:17px;
+  line-height:1.68;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{ background:var(--brass); color:#0E2019; }
+a{ color:var(--brass-bright); }
+
+.wrap{
+  max-width:760px;
+  margin:0 auto;
+  padding:0 24px 80px;
+}
+.top-rule{
+  max-width:760px;
+  margin:0 auto;
+  padding:22px 24px 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-family:'Space Mono', monospace;
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--sage);
+}
+.top-rule .quadrant-chip{
+  border:1px solid var(--line-strong);
+  border-radius:2px;
+  padding:4px 9px;
+  color:var(--brass-bright);
+}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;
+  padding:38px 0 30px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:40px;
+}
+.hero-grid{
+  display:flex;
+  align-items:flex-start;
+  gap:28px;
+}
+.hero-text{ flex:1; min-width:0; }
+.eyebrow{
+  font-family:'Space Mono', monospace;
+  font-size:12px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--brass);
+  margin:0 0 14px;
+}
+.eyebrow.alt{ color:var(--sage); }
+h1.hook{
+  font-family:'Fraunces', Georgia, serif;
+  font-optical-sizing:auto;
+  font-weight:600;
+  font-size:clamp(30px, 5.4vw, 44px);
+  line-height:1.08;
+  letter-spacing:-0.01em;
+  color:var(--brass-bright);
+  margin:0 0 16px;
+}
+.subhook{
+  font-family:'Newsreader', serif;
+  font-style:italic;
+  font-size:19px;
+  line-height:1.55;
+  color:var(--parchment-dim);
+  margin:0;
+  max-width:60ch;
+}
+
+/* ---------- SEAL (signature element) ---------- */
+.seal-wrap{ flex-shrink:0; width:118px; }
+.seal{
+  position:relative;
+  width:112px; height:112px;
+  border-radius:50%;
+  transform:rotate(-7deg);
+  background: var(--panel-solid);
+  border:2px solid var(--brass);
+  box-shadow: inset 0 0 0 5px rgba(14,32,25,0.9), inset 0 0 0 6px var(--line-strong);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.seal::before{
+  content:"";
+  position:absolute;
+  inset:14px;
+  border:1px dashed var(--line-strong);
+  border-radius:50%;
+}
+.seal-inner{
+  font-family:'Space Mono', monospace;
+  color:var(--brass-bright);
+  line-height:1.25;
+}
+.seal-inner .abbr{
+  display:block;
+  font-family:'Fraunces', serif;
+  font-weight:700;
+  font-size:22px;
+  letter-spacing:.02em;
+}
+.seal-inner .full{
+  display:block;
+  font-size:7.5px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  margin-top:2px;
+  color:var(--parchment-dim);
+}
+.seal-caption{
+  margin-top:10px;
+  text-align:center;
+  font-family:'Space Mono', monospace;
+  font-size:9.5px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--sage);
+  line-height:1.5;
+}
+
+/* ---------- LEDGER STAT BLOCK ---------- */
+.ledger{
+  border:1px solid var(--line-strong);
+  border-radius:var(--radius);
+  background:linear-gradient(180deg, rgba(231,192,120,0.05), rgba(231,192,120,0) 40%), var(--panel-solid);
+  margin:0 0 44px;
+  overflow:hidden;
+}
+.ledger-head{
+  font-family:'Space Mono', monospace;
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--brass);
+  padding:14px 20px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+}
+.ledger-row{
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+  padding:13px 20px;
+  border-bottom:1px solid var(--line);
+}
+.ledger-row:last-child{ border-bottom:none; }
+.ledger-label{
+  font-family:'Space Mono', monospace;
+  font-size:12.5px;
+  color:var(--parchment-dim);
+  letter-spacing:.01em;
+}
+.ledger-dots{
+  flex:1;
+  border-bottom:1px dotted var(--line-strong);
+  transform:translateY(-4px);
+  min-width:16px;
+}
+.ledger-value{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+  font-size:16.5px;
+  color:var(--brass-bright);
+  white-space:nowrap;
+  text-align:right;
+}
+
+/* ---------- SECTIONS ---------- */
+section.block{ margin:0 0 44px; }
+.section-label{
+  font-family:'Space Mono', monospace;
+  font-size:12px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--sage);
+  margin:0 0 18px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.section-label::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:var(--line);
+}
+.section-label.turn{ color:var(--brass); }
+.section-label.turn::before{
+  content:"\2666";
+  color:var(--brass);
+  font-size:10px;
+}
+
+.prose p{
+  margin:0 0 18px;
+  color:var(--parchment);
+}
+.prose p:last-child{ margin-bottom:0; }
+
+.dropcap p:first-of-type::first-letter{
+  font-family:'Fraunces', serif;
+  font-weight:700;
+  font-size:64px;
+  line-height:0.78;
+  float:left;
+  padding:6px 10px 0 0;
+  color:var(--brass-bright);
+}
+
+.optimization-panel{
+  border-left:2px solid var(--brass);
+  background:linear-gradient(90deg, rgba(231,192,120,0.07), transparent 60%);
+  padding:22px 24px;
+  border-radius:0 var(--radius) var(--radius) 0;
+}
+.optimization-panel p{ color:var(--parchment); }
+.optimization-panel p:last-child{ margin-bottom:0; }
+
+/* ---------- GAME CARD (Back to the Board) ---------- */
+.board-section{
+  border-top:1px solid var(--line);
+  padding-top:40px;
+}
+.board-flex{
+  display:flex;
+  gap:26px;
+  align-items:flex-start;
+  flex-wrap:wrap;
+}
+.game-card{
+  flex:0 0 220px;
+  width:220px;
+  border:1.5px solid var(--brass);
+  border-radius:12px;
+  padding:18px 16px;
+  background:
+    radial-gradient(circle at 1.4px 1.4px, rgba(231,192,120,0.06) 1px, transparent 0) 0 0/8px 8px,
+    var(--panel-raise);
+  box-shadow:var(--shadow);
+  position:relative;
+}
+.game-card::before{
+  content:"";
+  position:absolute;
+  inset:6px;
+  border:1px solid var(--line-strong);
+  border-radius:8px;
+  pointer-events:none;
+}
+.game-card-quadrant{
+  font-family:'Space Mono', monospace;
+  font-size:9.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--sage);
+  margin-bottom:6px;
+}
+.game-card-title{
+  font-family:'Fraunces', serif;
+  font-weight:700;
+  font-size:22px;
+  color:var(--brass-bright);
+  margin:0 0 14px;
+  line-height:1.1;
+}
+.game-card ul{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.game-card li{
+  font-family:'Newsreader', serif;
+  font-size:13.5px;
+  line-height:1.45;
+  color:var(--parchment-dim);
+  padding:8px 0;
+  border-top:1px dotted var(--line);
+}
+.game-card li:first-child{ border-top:none; }
+.game-card li::before{
+  content:"\2666  ";
+  color:var(--brass);
+}
+.game-card-foot{
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+  font-family:'Space Mono', monospace;
+  font-size:8.5px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--brass-dim);
+  text-align:center;
+}
+.board-text{ flex:1; min-width:260px; }
+.board-text p{ margin:0; color:var(--parchment); }
+
+/* ---------- FOOTER ---------- */
+footer{
+  margin-top:60px;
+  padding-top:26px;
+  border-top:1px solid var(--line);
+  text-align:center;
+}
+.wordmark{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  letter-spacing:.04em;
+  font-size:18px;
+  color:var(--brass-bright);
+}
+.tagline{
+  font-family:'Space Mono', monospace;
+  font-size:10.5px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--sage);
+  margin-top:6px;
+}
+.site-url{
+  margin-top:14px;
+  font-family:'Space Mono', monospace;
+  font-size:10.5px;
+  color:var(--brass-dim);
+}
+.nav-back{
+  display:inline-block;
+  margin-top:24px;
+  font-family:'Space Mono', monospace;
+  font-size:11px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--brass);
+  text-decoration:none;
+  border-bottom:1px solid var(--line-strong);
+  padding-bottom:2px;
+}
+
+@media (max-width:600px){
+  .hero-grid{ flex-direction:column-reverse; }
+  .seal-wrap{ width:100%; display:flex; justify-content:flex-start; }
+  body{ font-size:16.5px; }
+  .game-card{ width:100%; flex-basis:100%; }
+  .ledger-row{ flex-wrap:wrap; row-gap:4px; }
+  .ledger-label{ flex-basis:100%; }
+  .ledger-dots{ display:none; }
+  .ledger-value{ margin-left:auto; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="top-rule">
+  <span>Legacy Wealth &middot; Career Deep Dive</span>
+  <span class="quadrant-chip">Investor</span>
+</div>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <p class="eyebrow">Private Equity Investor</p>
+        <h1 class="hook">Buy It. Improve It. Sell It. Then Do That a Hundred Times at Once.</h1>
+        <p class="subhook">Real ownership, real operational control, strong returns on a single deal, but growth limited by how many businesses one person can personally find, finance, and turn around.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="ledger">
+    <div class="ledger-head"><span>By the Numbers</span><span>Real World</span></div>
+    <div class="ledger-row"><span class="ledger-label">Typical search fund acquisition</span><span class="ledger-dots"></span><span class="ledger-value">$2 million–$16 million</span></div>
+    <div class="ledger-row"><span class="ledger-label">Aggregate search fund IRR</span><span class="ledger-dots"></span><span class="ledger-value">~34% / yr</span></div>
+    <div class="ledger-row"><span class="ledger-label">Blackstone total AUM, all funds</span><span class="ledger-dots"></span><span class="ledger-value">$1 trillion+</span></div>
+  </div>
+
+  <section class="block">
+    <p class="section-label">The Real Path</p>
+    <div class="prose dropcap">
+      <p>Becoming a private equity investor at the individual level often starts with something called a search fund, raising a small amount of capital to buy one existing, profitable small business instead of starting one from scratch. Typical acquisitions run in the $2 million to $16 million range, financed with a mix of the buyer’s own money, investor capital, and debt. It’s a real path to ownership with genuinely strong historical returns, an aggregate internal rate of return around 34 percent, but it’s built around buying, improving, and eventually exiting one company at a time.</p>
+      <p>That’s the private equity investor at face value. Real ownership, real operational control, strong returns on a single deal, but growth is limited by how many businesses one person can personally find, finance, and turn around.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="section-label turn">The Optimization</p>
+    <div class="optimization-panel prose">
+      <p>The optimization is doing that same buy-and-improve playbook at institutional scale, using other people’s capital instead of just your own. Large private equity firms raise enormous funds from pension funds, endowments, and wealthy investors, then buy entire companies using that pooled capital plus leverage, charging roughly 1 to 2 percent of assets under management every year plus 20 percent of the profits once the fund returns money to investors. Blackstone alone manages well over a trillion dollars across its funds, and firms operating at that scale generate billions of dollars in fee income in a single year, completely separate from whether any individual company they own has been sold yet. The core skill never changes, buy an undervalued or underperforming business, improve it, and sell it for more than you paid. But at the fund level, that same skill gets applied across dozens of companies simultaneously, using capital raised from investors paying for access to exactly that skill.</p>
+    </div>
+  </section>
+
+  <section class="block board-section">
+    <p class="section-label">Back to the Board</p>
+    <div class="board-flex">
+      <div class="game-card">
+        <div class="game-card-quadrant">Investor Quadrant</div>
+        <div class="game-card-title">Private Equity Investor</div>
+        <ul>
+          <li>Dividend collected every lap</li>
+          <li>10% off Business assets</li>
+          <li>1.3x permanent income on Business assets</li>
+        </ul>
+        <div class="game-card-foot">Legacy Wealth &middot; Career Card</div>
+      </div>
+      <div class="board-text">
+        <p>The Private Equity Investor card reflects the face value version: strong starting cash, a dividend every lap, a 10 percent discount on Business assets, and a 1.3x permanent income multiplier on every Business asset owned. The ownership move, raising a real fund and doing the same thing at institutional scale, is the same leap that built the largest private equity firms in the world.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wordmark">LEGACY WEALTH</div>
+    <div class="tagline">Build Wealth. Leave a Legacy.</div>
+    <div class="site-url">legacywealthgame.com/careers/private-equity-investor</div>
+    <a class="nav-back" href="/">&larr; Back to Legacy Wealth</a>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angel Investor — Career Deep Dive | Legacy Wealth</title>
+<meta name="description" content="Real ownership in real companies from the very beginning, but the odds on any one check are long, and meaningful returns require enough capital to make many bets at once.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --ledger:#0E2019;
+  --panel:#15332686;
+  --panel-solid:#153326;
+  --panel-raise:#1C4234;
+  --brass:#B8874A;
+  --brass-bright:#E7C078;
+  --brass-dim:#8A6A3E;
+  --parchment:#F2EAD3;
+  --parchment-dim:#CBC2A3;
+  --sage:#83A491;
+  --line:rgba(231,192,120,0.22);
+  --line-strong:rgba(231,192,120,0.42);
+  --shadow: 0 20px 60px rgba(0,0,0,0.45);
+  --radius: 4px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background-color:var(--ledger);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(231,192,120,0.05) 1px, transparent 0);
+  background-size: 22px 22px;
+  color:var(--parchment);
+  font-family:'Newsreader', Georgia, serif;
+  font-size:17px;
+  line-height:1.68;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{ background:var(--brass); color:#0E2019; }
+a{ color:var(--brass-bright); }
+
+.wrap{
+  max-width:760px;
+  margin:0 auto;
+  padding:0 24px 80px;
+}
+.top-rule{
+  max-width:760px;
+  margin:0 auto;
+  padding:22px 24px 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-family:'Space Mono', monospace;
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--sage);
+}
+.top-rule .quadrant-chip{
+  border:1px solid var(--line-strong);
+  border-radius:2px;
+  padding:4px 9px;
+  color:var(--brass-bright);
+}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;
+  padding:38px 0 30px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:40px;
+}
+.hero-grid{
+  display:flex;
+  align-items:flex-start;
+  gap:28px;
+}
+.hero-text{ flex:1; min-width:0; }
+.eyebrow{
+  font-family:'Space Mono', monospace;
+  font-size:12px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--brass);
+  margin:0 0 14px;
+}
+.eyebrow.alt{ color:var(--sage); }
+h1.hook{
+  font-family:'Fraunces', Georgia, serif;
+  font-optical-sizing:auto;
+  font-weight:600;
+  font-size:clamp(30px, 5.4vw, 44px);
+  line-height:1.08;
+  letter-spacing:-0.01em;
+  color:var(--brass-bright);
+  margin:0 0 16px;
+}
+.subhook{
+  font-family:'Newsreader', serif;
+  font-style:italic;
+  font-size:19px;
+  line-height:1.55;
+  color:var(--parchment-dim);
+  margin:0;
+  max-width:60ch;
+}
+
+/* ---------- SEAL (signature element) ---------- */
+.seal-wrap{ flex-shrink:0; width:118px; }
+.seal{
+  position:relative;
+  width:112px; height:112px;
+  border-radius:50%;
+  transform:rotate(-7deg);
+  background: var(--panel-solid);
+  border:2px solid var(--brass);
+  box-shadow: inset 0 0 0 5px rgba(14,32,25,0.9), inset 0 0 0 6px var(--line-strong);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.seal::before{
+  content:"";
+  position:absolute;
+  inset:14px;
+  border:1px dashed var(--line-strong);
+  border-radius:50%;
+}
+.seal-inner{
+  font-family:'Space Mono', monospace;
+  color:var(--brass-bright);
+  line-height:1.25;
+}
+.seal-inner .abbr{
+  display:block;
+  font-family:'Fraunces', serif;
+  font-weight:700;
+  font-size:22px;
+  letter-spacing:.02em;
+}
+.seal-inner .full{
+  display:block;
+  font-size:7.5px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  margin-top:2px;
+  color:var(--parchment-dim);
+}
+.seal-caption{
+  margin-top:10px;
+  text-align:center;
+  font-family:'Space Mono', monospace;
+  font-size:9.5px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--sage);
+  line-height:1.5;
+}
+
+/* ---------- LEDGER STAT BLOCK ---------- */
+.ledger{
+  border:1px solid var(--line-strong);
+  border-radius:var(--radius);
+  background:linear-gradient(180deg, rgba(231,192,120,0.05), rgba(231,192,120,0) 40%), var(--panel-solid);
+  margin:0 0 44px;
+  overflow:hidden;
+}
+.ledger-head{
+  font-family:'Space Mono', monospace;
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--brass);
+  padding:14px 20px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+}
+.ledger-row{
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+  padding:13px 20px;
+  border-bottom:1px solid var(--line);
+}
+.ledger-row:last-child{ border-bottom:none; }
+.ledger-label{
+  font-family:'Space Mono', monospace;
+  font-size:12.5px;
+  color:var(--parchment-dim);
+  letter-spacing:.01em;
+}
+.ledger-dots{
+  flex:1;
+  border-bottom:1px dotted var(--line-strong);
+  transform:translateY(-4px);
+  min-width:16px;
+}
+.ledger-value{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+  font-size:16.5px;
+  color:var(--brass-bright);
+  white-space:nowrap;
+  text-align:right;
+}
+
+/* ---------- SECTIONS ---------- */
+section.block{ margin:0 0 44px; }
+.section-label{
+  font-family:'Space Mono', monospace;
+  font-size:12px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--sage);
+  margin:0 0 18px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.section-label::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:var(--line);
+}
+.section-label.turn{ color:var(--brass); }
+.section-label.turn::before{
+  content:"\2666";
+  color:var(--brass);
+  font-size:10px;
+}
+
+.prose p{
+  margin:0 0 18px;
+  color:var(--parchment);
+}
+.prose p:last-child{ margin-bottom:0; }
+
+.dropcap p:first-of-type::first-letter{
+  font-family:'Fraunces', serif;
+  font-weight:700;
+  font-size:64px;
+  line-height:0.78;
+  float:left;
+  padding:6px 10px 0 0;
+  color:var(--brass-bright);
+}
+
+.optimization-panel{
+  border-left:2px solid var(--brass);
+  background:linear-gradient(90deg, rgba(231,192,120,0.07), transparent 60%);
+  padding:22px 24px;
+  border-radius:0 var(--radius) var(--radius) 0;
+}
+.optimization-panel p{ color:var(--parchment); }
+.optimization-panel p:last-child{ margin-bottom:0; }
+
+/* ---------- GAME CARD (Back to the Board) ---------- */
+.board-section{
+  border-top:1px solid var(--line);
+  padding-top:40px;
+}
+.board-flex{
+  display:flex;
+  gap:26px;
+  align-items:flex-start;
+  flex-wrap:wrap;
+}
+.game-card{
+  flex:0 0 220px;
+  width:220px;
+  border:1.5px solid var(--brass);
+  border-radius:12px;
+  padding:18px 16px;
+  background:
+    radial-gradient(circle at 1.4px 1.4px, rgba(231,192,120,0.06) 1px, transparent 0) 0 0/8px 8px,
+    var(--panel-raise);
+  box-shadow:var(--shadow);
+  position:relative;
+}
+.game-card::before{
+  content:"";
+  position:absolute;
+  inset:6px;
+  border:1px solid var(--line-strong);
+  border-radius:8px;
+  pointer-events:none;
+}
+.game-card-quadrant{
+  font-family:'Space Mono', monospace;
+  font-size:9.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--sage);
+  margin-bottom:6px;
+}
+.game-card-title{
+  font-family:'Fraunces', serif;
+  font-weight:700;
+  font-size:22px;
+  color:var(--brass-bright);
+  margin:0 0 14px;
+  line-height:1.1;
+}
+.game-card ul{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.game-card li{
+  font-family:'Newsreader', serif;
+  font-size:13.5px;
+  line-height:1.45;
+  color:var(--parchment-dim);
+  padding:8px 0;
+  border-top:1px dotted var(--line);
+}
+.game-card li:first-child{ border-top:none; }
+.game-card li::before{
+  content:"\2666  ";
+  color:var(--brass);
+}
+.game-card-foot{
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+  font-family:'Space Mono', monospace;
+  font-size:8.5px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--brass-dim);
+  text-align:center;
+}
+.board-text{ flex:1; min-width:260px; }
+.board-text p{ margin:0; color:var(--parchment); }
+
+/* ---------- FOOTER ---------- */
+footer{
+  margin-top:60px;
+  padding-top:26px;
+  border-top:1px solid var(--line);
+  text-align:center;
+}
+.wordmark{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  letter-spacing:.04em;
+  font-size:18px;
+  color:var(--brass-bright);
+}
+.tagline{
+  font-family:'Space Mono', monospace;
+  font-size:10.5px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--sage);
+  margin-top:6px;
+}
+.site-url{
+  margin-top:14px;
+  font-family:'Space Mono', monospace;
+  font-size:10.5px;
+  color:var(--brass-dim);
+}
+.nav-back{
+  display:inline-block;
+  margin-top:24px;
+  font-family:'Space Mono', monospace;
+  font-size:11px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--brass);
+  text-decoration:none;
+  border-bottom:1px solid var(--line-strong);
+  padding-bottom:2px;
+}
+
+@media (max-width:600px){
+  .hero-grid{ flex-direction:column-reverse; }
+  .seal-wrap{ width:100%; display:flex; justify-content:flex-start; }
+  body{ font-size:16.5px; }
+  .game-card{ width:100%; flex-basis:100%; }
+  .ledger-row{ flex-wrap:wrap; row-gap:4px; }
+  .ledger-label{ flex-basis:100%; }
+  .ledger-dots{ display:none; }
+  .ledger-value{ margin-left:auto; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="top-rule">
+  <span>Legacy Wealth &middot; Career Deep Dive</span>
+  <span class="quadrant-chip">Investor</span>
+</div>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <p class="eyebrow">Angel Investor</p>
+        <h1 class="hook">One Check. One Company. One Outcome That Changes Everything.</h1>
+        <p class="subhook">Real ownership in real companies from the very beginning, but the odds on any one check are long, and meaningful returns require enough capital to make many bets at once.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="ledger">
+    <div class="ledger-head"><span>By the Numbers</span><span>Real World</span></div>
+    <div class="ledger-row"><span class="ledger-label">Typical individual angel check</span><span class="ledger-dots"></span><span class="ledger-value">$25,000–$100,000</span></div>
+    <div class="ledger-row"><span class="ledger-label">Angel investments that return $0</span><span class="ledger-dots"></span><span class="ledger-value">60%–70%</span></div>
+    <div class="ledger-row"><span class="ledger-label">Diversified angel portfolio IRR</span><span class="ledger-dots"></span><span class="ledger-value">20%–27% / yr</span></div>
+    <div class="ledger-row"><span class="ledger-label">Peter Thiel’s Facebook check</span><span class="ledger-dots"></span><span class="ledger-value">$500,000 → $1B+ (2,000x)</span></div>
+  </div>
+
+  <section class="block">
+    <p class="section-label">The Real Path</p>
+    <div class="prose dropcap">
+      <p>Becoming an angel investor means writing personal checks into early stage startups, usually somewhere between $25,000 and $100,000 per deal, in exchange for equity in a company that might not have any revenue yet. The math is brutal at the individual deal level. Roughly 60 to 70 percent of angel investments return nothing at all, and only a small handful of winners produce the returns that make the whole thing worthwhile. Angels who diversify across many deals and stay patient can average solid returns, often in the 20 to 27 percent annual range, but that requires real capital spread across dozens of bets.</p>
+      <p>That’s the angel investor at face value. Real ownership in real companies from the very beginning, but the odds on any one check are long, and meaningful returns require enough capital to make many bets at once.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="section-label turn">The Optimization</p>
+    <div class="optimization-panel prose">
+      <p>The optimization is what happens when one of those early checks turns into a legendary outcome, and then what a person does with that outcome afterward. Peter Thiel wrote a $500,000 angel check into Facebook in 2004 for just over 10 percent of the company. When Facebook went public in 2012, that stake was worth well over a billion dollars, a return of roughly 2,000 times his original investment. Instead of treating that as a lucky one time payday, Thiel used it to build Founders Fund, a venture capital firm that has gone on to back companies like SpaceX and Stripe, worth well over a hundred billion dollars combined today. That’s the real optimization, not just landing one enormous outcome, but turning that credibility and capital into a fund that lets someone make many more of those bets with other people’s money, collecting a share of the profits across an entire portfolio instead of hoping any single check pays off.</p>
+    </div>
+  </section>
+
+  <section class="block board-section">
+    <p class="section-label">Back to the Board</p>
+    <div class="board-flex">
+      <div class="game-card">
+        <div class="game-card-quadrant">Investor Quadrant</div>
+        <div class="game-card-title">Angel Investor</div>
+        <ul>
+          <li>Dividend collected every lap</li>
+          <li>+$10,000 when any player lands on Legacy Pitch</li>
+          <li>1.2x permanent income on ALL assets</li>
+        </ul>
+        <div class="game-card-foot">Legacy Wealth &middot; Career Card</div>
+      </div>
+      <div class="board-text">
+        <p>The Angel Investor card reflects the face value version: strong starting cash, a dividend every lap, a $10,000 bank bonus every time any player lands on Legacy Pitch, and a 1.2x permanent income multiplier across every asset category. The ownership move, turning one legendary check into a fund built to find the next one, is the same leap that built some of the largest venture firms in the world.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wordmark">LEGACY WEALTH</div>
+    <div class="tagline">Build Wealth. Leave a Legacy.</div>
+    <div class="site-url">legacywealthgame.com/careers/angel-investor</div>
+    <a class="nav-back" href="/">&larr; Back to Legacy Wealth</a>
+  </footer>
+
+</div>
+</body>
+</html>
