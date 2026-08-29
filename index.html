@@ -3,63 +3,105 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Join the Waitlist | Legacy Wealth</title>
-<meta name="description" content="Be the first to know when Legacy Wealth opens for pre-order. Build Wealth. Leave a Legacy.">
-<meta name="theme-color" content="#FAF7F0">
+<title>Legacy Wealth | Be First to Own It</title>
+<meta name="description" content="What wealthy families already know. What every family should learn. Legacy Wealth is an AI powered financial and business education board game. Join the waitlist for early access.">
+<meta name="theme-color" content="#0B0B0C">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --cream:#FAF7F0; --cream-deep:#F1EBDD; --gold:#C9A84C; --gold-soft:#E3D4A3;
-    --ink:#07080D; --ink-soft:#3E4048; --rule:rgba(7,8,13,.10);
-    --shadow:0 18px 50px -22px rgba(7,8,13,.45);
+    --charcoal-1:#1a1a1c; --charcoal-2:#0f0f11; --charcoal-3:#040405;
+    --gold:#C9A24C; --gold-soft:#E4CC8C; --gold-dim:#8B7433;
+    --paper:#F3EFE6; --paper-dim:rgba(243,239,230,.62); --paper-faint:rgba(243,239,230,.34);
+    --rule:rgba(201,162,76,.28);
     --serif:'Playfair Display',Georgia,serif; --sans:'Inter',system-ui,-apple-system,sans-serif;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{margin:0;padding:0;}
   body{
-    background:var(--cream); color:var(--ink); font-family:var(--sans);
+    position:relative; isolation:isolate; overflow-x:hidden;
+    color:var(--paper); font-family:var(--sans);
     -webkit-font-smoothing:antialiased; min-height:100svh; display:flex; flex-direction:column;
     padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    background-color:#060606;
   }
-  .masthead{text-align:center; padding:44px 22px 8px;}
-  .brand{font-family:var(--serif); font-size:clamp(30px,7vw,42px); font-weight:600; letter-spacing:.01em; color:var(--ink); opacity:1;}
-  .flourish{width:64px; height:1px; margin:16px auto 0; background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-  .stage{flex:1; display:flex; align-items:center; justify-content:center; padding:20px 18px 40px;}
+  /* real charcoal marble photograph, color-graded toward the gold/charcoal palette */
+  body::before{
+    content:""; position:fixed; inset:0; z-index:-3; pointer-events:none;
+    background-image:url("assets/images/marble-bg.webp");
+    background-repeat:no-repeat; background-size:cover; background-position:50% 35%;
+    filter:saturate(1.2) contrast(1.1) brightness(.88) sepia(.08);
+  }
+  /* darkening scrim + soft gold spotlight for text legibility */
+  body::after{
+    content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
+    background:
+      radial-gradient(ellipse 700px 500px at 50% 6%, rgba(201,162,76,.10), transparent 60%),
+      radial-gradient(ellipse 900px 700px at 50% 50%, rgba(0,0,0,.28), rgba(0,0,0,.5) 75%),
+      linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.2) 18%, rgba(0,0,0,.3) 78%, rgba(0,0,0,.6) 100%);
+  }
+  .masthead{text-align:center; padding:52px 22px 6px; position:relative; z-index:1;}
+  .brand{
+    font-family:var(--serif); font-size:clamp(20px,4.4vw,26px); font-weight:600;
+    letter-spacing:.28em; text-transform:uppercase;
+    background:linear-gradient(115deg,var(--gold-dim) 0%,var(--gold-soft) 35%,var(--gold) 60%,var(--gold-soft) 85%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .flourish{width:56px; height:1px; margin:18px auto 0; background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+  .stage{flex:1; display:flex; align-items:center; justify-content:center; padding:26px 20px 48px; position:relative; z-index:1;}
   .card{
-    width:100%; max-width:520px; background:#fff; border:1px solid var(--rule);
-    border-top:3px solid var(--gold); border-radius:3px; box-shadow:var(--shadow);
-    padding:44px 34px 40px; text-align:center;
-    animation:rise .5s cubic-bezier(.2,.7,.3,1) both;
+    width:100%; max-width:480px; text-align:center;
+    animation:rise .6s cubic-bezier(.2,.7,.3,1) both;
   }
-  @keyframes rise{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:none;}}
+  @keyframes rise{from{opacity:0; transform:translateY(16px);} to{opacity:1; transform:none;}}
+  .eyebrow{
+    font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:var(--gold-soft);
+    margin:0 0 18px; opacity:.9;
+  }
   h1{
-    font-family:var(--serif); font-size:clamp(28px,6vw,36px); line-height:1.15;
-    font-weight:600; margin:0 0 14px; letter-spacing:-.015em;
+    font-family:var(--serif); font-size:clamp(32px,7vw,44px); line-height:1.14;
+    font-weight:600; margin:0 0 16px; letter-spacing:-.01em; color:var(--paper);
   }
   .tagline{
-    font-family:var(--serif); font-style:italic; font-size:16px; color:var(--gold);
-    margin:0 0 22px;
+    font-family:var(--serif); font-style:italic; font-size:17px; color:var(--gold-soft);
+    margin:0 0 26px;
   }
-  .desc{font-size:15.5px; line-height:1.6; color:var(--ink-soft); margin:0 0 30px;}
-  form{display:flex; flex-direction:column; gap:12px;}
-  input[type=email], input[type=text], input[type=tel]{
-    width:100%; padding:15px 16px; font-size:16px; font-family:var(--sans);
-    border:1px solid var(--rule); border-radius:2px; background:var(--cream);
-    color:var(--ink); outline:none; transition:border-color .2s;
+  .rule-sm{width:36px; height:1px; margin:0 auto 26px; background:var(--gold-dim);}
+  .desc{font-size:15.5px; line-height:1.72; color:var(--paper-dim); margin:0 0 22px; font-weight:400;}
+  .urgency{
+    font-size:14px; line-height:1.6; color:var(--gold-soft); margin:0 0 34px;
+    font-weight:500; letter-spacing:.01em;
   }
-  input[type=email]:focus, input[type=text]:focus, input[type=tel]:focus{border-color:var(--gold);}
+  form{display:flex; flex-direction:column; gap:13px;}
+  input[type=email], input[type=text]{
+    width:100%; padding:16px 18px; font-size:16px; font-family:var(--sans);
+    border:1px solid rgba(201,162,76,.45); border-radius:1px;
+    background:rgba(8,8,9,.55);
+    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+    box-shadow:inset 0 1px 3px rgba(0,0,0,.35);
+    color:var(--paper); outline:none; transition:border-color .25s,background .25s,box-shadow .25s;
+  }
+  input[type=email]::placeholder, input[type=text]::placeholder{color:var(--paper-dim);}
+  input[type=email]:focus, input[type=text]:focus{
+    border-color:var(--gold-soft); background:rgba(8,8,9,.72);
+    box-shadow:inset 0 1px 3px rgba(0,0,0,.35), 0 0 0 3px rgba(201,162,76,.14);
+  }
   button{
-    padding:15px 16px; font-size:14px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
-    color:#fff; background:var(--ink); border:none; border-radius:2px; cursor:pointer;
-    transition:background .2s;
+    margin-top:5px; padding:16px 18px; font-size:13px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--charcoal-3);
+    background:linear-gradient(115deg,var(--gold-dim),var(--gold-soft) 50%,var(--gold));
+    border:none; border-radius:1px; cursor:pointer;
+    transition:filter .25s, transform .25s;
   }
-  button:hover{background:#000;}
-  .fineprint{font-size:12px; color:var(--ink-soft); opacity:.6; margin-top:18px; line-height:1.5;}
+  button:hover{filter:brightness(1.08); transform:translateY(-1px);}
+  .fineprint{font-size:11.5px; color:var(--paper-faint); margin-top:22px; line-height:1.5; letter-spacing:.02em;}
   .success{display:none;}
   .success.show{display:block;}
-  .success h1{color:var(--gold);}
+  .success h1{
+    background:linear-gradient(115deg,var(--gold-dim),var(--gold-soft) 50%,var(--gold));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
 </style>
 </head>
 <body>
@@ -69,9 +111,11 @@
 </header>
 <main class="stage">
   <div class="card" id="formCard">
-    <h1>Be First to Know</h1>
-    <p class="tagline">Build Wealth. Leave a Legacy.</p>
-    <p class="desc">Legacy Wealth is the first premium financial and business education board game built around creating generational wealth. Join the waitlist and we'll notify you the moment pre-orders open.</p>
+    <p class="eyebrow">Be First to Own It</p>
+    <h1>Build Wealth.<br>Leave a Legacy.</h1>
+    <div class="rule-sm"></div>
+    <p class="desc">What wealthy families already know. What every family should learn. Legacy Wealth is an AI powered financial and business education board game, built around real careers, real assets, and real businesses, that teaches you how to build wealth.</p>
+    <p class="urgency">The first 100 people to preorder get something extra. Join the waitlist now for early access when preorders open.</p>
 
     <form name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="waitlistForm">
       <input type="hidden" name="form-name" value="waitlist" />
@@ -80,16 +124,15 @@
       </p>
       <input type="text" name="name" placeholder="Full name" required />
       <input type="email" name="email" placeholder="Email address" required />
-      <input type="tel" name="phone" placeholder="Phone number" />
-      <button type="submit">Join the Waitlist</button>
+      <button type="submit">Claim Early Access</button>
     </form>
 
-    <p class="fineprint">No spam, ever. Just one email when pre-orders go live.</p>
+    <p class="fineprint">No spam, ever. Just one email when preorders go live.</p>
   </div>
 
   <div class="card success" id="successCard">
     <h1>You're On the List</h1>
-    <p class="desc">Thanks for joining. We'll email you the moment Legacy Wealth opens for pre-order, and you'll be first in line.</p>
+    <p class="desc">Thank you for joining. We'll email you the moment Legacy Wealth opens for preorder, and you'll be first in line.</p>
   </div>
 </main>
 
