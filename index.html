@@ -44,12 +44,12 @@
   }
   .desc{font-size:15.5px; line-height:1.6; color:var(--ink-soft); margin:0 0 30px;}
   form{display:flex; flex-direction:column; gap:12px;}
-  input[type=email], input[type=text]{
+  input[type=email], input[type=text], input[type=tel]{
     width:100%; padding:15px 16px; font-size:16px; font-family:var(--sans);
     border:1px solid var(--rule); border-radius:2px; background:var(--cream);
     color:var(--ink); outline:none; transition:border-color .2s;
   }
-  input[type=email]:focus, input[type=text]:focus{border-color:var(--gold);}
+  input[type=email]:focus, input[type=text]:focus, input[type=tel]:focus{border-color:var(--gold);}
   button{
     padding:15px 16px; font-size:14px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
     color:#fff; background:var(--ink); border:none; border-radius:2px; cursor:pointer;
@@ -80,6 +80,7 @@
       </p>
       <input type="text" name="name" placeholder="Full name" required />
       <input type="email" name="email" placeholder="Email address" required />
+      <input type="tel" name="phone" placeholder="Phone number" />
       <button type="submit">Join the Waitlist</button>
     </form>
 
@@ -102,7 +103,8 @@
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(formData).toString()
     })
-    .then(() => {
+    .then((response) => {
+      if (!response.ok) throw new Error('Form submission failed with status ' + response.status);
       document.getElementById('formCard').style.display = 'none';
       document.getElementById('successCard').classList.add('show');
     })
