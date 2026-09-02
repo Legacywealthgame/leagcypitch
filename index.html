@@ -48,6 +48,10 @@
     background:linear-gradient(115deg,var(--gold-dim) 0%,var(--gold-soft) 35%,var(--gold) 60%,var(--gold-soft) 85%);
     -webkit-background-clip:text; background-clip:text; color:transparent;
   }
+  .brand-sub{
+    font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--paper-dim);
+    margin:8px 0 0; font-weight:500;
+  }
   .flourish{width:56px; height:1px; margin:18px auto 0; background:linear-gradient(90deg,transparent,var(--gold),transparent);}
   .stage{flex:1; display:flex; align-items:center; justify-content:center; padding:26px 20px 48px; position:relative; z-index:1;}
   .card{
@@ -107,11 +111,11 @@
 <body>
 <header class="masthead">
   <div class="brand">Legacy Wealth</div>
+  <div class="brand-sub">The Board Game</div>
   <div class="flourish"></div>
 </header>
 <main class="stage">
   <div class="card" id="formCard">
-    <p class="eyebrow">Be First to Own It</p>
     <h1>Build Wealth.<br>Leave a Legacy.</h1>
     <div class="rule-sm"></div>
     <p class="tagline">You are the one who breaks the pattern.</p>
