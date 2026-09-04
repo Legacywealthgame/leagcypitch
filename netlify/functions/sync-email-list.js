@@ -12,6 +12,10 @@
 //   ANTHROPIC_API_KEY). Generate the token itself at
 //   app.netlify.com -> User settings -> Applications -> Personal access tokens.
 //
+// Also requires COMMAND_PASSWORD (same secret that gates /command) so this
+// function can authenticate its own POST to the now-protected state
+// endpoint, the same way a logged-in browser would.
+//
 // Known limitation: if someone submits both the waitlist and the quiz,
 // they are counted twice. There is no shared identifier (like email) to
 // de-duplicate on across separate Netlify Forms.
@@ -41,10 +45,18 @@ export default async () => {
 
   const total = (forms || []).reduce((sum, f) => sum + (f.submission_count || 0), 0);
 
+  const commandPassword = process.env.COMMAND_PASSWORD;
+  if (!commandPassword) {
+    return json({ error: "COMMAND_PASSWORD is not set on this site, cannot authenticate to /state." }, 500);
+  }
+
   try {
     const r = await fetch(`${SITE_URL}/.netlify/functions/state`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: {
+        "content-type": "application/json",
+        authorization: `Basic ${Buffer.from(`command:${commandPassword}`).toString("base64")}`
+      },
       body: JSON.stringify({
         metrics: { emailList: total },
         note: `Auto-synced email list from Netlify Forms: ${total} total submission(s) across ${forms.length} form(s).`

@@ -10,7 +10,32 @@
 import { getStore } from "@netlify/blobs";
 import seed from "../../state.json" with { type: "json" };
 
+// Same shared secret the /command edge gate checks. Accepts either a
+// browser's cached Basic Auth credentials (after logging into /command) or
+// the exact same header sent server-to-server, e.g. by sync-email-list.js.
+function isAuthorized(req) {
+  const expected = process.env.COMMAND_PASSWORD;
+  if (!expected) return false;
+  const header = req.headers.get("authorization");
+  if (!header || !header.startsWith("Basic ")) return false;
+  try {
+    const decoded = Buffer.from(header.slice(6), "base64").toString("utf8");
+    const sep = decoded.indexOf(":");
+    const password = sep === -1 ? decoded : decoded.slice(sep + 1);
+    return password === expected;
+  } catch {
+    return false;
+  }
+}
+
 export default async (req) => {
+  if (!isAuthorized(req)) {
+    return new Response("Authentication required.", {
+      status: 401,
+      headers: { "WWW-Authenticate": 'Basic realm="Command", charset="UTF-8"' }
+    });
+  }
+
   const store = getStore("venture-legacy");
 
   if (req.method === "GET") {

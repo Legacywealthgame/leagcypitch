@@ -73,7 +73,29 @@ WHAT I NEED TO ASK YOU
 Two or three direct questions. These should be things you genuinely cannot know from the data and that would change your advice. Ask about things that have been sitting still. Challenge assumptions where the numbers do not support them.
 `;
 
+function isAuthorized(req) {
+  const expected = process.env.COMMAND_PASSWORD;
+  if (!expected) return false;
+  const header = req.headers.get("authorization");
+  if (!header || !header.startsWith("Basic ")) return false;
+  try {
+    const decoded = Buffer.from(header.slice(6), "base64").toString("utf8");
+    const sep = decoded.indexOf(":");
+    const password = sep === -1 ? decoded : decoded.slice(sep + 1);
+    return password === expected;
+  } catch {
+    return false;
+  }
+}
+
 export default async (req, context) => {
+  if (!isAuthorized(req)) {
+    return new Response("Authentication required.", {
+      status: 401,
+      headers: { "WWW-Authenticate": 'Basic realm="Command", charset="UTF-8"' }
+    });
+  }
+
   const key = process.env.ANTHROPIC_API_KEY;
   if (!key) {
     return json({ error: "ANTHROPIC_API_KEY is not set on this site." }, 500);

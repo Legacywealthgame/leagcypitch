@@ -67,27 +67,10 @@
   .msg.bad{color:var(--warn)}
   @media(max-width:520px){.nums,.edit{grid-template-columns:1fr}}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
-  .gate-screen{position:fixed;inset:0;background:var(--ink);z-index:50;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
-  .gate-screen h1{font-family:Fraunces,Georgia,serif;font-weight:600;
-    font-size:1.4rem;margin-bottom:24px;color:var(--cream)}
-  .gate-screen input{width:220px;text-align:center;font-size:1.3rem;letter-spacing:.3em;
-    background:var(--ink-2);border:1px solid var(--rule);color:var(--gold);
-    padding:14px;border-radius:2px;margin-bottom:14px}
-  .gate-screen input:focus{outline:none;border-color:var(--gold)}
-  .gate-screen .err{color:var(--warn);font-size:.85rem;min-height:1.2em;margin-bottom:10px}
-  .gate-screen button{background:var(--gold);color:var(--ink);border:none;
-    padding:12px 30px;border-radius:2px;font-weight:600;cursor:pointer}
 </style>
 </head>
 <body>
-<div class="gate-screen" id="gate-screen">
-  <h1>Command</h1>
-  <input id="gate-input" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="····">
-  <div class="err" id="gate-err"></div>
-  <button id="gate-go">Enter</button>
-</div>
-<div id="app-body" style="display:none">
+<div id="app-body">
 <div class="shell">
 
   <div class="top">
@@ -223,33 +206,7 @@ $("save").onclick = async () => {
   setTimeout(()=>{ msg.textContent=""; }, 2500);
 };
 
-const CODE = "5221";
-const gateScreen = document.getElementById("gate-screen");
-const appBody = document.getElementById("app-body");
-const gateInput = document.getElementById("gate-input");
-const gateErr = document.getElementById("gate-err");
-
-function tryUnlock(){
-  if (gateInput.value === CODE){
-    sessionStorage.setItem("cmd-unlocked", "1");
-    gateScreen.style.display = "none";
-    appBody.style.display = "block";
-    load();
-  } else {
-    gateErr.textContent = "That's not it.";
-    gateInput.value = "";
-  }
-}
-document.getElementById("gate-go").onclick = tryUnlock;
-gateInput.addEventListener("keydown", e => { if (e.key === "Enter") tryUnlock(); });
-
-if (sessionStorage.getItem("cmd-unlocked") === "1"){
-  gateScreen.style.display = "none";
-  appBody.style.display = "block";
-  load();
-} else {
-  gateInput.focus();
-}
+load();
 </script>
 </div>
 </body>
