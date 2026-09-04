@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Command | Venture Legacy</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0F1311;--ink-2:#171C19;--gold:#C8A44B;--cream:#F0EBE0;
+    --dim:#A8A399;--rule:rgba(240,235,224,.14);--warn:#B5705A;--ok:#6E9C6B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ink);color:var(--cream);font-family:Inter,system-ui,sans-serif;
+    line-height:1.55;padding:28px 20px 80px}
+  .shell{max-width:680px;margin:0 auto}
+
+  .top{display:flex;justify-content:space-between;align-items:baseline;
+    padding-bottom:20px;border-bottom:1px solid var(--rule);margin-bottom:28px}
+  .top h1{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:1.5rem;letter-spacing:-.01em}
+  .clock{font-family:Fraunces,Georgia,serif;color:var(--gold);font-size:1.5rem}
+  .clock small{display:block;font-family:Inter,sans-serif;font-size:.72rem;
+    color:var(--dim);text-align:right;letter-spacing:.04em}
+
+  .nums{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);
+    border:1px solid var(--rule);margin-bottom:28px}
+  .num{background:var(--ink);padding:18px}
+  .num b{display:block;font-family:Fraunces,Georgia,serif;font-size:1.9rem;
+    font-weight:600;line-height:1.1;color:var(--gold)}
+  .num i{font-style:normal;font-size:.8rem;color:var(--dim);display:block;margin-top:4px}
+  .bar{height:2px;background:var(--rule);margin-top:10px}
+  .bar span{display:block;height:100%;background:var(--gold)}
+
+  .row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+  button{font:inherit;cursor:pointer;border:1px solid var(--rule);background:var(--ink-2);
+    color:var(--cream);padding:10px 16px;border-radius:2px;font-size:.9rem;
+    transition:border-color .15s,color .15s}
+  button:hover{border-color:var(--gold);color:var(--gold)}
+  button.on{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+  button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  button[disabled]{opacity:.45;cursor:not-allowed}
+
+  .brief{background:var(--ink-2);border-left:2px solid var(--gold);padding:26px;
+    white-space:pre-wrap;font-size:.97rem;min-height:180px;margin-bottom:36px}
+  .brief.empty{color:var(--dim);border-left-color:var(--rule)}
+
+  h2{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:1.15rem;
+    margin:0 0 14px;padding-top:24px;border-top:1px solid var(--rule)}
+
+  .track{display:flex;justify-content:space-between;align-items:center;gap:14px;
+    padding:12px 0;border-bottom:1px solid var(--rule)}
+  .track p{font-size:.94rem}
+  .track p em{font-style:normal;color:var(--warn);font-size:.76rem;display:block}
+  select{font:inherit;background:var(--ink-2);color:var(--cream);border:1px solid var(--rule);
+    padding:7px 9px;border-radius:2px;font-size:.84rem}
+
+  .edit{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0 20px}
+  label{font-size:.8rem;color:var(--dim);display:block;margin-bottom:6px}
+  input{width:100%;background:var(--ink-2);border:1px solid var(--rule);color:var(--cream);
+    padding:11px 12px;font:inherit;border-radius:2px}
+  input:focus,select:focus{outline:none;border-color:var(--gold)}
+  .save{background:var(--gold);color:var(--ink);border-color:var(--gold);font-weight:600}
+  .msg{font-size:.85rem;color:var(--ok);margin-left:12px}
+  .msg.bad{color:var(--warn)}
+  @media(max-width:520px){.nums,.edit{grid-template-columns:1fr}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+  .gate-screen{position:fixed;inset:0;background:var(--ink);z-index:50;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+  .gate-screen h1{font-family:Fraunces,Georgia,serif;font-weight:600;
+    font-size:1.4rem;margin-bottom:24px;color:var(--cream)}
+  .gate-screen input{width:220px;text-align:center;font-size:1.3rem;letter-spacing:.3em;
+    background:var(--ink-2);border:1px solid var(--rule);color:var(--gold);
+    padding:14px;border-radius:2px;margin-bottom:14px}
+  .gate-screen input:focus{outline:none;border-color:var(--gold)}
+  .gate-screen .err{color:var(--warn);font-size:.85rem;min-height:1.2em;margin-bottom:10px}
+  .gate-screen button{background:var(--gold);color:var(--ink);border:none;
+    padding:12px 30px;border-radius:2px;font-weight:600;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="gate-screen" id="gate-screen">
+  <h1>Command</h1>
+  <input id="gate-input" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="····">
+  <div class="err" id="gate-err"></div>
+  <button id="gate-go">Enter</button>
+</div>
+<div id="app-body" style="display:none">
+<div class="shell">
+
+  <div class="top">
+    <h1>Command</h1>
+    <div class="clock"><span id="days">–</span><small>days to launch</small></div>
+  </div>
+
+  <div class="nums" id="nums"></div>
+
+  <div class="row" id="agents"></div>
+
+  <div class="brief empty" id="brief">Pick an agent above to get today's briefing.</div>
+
+  <h2>Tracks</h2>
+  <div id="tracks"></div>
+
+  <h2>Update the numbers</h2>
+  <div class="edit">
+    <div><label for="list">Email list</label><input id="list" type="number" inputmode="numeric"></div>
+    <div><label for="pre">Pre-orders</label><input id="pre" type="number" inputmode="numeric"></div>
+    <div><label for="ig">Instagram followers</label><input id="ig" type="number" inputmode="numeric"></div>
+    <div><label for="vid">Videos published</label><input id="vid" type="number" inputmode="numeric"></div>
+  </div>
+  <div><label for="note">What changed today</label><input id="note" type="text" placeholder="Designer sent back board art"></div>
+  <div class="row" style="margin-top:16px">
+    <button class="save" id="save">Save</button><span class="msg" id="msg"></span>
+  </div>
+
+</div>
+
+<script>
+const F = "/.netlify/functions";
+const $ = id => document.getElementById(id);
+let STATE = null;
+
+const AGENTS = [
+  ["chief","Chief of Staff"],["content","Content"],["money","Finance"],
+  ["ops","Operations"],["launch","Launch"]
+];
+
+AGENTS.forEach(([id,label])=>{
+  const b=document.createElement("button");
+  b.textContent=label; b.dataset.agent=id;
+  b.onclick=()=>brief(id,b);
+  $("agents").appendChild(b);
+});
+
+async function load(){
+  try{
+    const r = await fetch(`${F}/state`);
+    STATE = await r.json();
+    render();
+  }catch(e){
+    $("brief").textContent = "Could not load your business state. Check that the state function is deployed.";
+  }
+}
+
+function render(){
+  const m = STATE.metrics;
+  const days = Math.ceil((new Date(STATE.launchDate) - new Date())/86400000);
+  $("days").textContent = days;
+
+  const listPct = Math.min(100, (m.emailList / m.emailListGoal) * 100);
+  const prePct  = Math.min(100, (m.preOrders / m.preOrderBreakeven) * 100);
+
+  $("nums").innerHTML = `
+    <div class="num"><b>${m.emailList.toLocaleString()}</b><i>on the list, goal ${m.emailListGoal.toLocaleString()}</i>
+      <div class="bar"><span style="width:${listPct}%"></span></div></div>
+    <div class="num"><b>${m.preOrders}</b><i>pre-orders, ${m.preOrderBreakeven} funds the run</i>
+      <div class="bar"><span style="width:${prePct}%"></span></div></div>
+    <div class="num"><b>${m.instagramFollowers.toLocaleString()}</b><i>Instagram followers</i></div>
+    <div class="num"><b>${m.videosPublished}</b><i>videos published</i></div>`;
+
+  $("tracks").innerHTML = STATE.tracks.map(t=>`
+    <div class="track">
+      <p>${t.name}${t.blocking && t.status!=="done" ? "<em>Blocking everything downstream</em>" : ""}</p>
+      <select data-id="${t.id}">
+        <option value="not_started"${t.status==="not_started"?" selected":""}>Not started</option>
+        <option value="in_progress"${t.status==="in_progress"?" selected":""}>In progress</option>
+        <option value="done"${t.status==="done"?" selected":""}>Done</option>
+      </select>
+    </div>`).join("");
+
+  $("list").value = m.emailList;
+  $("pre").value  = m.preOrders;
+  $("ig").value   = m.instagramFollowers;
+  $("vid").value  = m.videosPublished;
+}
+
+async function brief(agent, btn){
+  document.querySelectorAll("#agents button").forEach(b=>b.classList.remove("on"));
+  btn.classList.add("on");
+  const box = $("brief");
+  box.classList.remove("empty");
+  box.textContent = "Reading the numbers…";
+  try{
+    const r = await fetch(`${F}/briefing?agent=${agent}`);
+    const d = await r.json();
+    box.textContent = d.briefing || d.error || "No briefing came back.";
+  }catch(e){
+    box.textContent = "Could not reach the briefing service. Try again shortly.";
+  }
+}
+
+$("save").onclick = async () => {
+  const btn = $("save"), msg = $("msg");
+  btn.disabled = true; msg.className="msg"; msg.textContent = "Saving…";
+  const tracks = [...document.querySelectorAll("#tracks select")]
+    .map(s => ({ id: s.dataset.id, status: s.value }));
+  try{
+    const r = await fetch(`${F}/state`, {
+      method:"POST",
+      headers:{"content-type":"application/json"},
+      body: JSON.stringify({
+        metrics:{
+          emailList: +$("list").value || 0,
+          preOrders: +$("pre").value || 0,
+          instagramFollowers: +$("ig").value || 0,
+          videosPublished: +$("vid").value || 0
+        },
+        tracks,
+        note: $("note").value.trim() || null
+      })
+    });
+    STATE = await r.json();
+    $("note").value = "";
+    render();
+    msg.textContent = "Saved";
+  }catch(e){
+    msg.className="msg bad"; msg.textContent = "That did not save. Try again.";
+  }
+  btn.disabled = false;
+  setTimeout(()=>{ msg.textContent=""; }, 2500);
+};
+
+const CODE = "5221";
+const gateScreen = document.getElementById("gate-screen");
+const appBody = document.getElementById("app-body");
+const gateInput = document.getElementById("gate-input");
+const gateErr = document.getElementById("gate-err");
+
+function tryUnlock(){
+  if (gateInput.value === CODE){
+    sessionStorage.setItem("cmd-unlocked", "1");
+    gateScreen.style.display = "none";
+    appBody.style.display = "block";
+    load();
+  } else {
+    gateErr.textContent = "That's not it.";
+    gateInput.value = "";
+  }
+}
+document.getElementById("gate-go").onclick = tryUnlock;
+gateInput.addEventListener("keydown", e => { if (e.key === "Enter") tryUnlock(); });
+
+if (sessionStorage.getItem("cmd-unlocked") === "1"){
+  gateScreen.style.display = "none";
+  appBody.style.display = "block";
+  load();
+} else {
+  gateInput.focus();
+}
+</script>
+</div>
+</body>
+</html>

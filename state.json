@@ -1,0 +1,79 @@
+{
+  "company": "Venture Legacy",
+  "product": "Legacy Wealth",
+  "launchDate": "2026-11-08",
+  "metrics": {
+    "emailList": 0,
+    "emailListGoal": 5000,
+    "preOrders": 0,
+    "preOrderBreakeven": 148,
+    "instagramFollowers": 1000,
+    "videosPublished": 0,
+    "lastUpdated": null
+  },
+  "money": {
+    "retailPrice": 79.99,
+    "landedCostPerUnit": 11.83,
+    "runSize": 1000,
+    "totalRunCost": 11830,
+    "productionDays": 35,
+    "shippingDays": 40
+  },
+  "tracks": [
+    {
+      "id": "design",
+      "name": "Finalize designs with designer",
+      "status": "in_progress",
+      "blocking": true,
+      "note": "The only true bottleneck. Unlocks sample order, 3D renders, and all product photography."
+    },
+    {
+      "id": "website",
+      "name": "Build purchase page on venturelegacy.co",
+      "status": "not_started",
+      "blocking": false,
+      "note": "Structure and copy can be built now with renders or placeholders. Does not need final photos."
+    },
+    {
+      "id": "content",
+      "name": "Film and publish Build With Me series",
+      "status": "not_started",
+      "blocking": false,
+      "note": "Founder story needs no finished product. Every week not filming is list growth lost."
+    },
+    {
+      "id": "fulfillment",
+      "name": "Choose a 3PL fulfillment partner",
+      "status": "in_progress",
+      "blocking": false,
+      "note": "Called G&B Fulfillment (Woodland) and Buske Logistics (Vacaville/Fairfield), both near Sacramento for in-person pickup. Quotes expected end of day."
+    },
+    {
+      "id": "freight",
+      "name": "Freight decision",
+      "status": "done",
+      "blocking": false,
+      "note": "Staying with Bangwee's freight quote, $2,850, all-in except taxes, for simplicity."
+    },
+    {
+      "id": "quiz",
+      "name": "Deploy Wealth IQ Check quiz",
+      "status": "in_progress",
+      "blocking": false,
+      "note": "Primary list-building asset. Every piece of content should point here."
+    },
+    {
+      "id": "asklegacy",
+      "name": "Rebuild Legacy Pitch as Ask Legacy with feedback",
+      "status": "not_started",
+      "blocking": false,
+      "note": "The most remarkable thing in the box. Needs to handle joke pitches in character."
+    }
+  ],
+  "openQuestions": [
+    "Pre-order close date, pending confirmed delivery estimate",
+    "Second production run size and trigger point",
+    "Paid ad budget, if any"
+  ],
+  "log": []
+}
