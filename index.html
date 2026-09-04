@@ -48,10 +48,6 @@
     background:linear-gradient(115deg,var(--gold-dim) 0%,var(--gold-soft) 35%,var(--gold) 60%,var(--gold-soft) 85%);
     -webkit-background-clip:text; background-clip:text; color:transparent;
   }
-  .brand-sub{
-    font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--paper-dim);
-    margin:8px 0 0; font-weight:500;
-  }
   .flourish{width:56px; height:1px; margin:18px auto 0; background:linear-gradient(90deg,transparent,var(--gold),transparent);}
   .stage{flex:1; display:flex; align-items:center; justify-content:center; padding:26px 20px 48px; position:relative; z-index:1;}
   .card{
@@ -111,16 +107,16 @@
 <body>
 <header class="masthead">
   <div class="brand">Legacy Wealth</div>
-  <div class="brand-sub">The Board Game</div>
   <div class="flourish"></div>
 </header>
 <main class="stage">
   <div class="card" id="formCard">
+    <p class="eyebrow">AI Powered Board Game</p>
     <h1>Build Wealth.<br>Leave a Legacy.</h1>
     <div class="rule-sm"></div>
     <p class="tagline">You are the one who breaks the pattern.</p>
-    <p class="desc">Every family has a first millionaire. Legacy Wealth is an AI-powered financial and business education board game, designed by a financial planner, built around real careers, real assets, and real businesses.</p>
-    <p class="desc">It isn't for everyone. It's for families who are done talking about wealth and ready to start building it.</p>
+    <p class="desc">Legacy Wealth is an AI powered financial and business education board game that teaches you how to build wealth. Designed by a financial planner, it's built around real careers, real assets, and real businesses.</p>
+    <p class="desc">Gather your family around the table and race to become the first millionaire. Pitch a business idea and watch Ask Legacy, the game's built-in AI, react. Battle each other in Financial Duels that put your money knowledge on the line, and learn the habits that separate the rich from the poor along the way. The first player to reach a million in Legacy Value wins.</p>
     <p class="urgency">Preorders open November 8th. Join the waitlist now to be notified the moment it goes live and be first in line.</p>
 
     <form name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="waitlistForm">
@@ -130,6 +126,7 @@
       </p>
       <input type="text" name="name" placeholder="Full name" required />
       <input type="email" name="email" placeholder="Email address" required />
+      <input type="text" name="phone" inputmode="tel" placeholder="Phone number" />
       <button type="submit">Claim Early Access</button>
     </form>
   </div>
