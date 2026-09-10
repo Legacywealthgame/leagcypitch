@@ -25,3 +25,10 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# Card pages are reached by printed QR codes, so a stale cached copy can
+# outlive a content correction with no way for the reader to know.
+[[headers]]
+  for = "/wealthiq/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
