@@ -4,8 +4,15 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=()
 
+# Immutable is only safe for filenames that change when their contents do.
+# Images and fonts here are replaced under new names; the stylesheets are
+# edited in place, so a year-long immutable cache pinned every visitor to the
+# stylesheet they first downloaded. A restyle shipped and nobody saw it.
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
+
+/assets/css/*
+  Cache-Control: public, max-age=0, must-revalidate
 
 # Card pages are reached by printed QR codes, so a stale cached copy can
 # outlive a content correction with no way for the reader to know.
