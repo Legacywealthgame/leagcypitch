@@ -2,6 +2,7 @@
   "name": "legacywealthgame-site",
   "private": true,
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.125.0",
     "@netlify/blobs": "^11.0.3"
   }
 }
