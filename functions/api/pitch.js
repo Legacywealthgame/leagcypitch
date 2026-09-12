@@ -191,7 +191,7 @@ export async function onRequestPost({ request, env }) {
 
   if (!env.ANTHROPIC_API_KEY) {
     return json(500, {
-      error: 'config',
+      error: 'config_missing_key',
       message: 'The pitch generator is not configured yet.',
     });
   }
@@ -200,7 +200,7 @@ export async function onRequestPost({ request, env }) {
     /* Fail closed. Without the counter store there is no spend ceiling, and
        an uncapped endpoint that calls a paid API is worse than an offline one. */
     return json(500, {
-      error: 'config',
+      error: 'config_missing_kv',
       message: 'The pitch generator is not configured yet.',
     });
   }
@@ -266,7 +266,7 @@ export async function onRequestPost({ request, env }) {
       return json(429, { error: 'rate', message: 'Busy right now. Try again shortly.' });
     }
     if (upstream.status === 401 || upstream.status === 403) {
-      return json(500, { error: 'config', message: 'The pitch generator is not configured yet.' });
+      return json(500, { error: 'config_key_rejected', message: 'The pitch generator is not configured yet.' });
     }
     if (!upstream.ok) {
       throw new Error(`Upstream returned ${upstream.status}`);
