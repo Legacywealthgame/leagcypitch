@@ -11,10 +11,15 @@
      RATE_LIMIT         KV namespace  binding used by the limiter below
      PITCH_MODEL        variable      optional model override
      PITCH_DAILY_CAP    variable      optional override of the daily ceiling
+
+   This calls the Messages API over plain fetch rather than through the
+   Anthropic SDK. The project builds with no build command, so adding an npm
+   dependency here broke every deploy. fetch is native to the Workers runtime,
+   so there is nothing to install and nothing to bundle.
    ========================================================================== */
 
-import Anthropic from '@anthropic-ai/sdk';
-
+const API_URL = 'https://api.anthropic.com/v1/messages';
+const API_VERSION = '2023-06-01';
 const DEFAULT_MODEL = 'claude-opus-5';
 const MAX_TOKENS = 800;
 
@@ -235,21 +240,39 @@ export async function onRequestPost({ request, env }) {
     });
   }
 
-  const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
-
   try {
-    const response = await client.messages.create({
-      model: env.PITCH_MODEL || DEFAULT_MODEL,
-      max_tokens: MAX_TOKENS,
-      output_config: { effort: 'low' },
-      system: SYSTEM_PROMPT,
-      messages: [
-        {
-          role: 'user',
-          content: `Business: ${business}\nTarget customer: ${customer}\nProblem it solves: ${problem}\nKey details: ${details || 'none given'}`,
-        },
-      ],
+    const upstream = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'x-api-key': env.ANTHROPIC_API_KEY,
+        'anthropic-version': API_VERSION,
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: env.PITCH_MODEL || DEFAULT_MODEL,
+        max_tokens: MAX_TOKENS,
+        output_config: { effort: 'low' },
+        system: SYSTEM_PROMPT,
+        messages: [
+          {
+            role: 'user',
+            content: `Business: ${business}\nTarget customer: ${customer}\nProblem it solves: ${problem}\nKey details: ${details || 'none given'}`,
+          },
+        ],
+      }),
     });
+
+    if (upstream.status === 429) {
+      return json(429, { error: 'rate', message: 'Busy right now. Try again shortly.' });
+    }
+    if (upstream.status === 401 || upstream.status === 403) {
+      return json(500, { error: 'config', message: 'The pitch generator is not configured yet.' });
+    }
+    if (!upstream.ok) {
+      throw new Error(`Upstream returned ${upstream.status}`);
+    }
+
+    const response = await upstream.json();
 
     if (response.stop_reason === 'refusal') {
       return json(422, {
@@ -258,7 +281,7 @@ export async function onRequestPost({ request, env }) {
       });
     }
 
-    const text = response.content
+    const text = (response.content || [])
       .filter((block) => block.type === 'text')
       .map((block) => block.text)
       .join('');
@@ -272,13 +295,7 @@ export async function onRequestPost({ request, env }) {
       solution: pitch.solution,
       value: pitch.value,
     });
-  } catch (error) {
-    if (error instanceof Anthropic.RateLimitError) {
-      return json(429, { error: 'rate', message: 'Busy right now. Try again shortly.' });
-    }
-    if (error instanceof Anthropic.AuthenticationError) {
-      return json(500, { error: 'config', message: 'The pitch generator is not configured yet.' });
-    }
+  } catch {
     return json(502, {
       error: 'upstream',
       message: 'Could not build a pitch right now. Try again.',
