@@ -4,12 +4,13 @@
 # serving a copy whose form would silently fail to record anyone.
 /  https://join.legacywealthgame.com/  302
 
-# /command is gated by a Netlify edge function and /legacypitch posts to a
-# Netlify function. Neither runs on Cloudflare, so serving copies here would
-# publish the dashboard with no password and leave the pitch form dead. Send
-# both back to the Netlify host, where the gate and the functions still work.
-# The .html forms are listed too so the raw file cannot be fetched directly.
+# /command is gated by a Netlify edge function, which does not run here, so
+# serving a copy would publish the dashboard with no password at all. Send it
+# back to the Netlify host where the gate still works. The .html form is listed
+# too so the raw file cannot be fetched directly.
+#
+# /legacypitch is deliberately NOT redirected. It is served from here and calls
+# the Cloudflare function at /api/pitch. Redirecting it moved the page onto the
+# join subdomain, which the pitch endpoint's origin allowlist rejects.
 /command            https://join.legacywealthgame.com/command      302
 /command.html       https://join.legacywealthgame.com/command      302
-/legacypitch        https://join.legacywealthgame.com/legacypitch  302
-/legacypitch.html   https://join.legacywealthgame.com/legacypitch  302
