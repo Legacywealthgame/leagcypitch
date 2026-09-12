@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Wealth Wisdom — Legacy Wealth</title>
 <meta name="description" content="A teaching moment from the Legacy Wealth board game. Build Wealth. Leave a Legacy.">
-<meta name="theme-color" content="#FAF7F0">
+<meta name="theme-color" content="#242424">
 <meta name="robots" content="noindex">
 
 <meta property="og:title" content="Wealth Wisdom — Legacy Wealth">
@@ -14,23 +14,31 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ==========================================================
    Legacy Wealth — QR companion pages
    Shared stylesheet (Wealth Wisdom + Business Blueprint)
+
+   Restyled to the dark marble system used by the card and career
+   pages. Selectors are unchanged, so no markup or script moved.
    ========================================================== */
 
 :root{
-  --cream:#FAF7F0;
-  --gold:#C9A84C;
-  --gold-soft:#E3D4A3;
-  --ink:#07080D;
-  --ink-soft:#3E4048;
-  --rule:rgba(7,8,13,.10);
-  --shadow:0 18px 50px -22px rgba(7,8,13,.45);
-  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
-  --sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --charcoal:#242424;
+  --cream:#F6F1E8;
+  --gold:#C6A15B;
+  --gold-light:#D4B483;
+  --gold-soft:rgba(198,161,91,.18);
+  --gold-dim:rgba(198,161,91,.34);
+  --gold-faint:rgba(198,161,91,.15);
+  --ink:#F6F1E8;
+  --ink-soft:rgba(246,241,232,.62);
+  --rule:rgba(198,161,91,.16);
+  --rose:#d98c95;
+  --shadow:0 1px 0 rgba(246,241,232,.05) inset, 0 26px 60px -22px rgba(0,0,0,.8);
+  --serif:'Cormorant Garamond',Garamond,'Times New Roman',serif;
+  --sans:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
 }
 
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -38,26 +46,46 @@ html,body{margin:0;padding:0;}
 html{-webkit-text-size-adjust:100%;}
 
 body{
-  background:var(--cream);
+  background:var(--charcoal);
   color:var(--ink);
   font-family:var(--sans);
   -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
   min-height:100svh;
   display:flex;
   flex-direction:column;
   padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
+/* ---------- Polished stone ---------- */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(ellipse 80% 55% at 22% 8%, rgba(120,120,126,.20), transparent 62%),
+    radial-gradient(ellipse 65% 45% at 88% 78%, rgba(104,104,110,.16), transparent 60%),
+    radial-gradient(ellipse 120% 70% at 50% 110%, rgba(28,28,29,.9), transparent 70%),
+    linear-gradient(165deg,#2b2b2d 0%,#232324 44%,#1d1d1e 100%);
+}
+body::after{
+  content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none;opacity:.5;
+  background:
+    linear-gradient(112deg,transparent 40%,rgba(168,168,175,.13) 41%,transparent 42.4%),
+    linear-gradient(104deg,transparent 62%,rgba(150,150,158,.09) 63%,transparent 64.2%),
+    linear-gradient(128deg,transparent 22%,rgba(182,182,190,.07) 23%,transparent 24.8%),
+    linear-gradient(96deg,transparent 76%,rgba(160,160,168,.08) 77%,transparent 78%);
+  filter:blur(.4px);
+}
+
 /* ---------- Masthead ---------- */
 .masthead{text-align:center;padding:26px 22px 16px;}
 .brand{
   font-size:10px;font-weight:600;letter-spacing:.34em;
-  text-transform:uppercase;color:var(--ink-soft);opacity:.65;
+  text-transform:uppercase;color:var(--gold);opacity:.85;
 }
 .masthead h1{
-  font-family:var(--serif);font-weight:600;
-  font-size:clamp(30px,9vw,40px);line-height:1.02;
-  margin:10px 0 0;letter-spacing:-.015em;
+  font-family:var(--serif);font-weight:600;color:var(--cream);
+  font-size:clamp(32px,9.4vw,44px);line-height:1.04;
+  margin:10px 0 0;letter-spacing:-.01em;
 }
 .flourish{
   width:64px;height:1px;margin:14px auto 0;
@@ -67,42 +95,48 @@ body{
 /* ---------- Stage + card ---------- */
 .stage{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:8px 18px 26px;}
 .card{
-  width:100%;max-width:560px;background:#fff;
-  border:1px solid var(--rule);border-top:3px solid var(--gold);
+  width:100%;max-width:560px;
+  background:linear-gradient(158deg,rgba(58,58,61,.82) 0%,rgba(36,36,38,.9) 52%,rgba(26,26,28,.94) 100%);
+  border:1px solid rgba(198,161,91,.3);border-top:3px solid var(--gold);
   border-radius:3px;box-shadow:var(--shadow);
   padding:30px 24px 28px;position:relative;
   animation:rise .5s cubic-bezier(.2,.7,.3,1) both;
+}
+/* The inner hairline that marks every plaque in this system. */
+.card::before{
+  content:"";position:absolute;inset:6px;
+  border:1px solid rgba(198,161,91,.16);border-radius:1px;pointer-events:none;
 }
 @keyframes rise{from{opacity:0;transform:translateY(14px) scale(.99);}to{opacity:1;transform:none;}}
 
 .kicker{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
 .badge{
   font-size:9.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--ink);background:var(--gold-soft);border:1px solid var(--gold);
+  color:var(--gold-light);background:var(--gold-soft);border:1px solid var(--gold-dim);
   padding:5px 9px;border-radius:2px;white-space:nowrap;
 }
 .cat{
   font-size:10.5px;font-weight:500;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--ink-soft);opacity:.7;
+  text-transform:uppercase;color:var(--ink-soft);
 }
 
 .statement{
-  font-family:var(--serif);font-size:clamp(21px,5.6vw,26px);
-  line-height:1.34;font-weight:500;margin:0;letter-spacing:-.01em;
+  font-family:var(--serif);font-size:clamp(22px,5.8vw,28px);
+  line-height:1.32;font-weight:600;color:var(--cream);margin:0;letter-spacing:0;
 }
 .statement.quoted::before{content:'\201C';}
 .statement.quoted::after{content:'\201D';}
 
 .lesson-title{
-  font-family:var(--serif);font-size:clamp(24px,6.4vw,30px);
-  line-height:1.16;font-weight:600;margin:0 0 16px;letter-spacing:-.015em;
+  font-family:var(--serif);font-size:clamp(25px,6.6vw,32px);
+  line-height:1.16;font-weight:600;color:var(--cream);margin:0 0 16px;letter-spacing:0;
 }
-.lesson-body{font-size:16.5px;line-height:1.66;color:var(--ink-soft);margin:0;}
+.lesson-body{font-size:16px;line-height:1.66;color:var(--cream);margin:0;}
 
 /* ---------- Flashcard term ---------- */
 .term{
-  font-family:var(--serif);font-size:clamp(30px,8.4vw,42px);
-  line-height:1.08;font-weight:600;margin:0;letter-spacing:-.02em;
+  font-family:var(--serif);font-size:clamp(31px,8.6vw,44px);
+  line-height:1.08;font-weight:600;color:var(--cream);margin:0;letter-spacing:0;
 }
 .term-ctx{
   font-size:0.52em;font-weight:500;color:var(--ink-soft);
@@ -111,18 +145,19 @@ body{
 
 /* ---------- Reveal fields (flashcards) ---------- */
 .field-label{
-  font-size:9.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  font-family:var(--serif);
+  font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
   color:var(--gold);margin:0 0 7px;
 }
 .field-label.spaced{margin-top:20px;}
-.field-text{font-size:16.5px;line-height:1.6;color:var(--ink-soft);margin:0;}
+.field-text{font-size:16px;line-height:1.6;color:var(--cream);margin:0;}
 
 /* ---------- Reward line (flashcards) ---------- */
 .reward-line{
   margin-top:22px;padding:14px 16px;
-  background:rgba(201,168,76,.12);border:1px solid var(--gold);
+  background:rgba(198,161,91,.09);border:1px solid var(--gold-dim);
   border-radius:2px;
-  font-size:14.5px;font-weight:600;color:#7C6520;
+  font-size:14.5px;font-weight:600;color:var(--gold-light);
   text-align:center;
 }
 
@@ -130,48 +165,49 @@ body{
 .choices{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:26px;}
 .choices.single{grid-template-columns:1fr;}
 .choice{
-  font-family:var(--sans);font-size:14px;font-weight:600;
+  font-family:var(--sans);font-size:14px;font-weight:700;
   letter-spacing:.11em;text-transform:uppercase;
-  padding:17px 10px;border:1.5px solid var(--ink);
-  background:transparent;color:var(--ink);border-radius:2px;
-  cursor:pointer;transition:background .16s ease,color .16s ease,transform .12s ease;
+  padding:17px 10px;border:1px solid var(--gold-dim);
+  background:none;color:var(--gold);border-radius:2px;
+  cursor:pointer;transition:background .16s ease,border-color .16s ease,color .16s ease,transform .12s ease;
 }
 .choice:active{transform:scale(.975);}
-.choice:hover{background:var(--ink);color:var(--cream);}
+.choice:hover{background:linear-gradient(172deg,var(--gold-light),var(--gold) 56%,#a9863f);color:#1a1508;border-color:transparent;}
 .choice:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
 
 /* ---------- Reveal ---------- */
 .reveal{
-  margin-top:24px;padding-top:22px;border-top:1px solid var(--rule);
+  margin-top:24px;padding-top:22px;border-top:1px solid var(--gold-faint);
   animation:fade .42s ease both;
 }
 @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
 
 .verdict{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;margin-bottom:14px;}
 .verdict-word{
-  font-family:var(--serif);font-size:34px;font-weight:700;
-  line-height:1;letter-spacing:-.02em;
+  font-family:var(--serif);font-size:36px;font-weight:700;
+  line-height:1;letter-spacing:0;color:var(--cream);
 }
 .verdict-note{
   font-size:10.5px;font-weight:600;letter-spacing:.17em;
   text-transform:uppercase;padding:4px 8px;border-radius:2px;
 }
-.right{background:rgba(201,168,76,.16);color:#7C6520;border:1px solid var(--gold);}
-.wrong{background:rgba(7,8,13,.05);color:var(--ink-soft);border:1px solid var(--rule);}
-.explain{font-size:16px;line-height:1.64;color:var(--ink-soft);margin:0;}
+.right{background:rgba(198,161,91,.14);color:var(--gold-light);border:1px solid var(--gold-dim);}
+.wrong{background:rgba(217,140,149,.10);color:var(--rose);border:1px solid rgba(217,140,149,.34);}
+.explain{font-size:16px;line-height:1.64;color:var(--cream);margin:0;}
 
 /* ---------- Tray ---------- */
 .tray{padding:0 18px 30px;display:flex;justify-content:center;}
 .again{
-  font-family:var(--sans);font-size:12.5px;font-weight:600;
+  font-family:var(--sans);font-size:12.5px;font-weight:700;
   letter-spacing:.19em;text-transform:uppercase;
-  background:var(--ink);color:var(--cream);border:none;
+  background:linear-gradient(172deg,var(--gold-light),var(--gold) 56%,#a9863f);
+  color:#1a1508;border:none;
   padding:17px 34px;border-radius:2px;cursor:pointer;
   width:100%;max-width:560px;
-  transition:opacity .16s ease,transform .12s ease;
+  transition:filter .16s ease,transform .12s ease;
 }
-.again:active{transform:scale(.985);}
-.again:hover{opacity:.87;}
+.again:active{transform:translateY(1px);}
+.again:hover{filter:brightness(1.07);}
 .again:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
 .again[hidden]{display:none;}
 
@@ -180,17 +216,17 @@ body{
   text-align:center;
 }
 .fallback h2{
-  font-family:var(--serif);font-size:24px;font-weight:600;
-  margin:0 0 12px;letter-spacing:-.01em;
+  font-family:var(--serif);font-size:26px;font-weight:600;color:var(--cream);
+  margin:0 0 12px;letter-spacing:0;
 }
 .fallback p{font-size:16px;line-height:1.62;color:var(--ink-soft);margin:0;}
 
 .legal{
   text-align:center;font-size:10.5px;line-height:1.6;
-  color:var(--ink-soft);opacity:.5;
+  color:rgba(246,241,232,.4);
   padding:0 26px 26px;max-width:520px;margin:0 auto;
 }
-.legal strong{font-weight:600;}
+.legal strong{font-weight:600;color:rgba(246,241,232,.55);}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
 @media (min-width:640px){.card{padding:38px 36px 34px;}.masthead{padding-top:44px;}}

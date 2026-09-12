@@ -8,7 +8,7 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/base.css">
 <style>
   /* Page-specific only. Everything shared lives in base.css. */
@@ -16,9 +16,10 @@
     display: flex;
     justify-content: center;
     min-height: 100vh;
-    padding: 32px 16px;
+    padding: clamp(16px, 4.5vw, 32px) clamp(16px, 5vw, 28px)
+             calc(clamp(16px, 4.5vw, 32px) + env(safe-area-inset-bottom));
   }
-  .wrap { width: 100%; max-width: 440px; }
+  .wrap { width: 100%; max-width: 520px; }
 
   .masthead { text-align: center; margin-bottom: 28px; }
   .masthead .eyebrow { margin-bottom: 6px; }
@@ -30,8 +31,8 @@
     letter-spacing: 1.4px;
     text-transform: uppercase;
     font-weight: 600;
-    color: var(--gold-deep);
-    border: 1px solid var(--gold);
+    color: var(--gold);
+    border: 1px solid var(--border);
     border-radius: 999px;
     padding: 4px 12px;
     margin-bottom: 12px;
@@ -42,29 +43,34 @@
   .progress { display: flex; justify-content: center; gap: 6px; margin-bottom: 22px; }
   .dot {
     width: 7px; height: 7px; border-radius: 50%;
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(246, 241, 232, 0.16);
     transition: background 0.2s ease, transform 0.2s ease;
   }
   .dot.active { background: var(--gold); transform: scale(1.2); }
-  .dot.done { background: var(--gold-deep); }
+  .dot.done { background: var(--gold-light); }
 
   .step-label {
-    font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
-    color: var(--text-muted); font-weight: 600; margin-bottom: 10px;
+    font-family: var(--font-display);
+    font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold); font-weight: 700; margin-bottom: 10px;
   }
-  .question { font-family: var(--font-display); font-size: 20px; margin: 0 0 6px; line-height: 1.35; }
+  .question {
+    font-family: var(--font-display); font-size: 23px;
+    color: var(--cream); margin: 0 0 6px; line-height: 1.32;
+  }
   .hint { font-size: 13px; color: var(--text-muted); margin: 0 0 16px; line-height: 1.45; }
   textarea { min-height: 80px; }
 
-  .counter { text-align: right; font-size: 11.5px; color: var(--text-muted); margin-top: 6px; }
-  .counter.near { color: var(--gold-deep); font-weight: 600; }
+  .counter { text-align: right; font-size: 11px; color: rgba(246, 241, 232, 0.32); margin-top: 6px; }
+  .counter.near { color: var(--gold); font-weight: 600; }
 
   .error { color: var(--red); font-size: 13px; margin-top: 10px; text-align: center; }
 
   .pitch-card {
-    background: var(--card);
+    background: linear-gradient(158deg,
+      rgba(58, 58, 61, .7) 0%, rgba(30, 30, 32, .9) 100%);
     border: 1px solid var(--hairline);
-    border-left: 4px solid var(--gold);
+    border-left: 3px solid var(--gold);
     border-radius: var(--radius-md);
     padding: 20px 22px;
     margin-bottom: 14px;
@@ -79,15 +85,16 @@
   @keyframes deal { to { opacity: 1; transform: translateY(0); } }
 
   .pitch-label {
-    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--gold-deep); font-weight: 700; margin-bottom: 8px;
+    font-family: var(--font-display);
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); font-weight: 700; margin-bottom: 8px;
   }
-  .pitch-text { font-size: 15.5px; line-height: 1.6; margin: 0; }
+  .pitch-text { font-size: 15.5px; line-height: 1.62; color: var(--cream); margin: 0; }
 
   .loading { text-align: center; padding: 40px 0; color: var(--text-muted); font-size: 14px; }
   .spinner {
     width: 28px; height: 28px;
-    border: 2.5px solid rgba(0, 0, 0, 0.1);
+    border: 2.5px solid rgba(246, 241, 232, 0.12);
     border-top-color: var(--gold);
     border-radius: 50%;
     margin: 0 auto 14px;
@@ -98,17 +105,18 @@
   .read-time { text-align: center; font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
   .timer-row { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 8px; }
   .timer-display {
-    font-family: var(--font-display); font-size: 30px; font-weight: 600;
+    font-family: var(--font-display); font-size: 34px; font-weight: 600;
+    color: var(--cream);
     min-width: 74px; text-align: center;
   }
   .timer-display.warn { color: var(--red); }
   .btn-timer {
     padding: 10px 18px; border: 1px solid var(--border); border-radius: var(--radius-sm);
-    background: var(--card); font-family: var(--font-body); font-weight: 600;
-    font-size: 13px; cursor: pointer; color: var(--black);
+    background: none; font-family: var(--font-body); font-weight: 600;
+    font-size: 13px; cursor: pointer; color: var(--gold);
   }
-  .btn-timer:hover { background: rgba(0, 0, 0, 0.03); }
-  .btn-timer.running { border-color: var(--gold); color: var(--gold-deep); }
+  .btn-timer:hover { background: rgba(198, 161, 91, 0.09); border-color: var(--gold); }
+  .btn-timer.running { border-color: var(--gold); color: var(--gold-light); }
 
   .finish-note {
     text-align: center; font-size: 13.5px; font-weight: 600;
@@ -117,8 +125,8 @@
 
   /* The investment round — what happens after the pitch is read aloud. */
   .invest {
-    background: rgba(201, 168, 76, 0.09);
-    border: 1px solid var(--gold);
+    background: rgba(198, 161, 91, 0.07);
+    border: 1px solid var(--border);
     border-radius: var(--radius-md);
     padding: 18px 20px;
     margin: 20px 0 4px;
@@ -126,7 +134,7 @@
     animation: deal 0.5s ease 0.85s forwards;
   }
   .invest .pitch-label { margin-bottom: 6px; }
-  .invest p { font-size: 14.5px; line-height: 1.55; margin: 0 0 8px; }
+  .invest p { font-size: 14.5px; line-height: 1.55; color: var(--cream); margin: 0 0 8px; }
   .invest p:last-child { margin-bottom: 0; }
   .invest .fine { font-size: 13px; color: var(--text-muted); }
 
