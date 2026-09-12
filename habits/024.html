@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>You Bought Things to Look Wealthy Instead of Building Wealth | Legacy Wealth</title>
-<meta name="description" content="You Bought Things to Look Wealthy Instead of Building Wealth. A financial lesson from the Legacy Wealth board game.">
+<title>You Looked Wealthy Instead Of Building Wealth | Legacy Wealth</title>
+<meta name="description" content="You financed the car, the watch, and the lifestyle while building very few assets. Looking successful and being financially secure are not the same thing.">
 <meta name="theme-color" content="#FAF7F0">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +14,7 @@
   :root{
     --cream:#FAF7F0; --cream-deep:#F1EBDD; --gold:#C9A84C; --gold-soft:#E3D4A3;
     --ink:#07080D; --ink-soft:#3E4048; --rule:rgba(7,8,13,.10);
-    --shadow:0 18px 50px -22px rgba(7,8,13,.45); --accent:#B23A48;
+    --shadow:0 18px 50px -22px rgba(7,8,13,.45); --accent:#2E5C4A;
     --serif:'Playfair Display',Georgia,serif; --sans:'Inter',system-ui,-apple-system,sans-serif;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -29,26 +29,30 @@
   .flourish{width:56px; height:1px; margin:12px auto 0; background:linear-gradient(90deg,transparent,var(--gold),transparent);}
   .stage{flex:1; display:flex; align-items:flex-start; justify-content:center; padding:8px 18px 30px;}
   .card{
-    width:100%; max-width:600px; background:#fff; border:1px solid var(--rule);
+    width:100%; max-width:620px; background:#fff; border:1px solid var(--rule);
     border-top:3px solid var(--accent); border-radius:3px; box-shadow:var(--shadow);
     padding:30px 26px 30px; animation:rise .5s cubic-bezier(.2,.7,.3,1) both;
   }
   @keyframes rise{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:none;}}
-  .kicker{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:18px;}
+  .kicker{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:14px;}
   .badge{
     font-size:9.5px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
     color:#fff; background:var(--accent); padding:5px 10px; border-radius:2px; white-space:nowrap;
   }
   .num{font-size:10.5px; font-weight:500; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-soft); opacity:.6;}
   h1{
-    font-family:var(--serif); font-size:clamp(25px,6.4vw,33px); line-height:1.14;
-    font-weight:600; margin:0 0 18px; letter-spacing:-.015em;
+    font-family:var(--serif); font-size:clamp(21px,5.4vw,27px); line-height:1.24;
+    font-weight:600; margin:0 0 18px; letter-spacing:-.01em;
   }
-  .amount{
-    display:inline-block; font-size:14px; font-weight:600; color:var(--accent);
-    border:1px solid var(--accent); border-radius:2px; padding:9px 14px; margin-bottom:26px;
-    background:rgba(201,168,76,.06);
+  .lede{
+    background:var(--cream-deep); border:1px solid var(--rule); border-left:3px solid var(--accent);
+    border-radius:3px; padding:16px 18px; margin:0 0 24px;
   }
+  .lede-label{
+    font-size:9.5px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 7px;
+  }
+  .lede-text{font-size:16.5px; line-height:1.6; color:var(--ink); font-weight:500; margin:0;}
   .field{margin-top:22px;}
   .field:first-of-type{margin-top:0;}
   .field-label{
@@ -72,27 +76,31 @@
 <main class="stage">
   <div class="card">
     <div class="kicker">
-      <span class="badge">Poor Habit</span>
+      <span class="badge">Habits</span>
       <span class="num">Card 024</span>
     </div>
-    <h1>You Bought Things to Look Wealthy Instead of Building Wealth</h1>
-    <div class="amount">Pay $25,000 to the bank.</div>
+    <h1>You Looked Wealthy Instead Of Building Wealth</h1>
+
+    <div class="lede">
+      <p class="lede-label">The Card</p>
+      <p class="lede-text">You financed the car, the watch, and the lifestyle while building very few assets. Looking successful and being financially secure are not the same thing.</p>
+    </div>
 
     <div class="field">
-      <p class="field-label">What's Really Going On</p>
-      <p class="field-text">The car depreciated, the watch was financed, and the designer clothes were charged to credit. From the outside it looked like success. On paper it was the opposite.</p>
-    </div>
-    <div class="field">
       <p class="field-label">The Fact</p>
-      <p class="field-text">Many visibly high spending households carry little real net worth, while a large share of actual millionaires live well below the lifestyle their income could support.</p>
+      <p class="field-text">A financed luxury vehicle typically loses a significant share of its value within the first few years while the loan balance remains largely unchanged, meaning the owner can owe more than the car is worth for a meaningful stretch of the loan.</p>
     </div>
     <div class="field">
-      <p class="field-label">Why It Matters</p>
-      <p class="field-text">Funding the appearance of wealth actively prevents building the real thing, because every dollar spent looking rich is a dollar that never becomes an asset.</p>
+      <p class="field-label">Why This Matters</p>
+      <p class="field-text">Visible wealth and actual wealth are frequently inversely related, since the spending required to look affluent is usually the same spending that would otherwise have funded actual assets. Nobody's balance sheet is visible from the outside, only the spending is, which is exactly why the two get confused.</p>
     </div>
     <div class="field">
-      <p class="field-label">The Wealthy Move</p>
-      <p class="field-text">The wealthy often buy quiet, letting their money compound into assets instead of financing a lifestyle designed to impress people who are not paying attention.</p>
+      <p class="field-label">A Real Example</p>
+      <p class="field-text">Two professionals earn similar incomes. One finances a luxury car, a watch, and a larger apartment, all visible signals of success, and has almost no savings. The other drives a modest, paid-off car and lives well below her means while investing the difference. From the outside, the first looks far more successful. On paper, the second has multiples more in actual net worth.</p>
+    </div>
+    <div class="field">
+      <p class="field-label">Think Like a Wealth Builder</p>
+      <p class="field-text">Nobody's net worth is visible in a parking lot. The people who look the wealthiest are frequently the ones with the least of it, because looking wealthy and being wealthy draw from the same paycheck.</p>
     </div>
   </div>
 </main>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>You Hit Your Savings Goal | Legacy Wealth</title>
-<meta name="description" content="You Hit Your Savings Goal. A financial lesson from the Legacy Wealth board game.">
+<meta name="description" content="You set a specific savings target and stayed consistent until you reached it. That discipline built momentum you carried into your next goal.">
 <meta name="theme-color" content="#FAF7F0">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +14,7 @@
   :root{
     --cream:#FAF7F0; --cream-deep:#F1EBDD; --gold:#C9A84C; --gold-soft:#E3D4A3;
     --ink:#07080D; --ink-soft:#3E4048; --rule:rgba(7,8,13,.10);
-    --shadow:0 18px 50px -22px rgba(7,8,13,.45); --accent:#2E7D46;
+    --shadow:0 18px 50px -22px rgba(7,8,13,.45); --accent:#2E5C4A;
     --serif:'Playfair Display',Georgia,serif; --sans:'Inter',system-ui,-apple-system,sans-serif;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -29,26 +29,30 @@
   .flourish{width:56px; height:1px; margin:12px auto 0; background:linear-gradient(90deg,transparent,var(--gold),transparent);}
   .stage{flex:1; display:flex; align-items:flex-start; justify-content:center; padding:8px 18px 30px;}
   .card{
-    width:100%; max-width:600px; background:#fff; border:1px solid var(--rule);
+    width:100%; max-width:620px; background:#fff; border:1px solid var(--rule);
     border-top:3px solid var(--accent); border-radius:3px; box-shadow:var(--shadow);
     padding:30px 26px 30px; animation:rise .5s cubic-bezier(.2,.7,.3,1) both;
   }
   @keyframes rise{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:none;}}
-  .kicker{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:18px;}
+  .kicker{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:14px;}
   .badge{
     font-size:9.5px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
     color:#fff; background:var(--accent); padding:5px 10px; border-radius:2px; white-space:nowrap;
   }
   .num{font-size:10.5px; font-weight:500; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-soft); opacity:.6;}
   h1{
-    font-family:var(--serif); font-size:clamp(25px,6.4vw,33px); line-height:1.14;
-    font-weight:600; margin:0 0 18px; letter-spacing:-.015em;
+    font-family:var(--serif); font-size:clamp(21px,5.4vw,27px); line-height:1.24;
+    font-weight:600; margin:0 0 18px; letter-spacing:-.01em;
   }
-  .amount{
-    display:inline-block; font-size:14px; font-weight:600; color:var(--accent);
-    border:1px solid var(--accent); border-radius:2px; padding:9px 14px; margin-bottom:26px;
-    background:rgba(201,168,76,.06);
+  .lede{
+    background:var(--cream-deep); border:1px solid var(--rule); border-left:3px solid var(--accent);
+    border-radius:3px; padding:16px 18px; margin:0 0 24px;
   }
+  .lede-label{
+    font-size:9.5px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 7px;
+  }
+  .lede-text{font-size:16.5px; line-height:1.6; color:var(--ink); font-weight:500; margin:0;}
   .field{margin-top:22px;}
   .field:first-of-type{margin-top:0;}
   .field-label{
@@ -72,27 +76,31 @@
 <main class="stage">
   <div class="card">
     <div class="kicker">
-      <span class="badge">Rich Habit</span>
+      <span class="badge">Habits</span>
       <span class="num">Card 065</span>
     </div>
     <h1>You Hit Your Savings Goal</h1>
-    <div class="amount">Collect $10,000 from the bank.</div>
+
+    <div class="lede">
+      <p class="lede-label">The Card</p>
+      <p class="lede-text">You set a specific savings target and stayed consistent until you reached it. That discipline built momentum you carried into your next goal.</p>
+    </div>
 
     <div class="field">
-      <p class="field-label">What&#x27;s Really Going On</p>
-      <p class="field-text">A goal that gets tracked and followed through on, month after month, proves something bigger than the number itself.</p>
-    </div>
-    <div class="field">
       <p class="field-label">The Fact</p>
-      <p class="field-text">Multiple behavioral finance studies on goal-setting, including research popularized by Dr. Gail Matthews at Dominican University of California, have found that people who write down specific goals and track progress toward them report substantially higher completion rates than those who don't.</p>
+      <p class="field-text">Specific, measurable financial goals are consistently associated with higher follow-through than vague intentions, because a defined target creates a clear finish line to track progress against, rather than an open-ended, easy-to-postpone aspiration.</p>
     </div>
     <div class="field">
-      <p class="field-label">Why It Matters</p>
-      <p class="field-text">Consistency over time, not intensity in a single month, is what usually separates a finished goal from an abandoned one.</p>
+      <p class="field-label">Why This Matters</p>
+      <p class="field-text">"Save more" is a wish. "Save $12,000 by December" is a plan with a scoreboard. The second version is what actually gets tracked, adjusted, and completed, because there's a specific number telling you exactly where you stand at any point along the way.</p>
     </div>
     <div class="field">
-      <p class="field-label">The Wealthy Move</p>
-      <p class="field-text">Wealthy people set specific targets and automate progress toward them, removing the need to rely on willpower alone.</p>
+      <p class="field-label">A Real Example</p>
+      <p class="field-text">Two people both want to build an emergency fund. One sets a vague goal to "save when possible" and, a year later, has saved inconsistently and fallen short of where she'd hoped to be. The other sets a specific target of $10,000 by a specific date, tracks it monthly, and hits the goal on schedule, then immediately sets a new, equally specific target for the next twelve months.</p>
+    </div>
+    <div class="field">
+      <p class="field-label">Think Like a Wealth Builder</p>
+      <p class="field-text">A specific number and a specific date turn a vague hope into something you can actually measure progress against. That's usually the entire difference between finishing a goal and abandoning it.</p>
     </div>
   </div>
 </main>

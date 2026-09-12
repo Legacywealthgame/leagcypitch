@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>You Are Being Personally Sued | Legacy Wealth</title>
-<meta name="description" content="You Are Being Personally Sued. A financial lesson from the Legacy Wealth board game.">
+<title>You Failed To Protect Yourself Legally | Legacy Wealth</title>
+<meta name="description" content="You operated without contracts, agreements, or legal protection in place. When a dispute happened, you had nothing to fall back on.">
 <meta name="theme-color" content="#FAF7F0">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +14,7 @@
   :root{
     --cream:#FAF7F0; --cream-deep:#F1EBDD; --gold:#C9A84C; --gold-soft:#E3D4A3;
     --ink:#07080D; --ink-soft:#3E4048; --rule:rgba(7,8,13,.10);
-    --shadow:0 18px 50px -22px rgba(7,8,13,.45); --accent:#B3412B;
+    --shadow:0 18px 50px -22px rgba(7,8,13,.45); --accent:#2E5C4A;
     --serif:'Playfair Display',Georgia,serif; --sans:'Inter',system-ui,-apple-system,sans-serif;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -29,26 +29,30 @@
   .flourish{width:56px; height:1px; margin:12px auto 0; background:linear-gradient(90deg,transparent,var(--gold),transparent);}
   .stage{flex:1; display:flex; align-items:flex-start; justify-content:center; padding:8px 18px 30px;}
   .card{
-    width:100%; max-width:600px; background:#fff; border:1px solid var(--rule);
+    width:100%; max-width:620px; background:#fff; border:1px solid var(--rule);
     border-top:3px solid var(--accent); border-radius:3px; box-shadow:var(--shadow);
     padding:30px 26px 30px; animation:rise .5s cubic-bezier(.2,.7,.3,1) both;
   }
   @keyframes rise{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:none;}}
-  .kicker{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:18px;}
+  .kicker{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:14px;}
   .badge{
     font-size:9.5px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
     color:#fff; background:var(--accent); padding:5px 10px; border-radius:2px; white-space:nowrap;
   }
   .num{font-size:10.5px; font-weight:500; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-soft); opacity:.6;}
   h1{
-    font-family:var(--serif); font-size:clamp(25px,6.4vw,33px); line-height:1.14;
-    font-weight:600; margin:0 0 18px; letter-spacing:-.015em;
+    font-family:var(--serif); font-size:clamp(21px,5.4vw,27px); line-height:1.24;
+    font-weight:600; margin:0 0 18px; letter-spacing:-.01em;
   }
-  .amount{
-    display:inline-block; font-size:14px; font-weight:600; color:var(--accent);
-    border:1px solid var(--accent); border-radius:2px; padding:9px 14px; margin-bottom:26px;
-    background:rgba(201,168,76,.06);
+  .lede{
+    background:var(--cream-deep); border:1px solid var(--rule); border-left:3px solid var(--accent);
+    border-radius:3px; padding:16px 18px; margin:0 0 24px;
   }
+  .lede-label{
+    font-size:9.5px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 7px;
+  }
+  .lede-text{font-size:16.5px; line-height:1.6; color:var(--ink); font-weight:500; margin:0;}
   .field{margin-top:22px;}
   .field:first-of-type{margin-top:0;}
   .field-label{
@@ -72,27 +76,31 @@
 <main class="stage">
   <div class="card">
     <div class="kicker">
-      <span class="badge">Poor Habit</span>
+      <span class="badge">Habits</span>
       <span class="num">Card 058</span>
     </div>
-    <h1>You Are Being Personally Sued</h1>
-    <div class="amount">Pay $15,000 to the bank.</div>
+    <h1>You Failed To Protect Yourself Legally</h1>
+
+    <div class="lede">
+      <p class="lede-label">The Card</p>
+      <p class="lede-text">You operated without contracts, agreements, or legal protection in place. When a dispute happened, you had nothing to fall back on.</p>
+    </div>
 
     <div class="field">
-      <p class="field-label">What&#x27;s Really Going On</p>
-      <p class="field-text">A lawsuit costs money to defend regardless of how strong the case against you actually is.</p>
-    </div>
-    <div class="field">
       <p class="field-label">The Fact</p>
-      <p class="field-text">Legal cost data shows that the bulk of litigation expense, retainers, filings, depositions, comes due regardless of the case's merit or outcome, which is why liability insurance exists specifically to cover defense costs, not just an eventual judgment.</p>
+      <p class="field-text">A written contract establishes clear, agreed-upon terms before a relationship or transaction begins, which is precisely when both parties are most willing to be reasonable. Without one, any later dispute has to be resolved based on memory, assumption, and whoever can argue more persuasively after the fact.</p>
     </div>
     <div class="field">
-      <p class="field-label">Why It Matters</p>
-      <p class="field-text">Without proper structure and coverage, a single claim can put personal assets directly at risk.</p>
+      <p class="field-label">Why This Matters</p>
+      <p class="field-text">Contracts feel unnecessary when a relationship is going well, which is exactly why they get skipped, and exactly why their absence only becomes a problem once things aren't going well anymore, at the worst possible time to negotiate terms.</p>
     </div>
     <div class="field">
-      <p class="field-label">The Wealthy Move</p>
-      <p class="field-text">Wealthy individuals carry liability coverage and keep documentation in order well before any claim ever arrives.</p>
+      <p class="field-label">A Real Example</p>
+      <p class="field-text">A freelancer takes on a large project based only on a verbal agreement with a client he trusts. Midway through, the client changes the scope significantly without adjusting payment, and there's no written agreement establishing what was originally promised. He either absorbs the extra work unpaid or fights a dispute with no documentation to support his position. A colleague working under a clear written contract faces a similar scope change and the contract resolves the disagreement in minutes.</p>
+    </div>
+    <div class="field">
+      <p class="field-label">Think Like a Wealth Builder</p>
+      <p class="field-text">A contract isn't about distrust in the relationship. It's about having a clear reference point for the one time trust alone isn't enough to resolve a disagreement.</p>
     </div>
   </div>
 </main>
