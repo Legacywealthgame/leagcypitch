@@ -1,8 +1,7 @@
-# The waitlist form is a Netlify Form, which only works on Netlify, so the
-# signup page stays there on join.legacywealthgame.com while the rest of the
-# site moves. The root is the signup page today, so hand it off rather than
-# serving a copy whose form would silently fail to record anyone.
-/  https://join.legacywealthgame.com/  302
+# The signup page is served from here now. It used to hand off to Netlify
+# because its form was a Netlify Form, which only records submissions on
+# Netlify; the form posts to /api/waitlist and stores signups in D1 instead,
+# so there is nothing left on the other host to hand off to.
 
 # /command is gated by a Netlify edge function, which does not run here, so
 # serving a copy would publish the dashboard with no password at all. Send it

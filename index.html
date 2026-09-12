@@ -96,6 +96,11 @@
   }
   button:hover{filter:brightness(1.08); transform:translateY(-1px);}
   .fineprint{font-size:11.5px; color:var(--paper-faint); margin-top:22px; line-height:1.5; letter-spacing:.02em;}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+  .formError{
+    color:#A32D2D;font-size:13.5px;line-height:1.5;
+    margin:12px 0 0;text-align:center;
+  }
   .success{display:none;}
   .success.show{display:block;}
   .success h1{
@@ -118,15 +123,17 @@
     <p class="desc">Gather your family around the table and race to become the first millionaire. Pitch business ideas, battle each other in Financial Duels, and learn the habits that separate the rich from the poor along the way. The first player to reach a million in Legacy Value wins.</p>
     <p class="urgency">Preorders open November 8th. Join the waitlist now to be notified the moment it goes live and be first in line.</p>
 
-    <form name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="waitlistForm">
-      <input type="hidden" name="form-name" value="waitlist" />
-      <p style="display:none;">
-        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
-      </p>
-      <input type="text" name="name" placeholder="Full name" required />
-      <input type="email" name="email" placeholder="Email address" required />
-      <input type="text" name="phone" inputmode="tel" placeholder="Phone number" />
-      <button type="submit">Claim Early Access</button>
+    <form id="waitlistForm" novalidate>
+      <!-- Honeypot: hidden from people, filled in by bots. Named "company"
+           rather than "bot-field" so it reads as a real field to a scraper. -->
+      <div class="hp" aria-hidden="true">
+        <label>Company <input name="company" tabindex="-1" autocomplete="off" /></label>
+      </div>
+      <input type="text" name="name" placeholder="Full name" autocomplete="name" required />
+      <input type="email" name="email" placeholder="Email address" autocomplete="email" required />
+      <input type="text" name="phone" inputmode="tel" placeholder="Phone number" autocomplete="tel" />
+      <button type="submit" id="submitBtn">Claim Early Access</button>
+      <p class="formError" id="formError" role="alert" hidden></p>
     </form>
   </div>
 
@@ -137,24 +144,66 @@
 </main>
 
 <script>
-  const form = document.getElementById('waitlistForm');
-  form.addEventListener('submit', function(e) {
+  var form = document.getElementById('waitlistForm');
+  var button = document.getElementById('submitBtn');
+  var errorLine = document.getElementById('formError');
+
+  function showError(message) {
+    errorLine.textContent = message;
+    errorLine.hidden = false;
+    button.disabled = false;
+    button.textContent = 'Claim Early Access';
+  }
+
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
-    const formData = new FormData(form);
-    fetch('/waitlist', {
+    errorLine.hidden = true;
+
+    /* form.elements[...] rather than form.name: HTMLFormElement defines its
+       own .name property, so form.name is the form's name attribute and never
+       the input called "name". Same trap for action, method, target and id. */
+    var fields = form.elements;
+    var payload = {
+      name: fields['name'].value,
+      email: fields['email'].value,
+      phone: fields['phone'].value,
+      company: fields['company'].value
+    };
+
+    if (!payload.name.trim()) return showError('Please enter your name.');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(payload.email.trim())) {
+      return showError('Please enter a valid email address.');
+    }
+
+    /* Lock the button while it is in flight. Without this a slow connection
+       invites a second tap, and the person cannot tell whether either worked. */
+    button.disabled = true;
+    button.textContent = 'Adding you...';
+
+    fetch('/api/waitlist', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(formData).toString()
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
     })
-    .then((response) => {
-      if (!response.ok) throw new Error('Form submission failed with status ' + response.status);
-      document.getElementById('formCard').style.display = 'none';
-      document.getElementById('successCard').classList.add('show');
-    })
-    .catch((error) => {
-      alert('Something went wrong. Please try again or email us directly.');
-      console.error(error);
-    });
+      .then(function (response) {
+        return response.json().catch(function () { return {}; }).then(function (data) {
+          if (!response.ok) {
+            var serverError = new Error(data.message || 'That did not go through.');
+            serverError.fromServer = true;   /* safe to show; we wrote it */
+            throw serverError;
+          }
+          document.getElementById('formCard').style.display = 'none';
+          document.getElementById('successCard').classList.add('show');
+        });
+      })
+      .catch(function (error) {
+        /* Say so plainly and leave what they typed in place. The old version
+           failed silently, which is how signups were lost without anyone
+           noticing. */
+        showError(error.fromServer
+          ? error.message
+          : 'Could not reach the server. Check your connection and try again.');
+      });
   });
 </script>
 </body>
