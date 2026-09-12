@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>You Have No Budget and No Clue Where Your Money Goes | Legacy Wealth</title>
-<meta name="description" content="You Have No Budget and No Clue Where Your Money Goes. A financial lesson from the Legacy Wealth board game.">
+<title>You Had No Plan For Your Money | Legacy Wealth</title>
+<meta name="description" content="You earned money for years without a clear strategy for what to do with it. Without direction, income came and went without building anything lasting.">
 <meta name="theme-color" content="#FAF7F0">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +14,7 @@
   :root{
     --cream:#FAF7F0; --cream-deep:#F1EBDD; --gold:#C9A84C; --gold-soft:#E3D4A3;
     --ink:#07080D; --ink-soft:#3E4048; --rule:rgba(7,8,13,.10);
-    --shadow:0 18px 50px -22px rgba(7,8,13,.45); --accent:#B3412B;
+    --shadow:0 18px 50px -22px rgba(7,8,13,.45); --accent:#2E5C4A;
     --serif:'Playfair Display',Georgia,serif; --sans:'Inter',system-ui,-apple-system,sans-serif;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -29,26 +29,30 @@
   .flourish{width:56px; height:1px; margin:12px auto 0; background:linear-gradient(90deg,transparent,var(--gold),transparent);}
   .stage{flex:1; display:flex; align-items:flex-start; justify-content:center; padding:8px 18px 30px;}
   .card{
-    width:100%; max-width:600px; background:#fff; border:1px solid var(--rule);
+    width:100%; max-width:620px; background:#fff; border:1px solid var(--rule);
     border-top:3px solid var(--accent); border-radius:3px; box-shadow:var(--shadow);
     padding:30px 26px 30px; animation:rise .5s cubic-bezier(.2,.7,.3,1) both;
   }
   @keyframes rise{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:none;}}
-  .kicker{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:18px;}
+  .kicker{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:14px;}
   .badge{
     font-size:9.5px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
     color:#fff; background:var(--accent); padding:5px 10px; border-radius:2px; white-space:nowrap;
   }
   .num{font-size:10.5px; font-weight:500; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-soft); opacity:.6;}
   h1{
-    font-family:var(--serif); font-size:clamp(25px,6.4vw,33px); line-height:1.14;
-    font-weight:600; margin:0 0 18px; letter-spacing:-.015em;
+    font-family:var(--serif); font-size:clamp(21px,5.4vw,27px); line-height:1.24;
+    font-weight:600; margin:0 0 18px; letter-spacing:-.01em;
   }
-  .amount{
-    display:inline-block; font-size:14px; font-weight:600; color:var(--accent);
-    border:1px solid var(--accent); border-radius:2px; padding:9px 14px; margin-bottom:26px;
-    background:rgba(201,168,76,.06);
+  .lede{
+    background:var(--cream-deep); border:1px solid var(--rule); border-left:3px solid var(--accent);
+    border-radius:3px; padding:16px 18px; margin:0 0 24px;
   }
+  .lede-label{
+    font-size:9.5px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 7px;
+  }
+  .lede-text{font-size:16.5px; line-height:1.6; color:var(--ink); font-weight:500; margin:0;}
   .field{margin-top:22px;}
   .field:first-of-type{margin-top:0;}
   .field-label{
@@ -72,27 +76,31 @@
 <main class="stage">
   <div class="card">
     <div class="kicker">
-      <span class="badge">Poor Habit</span>
+      <span class="badge">Habits</span>
       <span class="num">Card 066</span>
     </div>
-    <h1>You Have No Budget and No Clue Where Your Money Goes</h1>
-    <div class="amount">Pay $20,000 to the bank.</div>
+    <h1>You Had No Plan For Your Money</h1>
+
+    <div class="lede">
+      <p class="lede-label">The Card</p>
+      <p class="lede-text">You earned money for years without a clear strategy for what to do with it. Without direction, income came and went without building anything lasting.</p>
+    </div>
 
     <div class="field">
-      <p class="field-label">What&#x27;s Really Going On</p>
-      <p class="field-text">Decent income without a plan for it tends to disappear the same way regardless of how much comes in.</p>
-    </div>
-    <div class="field">
       <p class="field-label">The Fact</p>
-      <p class="field-text">The Federal Reserve's most recent household survey found only about half of Americans could confidently say where their money went last month without checking their accounts first, and CFPB research consistently links budget tracking with meaningfully higher savings rates.</p>
+      <p class="field-text">Money without an assigned purpose tends to get absorbed by whatever spending opportunity is most immediate, since there's no competing plan directing it elsewhere. A specific plan, savings targets, investment contributions, debt payoff goals, is what gives income somewhere deliberate to go instead.</p>
     </div>
     <div class="field">
-      <p class="field-label">Why It Matters</p>
-      <p class="field-text">Money that is not tracked is money that cannot be intentionally directed toward saving, investing, or paying down debt.</p>
+      <p class="field-label">Why This Matters</p>
+      <p class="field-text">Earning well and building wealth are not the same skill, and a high income with no plan behind it can produce almost nothing to show for years of work. A plan is what converts income into lasting assets instead of letting it simply pass through.</p>
     </div>
     <div class="field">
-      <p class="field-label">The Wealthy Move</p>
-      <p class="field-text">Wealthy people track spending closely, not out of restriction, but because visibility is what makes control possible.</p>
+      <p class="field-label">A Real Example</p>
+      <p class="field-text">A man earns a strong income for over a decade with no specific financial plan, and reaches his late thirties with very little to show for it beyond a comfortable lifestyle. A colleague earning a similar income the whole time had a specific plan from year one, savings percentages, investment targets, and reaches the same age with a meaningfully larger net worth, despite never out-earning him in any single year.</p>
+    </div>
+    <div class="field">
+      <p class="field-label">Think Like a Wealth Builder</p>
+      <p class="field-text">Income without a plan is a river with no banks. It moves plenty of water, it just doesn't go anywhere in particular.</p>
     </div>
   </div>
 </main>

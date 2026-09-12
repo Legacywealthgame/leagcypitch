@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>You Neglected Your Health | Legacy Wealth</title>
-<meta name="description" content="You Neglected Your Health. A financial lesson from the Legacy Wealth board game.">
+<meta name="description" content="You put your health on the back burner while focused on building wealth. The medical costs and lost time eventually caught up with you.">
 <meta name="theme-color" content="#FAF7F0">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +14,7 @@
   :root{
     --cream:#FAF7F0; --cream-deep:#F1EBDD; --gold:#C9A84C; --gold-soft:#E3D4A3;
     --ink:#07080D; --ink-soft:#3E4048; --rule:rgba(7,8,13,.10);
-    --shadow:0 18px 50px -22px rgba(7,8,13,.45); --accent:#B3412B;
+    --shadow:0 18px 50px -22px rgba(7,8,13,.45); --accent:#2E5C4A;
     --serif:'Playfair Display',Georgia,serif; --sans:'Inter',system-ui,-apple-system,sans-serif;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -29,26 +29,30 @@
   .flourish{width:56px; height:1px; margin:12px auto 0; background:linear-gradient(90deg,transparent,var(--gold),transparent);}
   .stage{flex:1; display:flex; align-items:flex-start; justify-content:center; padding:8px 18px 30px;}
   .card{
-    width:100%; max-width:600px; background:#fff; border:1px solid var(--rule);
+    width:100%; max-width:620px; background:#fff; border:1px solid var(--rule);
     border-top:3px solid var(--accent); border-radius:3px; box-shadow:var(--shadow);
     padding:30px 26px 30px; animation:rise .5s cubic-bezier(.2,.7,.3,1) both;
   }
   @keyframes rise{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:none;}}
-  .kicker{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:18px;}
+  .kicker{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:14px;}
   .badge{
     font-size:9.5px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
     color:#fff; background:var(--accent); padding:5px 10px; border-radius:2px; white-space:nowrap;
   }
   .num{font-size:10.5px; font-weight:500; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-soft); opacity:.6;}
   h1{
-    font-family:var(--serif); font-size:clamp(25px,6.4vw,33px); line-height:1.14;
-    font-weight:600; margin:0 0 18px; letter-spacing:-.015em;
+    font-family:var(--serif); font-size:clamp(21px,5.4vw,27px); line-height:1.24;
+    font-weight:600; margin:0 0 18px; letter-spacing:-.01em;
   }
-  .amount{
-    display:inline-block; font-size:14px; font-weight:600; color:var(--accent);
-    border:1px solid var(--accent); border-radius:2px; padding:9px 14px; margin-bottom:26px;
-    background:rgba(201,168,76,.06);
+  .lede{
+    background:var(--cream-deep); border:1px solid var(--rule); border-left:3px solid var(--accent);
+    border-radius:3px; padding:16px 18px; margin:0 0 24px;
   }
+  .lede-label{
+    font-size:9.5px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 7px;
+  }
+  .lede-text{font-size:16.5px; line-height:1.6; color:var(--ink); font-weight:500; margin:0;}
   .field{margin-top:22px;}
   .field:first-of-type{margin-top:0;}
   .field-label{
@@ -72,27 +76,31 @@
 <main class="stage">
   <div class="card">
     <div class="kicker">
-      <span class="badge">Poor Habit</span>
+      <span class="badge">Habits</span>
       <span class="num">Card 092</span>
     </div>
     <h1>You Neglected Your Health</h1>
-    <div class="amount">Pay $20,000 to the bank.</div>
+
+    <div class="lede">
+      <p class="lede-label">The Card</p>
+      <p class="lede-text">You put your health on the back burner while focused on building wealth. The medical costs and lost time eventually caught up with you.</p>
+    </div>
 
     <div class="field">
-      <p class="field-label">What&#x27;s Really Going On</p>
-      <p class="field-text">Delaying care for your own body has a financial cost that shows up later, often larger than the cost of prevention.</p>
-    </div>
-    <div class="field">
       <p class="field-label">The Fact</p>
-      <p class="field-text">The CDC and multiple public health economics studies consistently find that preventive care and early treatment cost a fraction of what managing an advanced, untreated condition costs later, both in direct medical bills and in lost income from time away from work.</p>
+      <p class="field-text">Chronic health conditions linked to long-term neglect, poor sleep, stress, inactivity, often carry not just direct medical costs but also lost income from reduced capacity to work, both of which tend to compound the longer the underlying issue goes unaddressed.</p>
     </div>
     <div class="field">
-      <p class="field-label">Why It Matters</p>
-      <p class="field-text">Wealth built over years loses much of its purpose if poor health limits your ability to enjoy or even manage it.</p>
+      <p class="field-label">Why This Matters</p>
+      <p class="field-text">Health and wealth are frequently treated as separate categories, when in practice they're deeply connected, since income-generating capacity depends directly on physical and mental capacity. Neglecting one to focus entirely on the other eventually undermines both at once.</p>
     </div>
     <div class="field">
-      <p class="field-label">The Wealthy Move</p>
-      <p class="field-text">Wealthy people budget for preventive care the same way they budget for anything else important, on a schedule, not an afterthought.</p>
+      <p class="field-label">A Real Example</p>
+      <p class="field-text">A business owner works relentlessly for years, skipping sleep and ignoring early warning signs from his body to keep growing the business. A serious health event eventually forces months away from the business entirely, both a significant medical cost and a period of lost income and momentum that takes years to fully recover from. The wealth he was building couldn't fully insulate him from a problem that was fully within his ability to prevent earlier.</p>
+    </div>
+    <div class="field">
+      <p class="field-label">Think Like a Wealth Builder</p>
+      <p class="field-text">Your ability to earn depends on your ability to function. Neglecting the second eventually limits the first, no matter how much wealth has already been built.</p>
     </div>
   </div>
 </main>
