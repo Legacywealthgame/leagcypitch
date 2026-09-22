@@ -62,6 +62,11 @@ Then `https://legacywealthgame.com/api/waitlist-export?key=...` returns a CSV.
 Without the variable set, the export endpoint answers 404 — it never runs
 unprotected.
 
+Every variable and binding above only reaches a build that starts after it is
+set. The dashboard's retry lives behind a `...` that appears on hover at the
+right-hand end of a deployment row, which is easy to miss; pushing any commit
+starts a fresh build and works just as well.
+
 ### Setup on Cloudflare Pages
 
 Needs a D1 database bound as `WAITLIST`, the schema in `db/waitlist-schema.sql`
