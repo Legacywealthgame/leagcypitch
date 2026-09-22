@@ -16,7 +16,7 @@
    Optional, for a notification email on each new signup. Leave either unset
    and notifications are simply skipped:
      RESEND_API_KEY      a Resend API key
-     NOTIFY_EMAIL        where to send the notification
+     NOTIFY_EMAIL        where to send it; separate several with commas
      NOTIFY_FROM         optional sender; defaults to Resend's shared address
    ========================================================================== */
 
@@ -69,13 +69,19 @@ function escapeHtml(value) {
    dropped. */
 function notify(env, waitUntil, signup, position) {
   const key = env.RESEND_API_KEY;
-  const to = env.NOTIFY_EMAIL;
-  if (!key || !to) return;            /* not set up: nothing to do */
+  /* One address or several. Commas, semicolons and spaces all separate, so a
+     value pasted from a contacts app works without reformatting. */
+  const to = String(env.NOTIFY_EMAIL || '')
+    .split(/[,;\s]+/)
+    .map((address) => address.trim())
+    .filter(Boolean)
+    .slice(0, 50);                    /* Resend's per-message ceiling */
+  if (!key || !to.length) return;     /* not set up: nothing to do */
 
   const place = position ? ` &middot; signup #${position}` : '';
   const body = {
     from: env.NOTIFY_FROM || 'Legacy Wealth <onboarding@resend.dev>',
-    to: [to],
+    to,
     subject: `New waitlist signup: ${signup.name}`,
     html:
       `<div style="font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:15px;line-height:1.6;color:#1a1a1c">` +

@@ -86,7 +86,11 @@ naming the person, their details and their position on the list:
 | Key | Value |
 |---|---|
 | `RESEND_API_KEY` | an API key from resend.com |
-| `NOTIFY_EMAIL` | where the notification goes |
+| `NOTIFY_EMAIL` | where the notification goes; separate several with commas |
+
+More than one recipient is fine — commas, semicolons and spaces all separate,
+so a value pasted out of a contacts app works as-is, up to Resend's limit of 50
+per message.
 
 `NOTIFY_FROM` is optional and defaults to Resend's shared sender, which can
 only deliver to the address on the Resend account — fine for notifying
