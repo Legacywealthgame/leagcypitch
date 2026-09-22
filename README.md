@@ -29,6 +29,55 @@ netlify/functions/pitch.js       server-side pitch generator, holds the API key
 Redeploy after adding the environment variable — functions only pick up new
 variables on a fresh deploy.
 
+## The waitlist
+
+The signup form on the homepage posts JSON to `/api/waitlist`. That endpoint
+exists twice, once for each host this site has run on:
+
+| File | Host | Store |
+|---|---|---|
+| `netlify/functions/waitlist.js` | Netlify | Netlify Blobs |
+| `functions/api/waitlist.js` | Cloudflare Pages | D1 |
+
+Both accept the same request and return the same responses, so the page works
+unchanged on either host and nothing has to be swapped when DNS moves. The
+Netlify function claims the path with `export const config = { path: ... }`;
+the Cloudflare one gets it from the `functions/` directory layout.
+
+This duplication is deliberate. The signup was rewritten to post to
+`/api/waitlist` as a Cloudflare Pages Function while the domain was still
+served by Netlify, which does not read that directory — so the endpoint
+answered 404 and every signup was lost without anything visibly failing.
+
+### Setup on Netlify
+
+Netlify Blobs needs no configuration; the store is created on first write.
+To download the list, set one environment variable:
+
+| Key | Value |
+|---|---|
+| `WAITLIST_EXPORT_KEY` | any long random string |
+
+Then `https://legacywealthgame.com/api/waitlist-export?key=...` returns a CSV.
+Without the variable set, the export endpoint answers 404 — it never runs
+unprotected.
+
+### Setup on Cloudflare Pages
+
+Needs a D1 database bound as `WAITLIST`, the schema in `db/waitlist-schema.sql`
+run once against it, and the same `WAITLIST_EXPORT_KEY` secret.
+
+### Checking it works
+
+Submit the form on the live site. The page shows whatever the server says
+rather than failing silently, so the message names the problem:
+
+| Message | Meaning |
+|---|---|
+| "You're on the list" | Working |
+| "Could not save that. Please try again." | Endpoint reached, store failed |
+| "Could not reach the server…" | Endpoint not running on this host |
+
 ## Testing locally
 
 ```bash
