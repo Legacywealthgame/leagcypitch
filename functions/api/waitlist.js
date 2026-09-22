@@ -12,6 +12,12 @@
      WAITLIST            D1 database binding
      RATE_LIMIT          KV namespace (optional, shared with the pitch endpoint)
      WAITLIST_EXPORT_KEY secret (only used by the export endpoint)
+
+   Optional, for a notification email on each new signup. Leave either unset
+   and notifications are simply skipped:
+     RESEND_API_KEY      a Resend API key
+     NOTIFY_EMAIL        where to send the notification
+     NOTIFY_FROM         optional sender; defaults to Resend's shared address
    ========================================================================== */
 
 const FIELD_LIMITS = { name: 120, email: 254, phone: 40 };
@@ -49,7 +55,58 @@ async function rateLimited(kv, ip) {
   return false;
 }
 
-export async function onRequestPost({ request, env }) {
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (c) =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+}
+
+/* Tell the owner a signup came in.
+
+   Deliberately fire-and-forget. The person has already been written to the
+   database by the time this runs, so a slow or broken mail provider must not
+   delay their response and must never turn a saved signup into an error on
+   their screen. Everything here is wrapped, and a failure is logged and
+   dropped. */
+function notify(env, waitUntil, signup, position) {
+  const key = env.RESEND_API_KEY;
+  const to = env.NOTIFY_EMAIL;
+  if (!key || !to) return;            /* not set up: nothing to do */
+
+  const place = position ? ` &middot; signup #${position}` : '';
+  const body = {
+    from: env.NOTIFY_FROM || 'Legacy Wealth <onboarding@resend.dev>',
+    to: [to],
+    subject: `New waitlist signup: ${signup.name}`,
+    html:
+      `<div style="font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:15px;line-height:1.6;color:#1a1a1c">` +
+      `<p style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#8B6F2E;margin:0 0 14px">` +
+      `Legacy Wealth waitlist${place}</p>` +
+      `<p style="margin:0 0 6px"><strong>${escapeHtml(signup.name)}</strong></p>` +
+      `<p style="margin:0 0 6px">${escapeHtml(signup.email)}</p>` +
+      (signup.phone ? `<p style="margin:0 0 6px">${escapeHtml(signup.phone)}</p>` : '') +
+      `<p style="margin:16px 0 0;font-size:13px;color:#6b6b6e">${escapeHtml(signup.joined_at)}</p>` +
+      `</div>`
+  };
+
+  const send = fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  })
+    .then(async (response) => {
+      if (!response.ok) {
+        console.error('waitlist notify failed', response.status, await response.text());
+      }
+    })
+    .catch((err) => console.error('waitlist notify threw', err));
+
+  /* waitUntil keeps the worker alive for the send without holding up the
+     response. Not every runtime provides it, so fall back to letting the
+     promise run loose rather than awaiting it. */
+  if (typeof waitUntil === 'function') waitUntil(send);
+}
+
+export async function onRequestPost({ request, env, waitUntil }) {
   if (!env.WAITLIST) {
     return json(500, { error: 'config', message: 'The waitlist is not configured yet.' });
   }
@@ -84,6 +141,8 @@ export async function onRequestPost({ request, env }) {
     return json(429, { error: 'rate', message: 'Too many signups from here. Try again later.' });
   }
 
+  const joined_at = new Date().toISOString();
+
   try {
     /* Signing up twice is a normal thing for a person to do — they forget, or
        they resubmit. Keep the first joined_at so list order stays honest, and
@@ -95,11 +154,21 @@ export async function onRequestPost({ request, env }) {
          name  = excluded.name,
          phone = CASE WHEN excluded.phone <> '' THEN excluded.phone ELSE signups.phone END`
     )
-      .bind(email, name, phone, new Date().toISOString(), 'site')
+      .bind(email, name, phone, joined_at, 'site')
       .run();
   } catch {
     return json(500, { error: 'store', message: 'Could not save that. Please try again.' });
   }
+
+  /* Only after the row is safely stored. A count is nice to have in the email
+     and cheap to read, but it must not be able to fail the request either. */
+  let position = 0;
+  try {
+    const row = await env.WAITLIST.prepare('SELECT COUNT(*) AS n FROM signups').first();
+    position = (row && row.n) || 0;
+  } catch { /* count is decoration; carry on without it */ }
+
+  notify(env, waitUntil, { name, email, phone, joined_at }, position);
 
   return json(200, { ok: true });
 }

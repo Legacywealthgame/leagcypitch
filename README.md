@@ -78,6 +78,26 @@ Binding changes only reach a build that starts after the change. After adding
 or editing one, retry the deployment or push a commit, or the running site
 carries on without it.
 
+### Signup notifications (optional)
+
+Set both of these on the Pages project and each new signup sends a short email
+naming the person, their details and their position on the list:
+
+| Key | Value |
+|---|---|
+| `RESEND_API_KEY` | an API key from resend.com |
+| `NOTIFY_EMAIL` | where the notification goes |
+
+`NOTIFY_FROM` is optional and defaults to Resend's shared sender, which can
+only deliver to the address on the Resend account — fine for notifying
+yourself, and it needs no DNS setup. To send from your own domain, verify it
+with Resend and set `NOTIFY_FROM` to an address there.
+
+Leave either key unset and notifications are skipped. The send happens after
+the row is written and does not block the response, so a slow or broken mail
+provider cannot delay a signup or turn a saved one into an error on the
+visitor's screen. A signup that failed to save never sends one.
+
 ### Checking it works
 
 Submit the form on the live site. The page shows whatever the server says
