@@ -16,8 +16,13 @@
    Optional, for a notification email on each new signup. Leave either unset
    and notifications are simply skipped:
      RESEND_API_KEY      a Resend API key
-     NOTIFY_EMAIL        where to send the notification
+     NOTIFY_EMAIL        where to send it; separate several with commas
      NOTIFY_FROM         optional sender; defaults to Resend's shared address
+
+   Optional, to mirror each signup into a Google Sheet. Leave either unset and
+   the mirror is skipped:
+     SHEET_WEBHOOK_URL     the Apps Script web app URL (see docs/sheet-sync.gs)
+     SHEET_WEBHOOK_SECRET  shared token that URL checks before writing
    ========================================================================== */
 
 const FIELD_LIMITS = { name: 120, email: 254, phone: 40 };
@@ -60,6 +65,38 @@ function escapeHtml(value) {
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 }
 
+/* Mirror the signup into a Google Sheet.
+
+   Same posture as the notification below: it runs after the row is stored, is
+   handed to waitUntil rather than awaited, and a failure is logged and
+   dropped. The sheet is a convenience copy — D1 is the record — so a Google
+   outage must never cost a signup.
+
+   The receiving end is an Apps Script web app, which is a public URL, hence
+   the shared secret. Sending it in the body rather than the query string
+   keeps it out of Google's request logs. */
+function toSheet(env, waitUntil, signup) {
+  const url = env.SHEET_WEBHOOK_URL;
+  const secret = env.SHEET_WEBHOOK_SECRET;
+  if (!url || !secret) return;
+
+  const send = fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ secret, ...signup })
+  })
+    .then(async (response) => {
+      /* Apps Script answers 302 to its own redirect chain and fetch follows it,
+         so only a non-ok final response is worth shouting about. */
+      if (!response.ok) {
+        console.error('waitlist sheet failed', response.status, (await response.text()).slice(0, 200));
+      }
+    })
+    .catch((err) => console.error('waitlist sheet threw', err));
+
+  if (typeof waitUntil === 'function') waitUntil(send);
+}
+
 /* Tell the owner a signup came in.
 
    Deliberately fire-and-forget. The person has already been written to the
@@ -69,13 +106,19 @@ function escapeHtml(value) {
    dropped. */
 function notify(env, waitUntil, signup, position) {
   const key = env.RESEND_API_KEY;
-  const to = env.NOTIFY_EMAIL;
-  if (!key || !to) return;            /* not set up: nothing to do */
+  /* One address or several. Commas, semicolons and spaces all separate, so a
+     value pasted from a contacts app works without reformatting. */
+  const to = String(env.NOTIFY_EMAIL || '')
+    .split(/[,;\s]+/)
+    .map((address) => address.trim())
+    .filter(Boolean)
+    .slice(0, 50);                    /* Resend's per-message ceiling */
+  if (!key || !to.length) return;     /* not set up: nothing to do */
 
   const place = position ? ` &middot; signup #${position}` : '';
   const body = {
     from: env.NOTIFY_FROM || 'Legacy Wealth <onboarding@resend.dev>',
-    to: [to],
+    to,
     subject: `New waitlist signup: ${signup.name}`,
     html:
       `<div style="font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:15px;line-height:1.6;color:#1a1a1c">` +
@@ -168,7 +211,9 @@ export async function onRequestPost({ request, env, waitUntil }) {
     position = (row && row.n) || 0;
   } catch { /* count is decoration; carry on without it */ }
 
-  notify(env, waitUntil, { name, email, phone, joined_at }, position);
+  const signup = { name, email, phone, joined_at, source: 'site' };
+  toSheet(env, waitUntil, signup);
+  notify(env, waitUntil, signup, position);
 
   return json(200, { ok: true });
 }

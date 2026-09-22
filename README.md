@@ -86,7 +86,11 @@ naming the person, their details and their position on the list:
 | Key | Value |
 |---|---|
 | `RESEND_API_KEY` | an API key from resend.com |
-| `NOTIFY_EMAIL` | where the notification goes |
+| `NOTIFY_EMAIL` | where the notification goes; separate several with commas |
+
+More than one recipient is fine — commas, semicolons and spaces all separate,
+so a value pasted out of a contacts app works as-is, up to Resend's limit of 50
+per message.
 
 `NOTIFY_FROM` is optional and defaults to Resend's shared sender, which can
 only deliver to the address on the Resend account — fine for notifying
@@ -97,6 +101,30 @@ Leave either key unset and notifications are skipped. The send happens after
 the row is written and does not block the response, so a slow or broken mail
 provider cannot delay a signup or turn a saved one into an error on the
 visitor's screen. A signup that failed to save never sends one.
+
+### Mirror signups into a Google Sheet (optional)
+
+Set both of these on the Pages project and every signup also appears as a row
+in a Google Sheet, live:
+
+| Key | Value |
+|---|---|
+| `SHEET_WEBHOOK_URL` | the Apps Script web app URL |
+| `SHEET_WEBHOOK_SECRET` | the token that script checks |
+
+`docs/sheet-sync.gs` is the script, with its setup steps at the top. It goes in
+the sheet's own Apps Script editor — no Google Cloud project, no service
+account, no key file. A second signup from the same email updates that row
+rather than adding a duplicate, so the sheet keeps matching the database.
+
+The web app has to be deployed as "Anyone has access", because Cloudflare calls
+it anonymously. The secret is what protects it, so treat that URL and token as
+a pair and keep the token out of anywhere public. It is sent in the request
+body rather than the query string so it stays out of Google's request logs.
+
+D1 remains the record. The sheet is a convenience copy, written after the row
+is stored and never awaited, so a Google outage cannot cost a signup or slow
+one down.
 
 ### Checking it works
 
