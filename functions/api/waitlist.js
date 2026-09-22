@@ -18,6 +18,11 @@
      RESEND_API_KEY      a Resend API key
      NOTIFY_EMAIL        where to send it; separate several with commas
      NOTIFY_FROM         optional sender; defaults to Resend's shared address
+
+   Optional, to mirror each signup into a Google Sheet. Leave either unset and
+   the mirror is skipped:
+     SHEET_WEBHOOK_URL     the Apps Script web app URL (see docs/sheet-sync.gs)
+     SHEET_WEBHOOK_SECRET  shared token that URL checks before writing
    ========================================================================== */
 
 const FIELD_LIMITS = { name: 120, email: 254, phone: 40 };
@@ -58,6 +63,38 @@ async function rateLimited(kv, ip) {
 function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, (c) =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+}
+
+/* Mirror the signup into a Google Sheet.
+
+   Same posture as the notification below: it runs after the row is stored, is
+   handed to waitUntil rather than awaited, and a failure is logged and
+   dropped. The sheet is a convenience copy — D1 is the record — so a Google
+   outage must never cost a signup.
+
+   The receiving end is an Apps Script web app, which is a public URL, hence
+   the shared secret. Sending it in the body rather than the query string
+   keeps it out of Google's request logs. */
+function toSheet(env, waitUntil, signup) {
+  const url = env.SHEET_WEBHOOK_URL;
+  const secret = env.SHEET_WEBHOOK_SECRET;
+  if (!url || !secret) return;
+
+  const send = fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ secret, ...signup })
+  })
+    .then(async (response) => {
+      /* Apps Script answers 302 to its own redirect chain and fetch follows it,
+         so only a non-ok final response is worth shouting about. */
+      if (!response.ok) {
+        console.error('waitlist sheet failed', response.status, (await response.text()).slice(0, 200));
+      }
+    })
+    .catch((err) => console.error('waitlist sheet threw', err));
+
+  if (typeof waitUntil === 'function') waitUntil(send);
 }
 
 /* Tell the owner a signup came in.
@@ -174,7 +211,9 @@ export async function onRequestPost({ request, env, waitUntil }) {
     position = (row && row.n) || 0;
   } catch { /* count is decoration; carry on without it */ }
 
-  notify(env, waitUntil, { name, email, phone, joined_at }, position);
+  const signup = { name, email, phone, joined_at, source: 'site' };
+  toSheet(env, waitUntil, signup);
+  notify(env, waitUntil, signup, position);
 
   return json(200, { ok: true });
 }
