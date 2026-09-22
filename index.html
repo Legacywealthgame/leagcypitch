@@ -33,6 +33,7 @@
   /* component taxonomy, sampled from the printed cards */
   --employee:#5A1F24; --investor:#5A5A5A; --owner:#2F5E2E;
   --realestate:#B48A3D; --rich:#8A6410; --poor:#490C20;
+  --selfemployed:#202F5C; --digital:#243B73;
 
   --gold-grad:linear-gradient(115deg,var(--gold-dim) 0%,var(--gold-soft) 34%,var(--gold) 58%,var(--gold-soft) 86%);
   --serif:'Playfair Display',Georgia,serif;
@@ -160,14 +161,7 @@ a{color:inherit;}
   color:var(--gold-soft);margin-bottom:7px;
 }
 /* AI POWERED seal, drawn rather than shipped as an image */
-.ai-seal{flex:0 0 auto;width:92px;height:92px;position:relative;display:grid;place-items:center;
-  border-radius:50%;background:radial-gradient(circle at 34% 28%, #1c1a16, #08080a 72%);
-  border:1px solid var(--gold);box-shadow:0 0 0 4px rgba(201,162,76,.10), 0 12px 30px -12px rgba(0,0,0,.9);}
-.ai-seal::before{content:"";position:absolute;inset:5px;border-radius:50%;border:1px dashed rgba(201,162,76,.5);}
-.ai-seal b{font-family:var(--serif);font-size:25px;line-height:1;font-weight:700;
-  background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
-.ai-seal i{position:absolute;bottom:20px;font-style:normal;font-size:7px;font-weight:700;
-  letter-spacing:.18em;color:var(--gold-soft);}
+.ai-seal{flex:0 0 auto;width:92px;height:auto;filter:drop-shadow(0 10px 22px rgba(0,0,0,.75));}
 
 /* ---- signup form ------------------------------------------------------- */
 .signup{max-width:520px;}
@@ -227,7 +221,7 @@ a{color:inherit;}
   .field-row{flex-wrap:wrap;}
   .field-row input{flex:1 1 140px;}
   .field-row .btn{flex:1 1 100%;}
-  .mentor-row{gap:15px;} .ai-seal{width:76px;height:76px;} .ai-seal b{font-size:21px;} .ai-seal i{bottom:16px;}
+  .mentor-row{gap:15px;} .ai-seal{width:74px;}
 }
 
 /* ==========================================================================
@@ -255,8 +249,10 @@ a{color:inherit;}
 .mat-frame img{border-radius:2px;}
 
 /* ---- mechanics grid ---------------------------------------------------- */
-.mech{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:1px;margin-top:44px;
+.mech{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:clamp(44px,5vw,64px);
   background:var(--stone-line);border:1px solid var(--stone-line);}
+@media (max-width:900px){.mech{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:560px){.mech{grid-template-columns:1fr;}}
 .mech div{background:var(--stone);padding:26px 24px;}
 .mech h3{font-family:var(--serif);font-size:19px;font-weight:600;margin:0 0 9px;color:var(--stone-ink);}
 .mech p{font-size:14px;line-height:1.68;color:var(--stone-ink-dim);margin:0;}
@@ -271,7 +267,7 @@ a{color:inherit;}
 .band-stone .deck-head p{color:var(--stone-ink-dim);}
 .chip{font-size:9.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#fff;
   padding:5px 11px;border-radius:2px;white-space:nowrap;}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(212px,1fr));gap:22px;}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
 .cards figure{margin:0;}
 .cards img{
   width:100%;height:auto;border-radius:4px;
@@ -281,8 +277,12 @@ a{color:inherit;}
 .cards img:hover{transform:translateY(-5px);box-shadow:0 26px 52px -22px rgba(0,0,0,.72), 0 0 0 1px rgba(0,0,0,.08);}
 .band-dark .cards img,.band-darker .cards img{box-shadow:0 18px 44px -22px rgba(0,0,0,.95), 0 0 0 1px var(--gold-faint);}
 .cards figcaption{font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-top:11px;color:var(--paper-faint);}
+.cards figcaption em{display:block;font-style:normal;font-size:9.5px;letter-spacing:.17em;
+  margin-top:4px;color:var(--gold-dim);}
+.band-stone .cards figcaption em{color:var(--gold-dim);opacity:.85;}
 .band-stone .cards figcaption{color:var(--stone-ink-dim);}
-@media (max-width:640px){.cards{grid-template-columns:repeat(auto-fill,minmax(146px,1fr));gap:15px;}}
+@media (max-width:900px){.cards{gap:16px;}}
+@media (max-width:620px){.cards{grid-template-columns:repeat(2,1fr);gap:14px;}}
 
 /* ---- currency ---------------------------------------------------------- */
 .notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:24px;margin-top:46px;}
@@ -296,14 +296,15 @@ a{color:inherit;}
   letter-spacing:.16em;text-transform:uppercase;color:var(--paper-faint);margin-top:4px;}
 
 /* ---- tokens ------------------------------------------------------------ */
-.tokens{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:48px;align-items:end;}
+.token-band{margin-top:clamp(40px,5vw,64px);padding-top:clamp(30px,4vw,44px);border-top:1px solid var(--stone-line);}
+.tokens{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:26px;align-items:end;}
 .token{text-align:center;}
 .token .pad{height:132px;display:flex;align-items:flex-end;justify-content:center;}
 .token img{max-height:132px;width:auto;margin:0 auto;
-  filter:drop-shadow(0 16px 20px rgba(0,0,0,.62));transition:transform .3s;}
+  filter:drop-shadow(0 14px 18px rgba(26,26,28,.34));transition:transform .3s;}
 .token:hover img{transform:translateY(-7px);}
 .token span{display:block;margin-top:16px;font-size:10px;font-weight:600;letter-spacing:.17em;
-  text-transform:uppercase;color:var(--paper-faint);}
+  text-transform:uppercase;color:var(--stone-ink-dim);}
 @media (max-width:860px){.tokens{grid-template-columns:repeat(3,1fr);gap:22px;}}
 @media (max-width:440px){.tokens{grid-template-columns:repeat(2,1fr);}.token .pad,.token img{height:104px;max-height:104px;}}
 
@@ -498,7 +499,7 @@ a{color:inherit;}
         along the way.</p>
 
       <div class="mentor-row">
-        <div class="ai-seal" aria-hidden="true"><b>AI</b><i>POWERED</i></div>
+        <img class="ai-seal" src="assets/images/ai-seal.webp" alt="AI Powered" width="280" height="281">
         <p class="mentor-copy">
           <strong>Featuring the AI Legacy Mentor</strong>
           Get personalized guidance, explore real-world financial questions, and go deeper into the
@@ -511,29 +512,23 @@ a{color:inherit;}
           <div class="hp" aria-hidden="true">
             <label>Company <input name="company" tabindex="-1" autocomplete="off"></label>
           </div>
-          <div class="field-row">
-            <span class="ico" aria-hidden="true">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <rect x="2" y="4.5" width="20" height="15" rx="2"/><path d="m2.8 6 9.2 7 9.2-7"/>
-              </svg>
-            </span>
-            <input type="email" name="email" placeholder="Enter your email address" autocomplete="email" required>
-            <button type="submit" class="btn btn-solid" data-label="Join the Waitlist">
-              Join the Waitlist <span class="arw" aria-hidden="true">→</span>
-            </button>
-          </div>
-
-          <div class="more-fields" id="heroMore" hidden>
+          <div class="more-fields" style="margin-top:0;">
             <div class="field">
               <input type="text" id="heroName" name="name" placeholder=" " autocomplete="name" required>
               <label for="heroName">Full name</label>
             </div>
             <div class="field">
+              <input type="email" id="heroEmail" name="email" placeholder=" " autocomplete="email" required>
+              <label for="heroEmail">Email address</label>
+            </div>
+            <div class="field">
               <input type="tel" id="heroPhone" name="phone" placeholder=" " autocomplete="tel" inputmode="tel">
               <label for="heroPhone">Phone number (optional)</label>
             </div>
-            <p class="optional">We only use your number for launch-day updates.</p>
-            <button type="button" class="btn btn-solid" data-role="finish" data-label="Confirm My Spot">Confirm My Spot</button>
+            <p class="optional">Phone is optional. We only use it for launch-day updates.</p>
+            <button type="submit" class="btn btn-solid" data-label="Join the Waitlist">
+              Join the Waitlist <span class="arw" aria-hidden="true">→</span>
+            </button>
           </div>
 
           <p class="form-error" id="heroError" role="alert" hidden></p>
@@ -604,6 +599,20 @@ a{color:inherit;}
       </div>
     </div>
   </div>
+
+  <div class="shell">
+    <div class="token-band rise">
+      <p class="eyebrow on-stone" style="margin-bottom:0;">Choose Your Token</p>
+      <div class="tokens on-stone">
+      <div class="token"><div class="pad"><img src="assets/images/tokens/token-businessman.webp" alt="The Executive token" loading="lazy" decoding="async"></div><span>The Executive</span></div>
+      <div class="token"><div class="pad"><img src="assets/images/tokens/token-bonsai.webp" alt="The Legacy Tree token" loading="lazy" decoding="async"></div><span>The Legacy Tree</span></div>
+      <div class="token"><div class="pad"><img src="assets/images/tokens/token-torch.webp" alt="The Torch token" loading="lazy" decoding="async"></div><span>The Torch</span></div>
+      <div class="token"><div class="pad"><img src="assets/images/tokens/token-car.webp" alt="The Supercar token" loading="lazy" decoding="async"></div><span>The Supercar</span></div>
+      <div class="token"><div class="pad"><img src="assets/images/tokens/token-jet.webp" alt="The Private Jet token" loading="lazy" decoding="async"></div><span>The Private Jet</span></div>
+        <div class="token"><div class="pad"><img src="assets/images/tokens/token-yacht.webp" alt="The Yacht token" loading="lazy" decoding="async"></div><span>The Yacht</span></div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ============================ OUR STORY ============================ -->
@@ -631,63 +640,27 @@ a{color:inherit;}
     <div class="rise center" style="max-width:760px;margin:0 auto;">
       <p class="eyebrow on-stone">The Game</p>
       <h2 class="display on-stone">Play the Decisions,<br>Not the Dice</h2>
-      <p class="lede on-stone">Take a career. Buy assets. Pitch businesses. Duel your family over what you
+      <p class="lede on-stone">Pick a career. Buy assets. Pitch businesses. Duel your family over what you
         actually know. Every lap around the board is a year of financial decisions compressed into a few minutes.</p>
     </div>
 
-    <div class="mech rise">
-      <div>
-        <span class="tick"></span>
-        <h3>Pick your career</h3>
-        <p>Start as an Employee, an Investor or a Business Owner. Each career sets your starting cash,
-          your income per lap, your debt, how many assets you can hold, and one advantage nobody else has.</p>
-      </div>
-      <div>
-        <span class="tick"></span>
-        <h3>Collect on every lap</h3>
-        <p>Pass GO and collect your salary and the income from every asset you own. Earned income is
-          where you start. Asset income is how you win.</p>
-      </div>
-      <div>
-        <span class="tick"></span>
-        <h3>Buy real assets</h3>
-        <p>Six decks of Real Estate, Business and Investment assets, each with a cost and the income it
-          returns every lap — from Bitcoin to a Manhattan penthouse to a commercial tower.</p>
-      </div>
-      <div>
-        <span class="tick"></span>
-        <h3>Live with your habits</h3>
-        <p>The most common space on the board. Rich Habits pay you. Poor Habits cost you. Every card
-          explains exactly why, so the lesson outlives the turn.</p>
-      </div>
-      <div>
-        <span class="tick"></span>
-        <h3>Survive the downside</h3>
-        <p>Market Crash. IRS Audit. Foreclosure. The board does what the real economy does, and the
-          players who built durable income are the ones still standing.</p>
-      </div>
-      <div>
-        <span class="tick"></span>
-        <h3>Win on Legacy Value</h3>
-        <p>Not cash. Legacy Value — what you built and what it produces. The first player to a million
-          takes it.</p>
-      </div>
-    </div>
+
 
     <!-- career cards -->
     <div class="deck rise">
       <div class="deck-head">
         <h3>Career Cards</h3>
         <span class="chip" style="background:var(--employee);">Employee</span>
-        <span class="chip" style="background:var(--investor);">Investor</span>
+        <span class="chip" style="background:var(--selfemployed);">Self Employed</span>
         <span class="chip" style="background:var(--owner);">Business Owner</span>
-        <p>Your starting position. Salary, debt, asset limit and one edge.</p>
+        <span class="chip" style="background:var(--investor);">Investor</span>
+        <p>20 career cards to choose from. Each sets your salary, debt, asset limit and one edge.</p>
       </div>
       <div class="cards">
-        <figure><img src="assets/images/cards/career-doctor.webp" alt="Doctor career card" width="700" height="980" loading="lazy" decoding="async"><figcaption>Doctor</figcaption></figure>
-        <figure><img src="assets/images/cards/career-hedge-fund.webp" alt="Hedge Fund Founder career card" width="700" height="980" loading="lazy" decoding="async"><figcaption>Hedge Fund Founder</figcaption></figure>
-        <figure><img src="assets/images/cards/career-private-equity.webp" alt="Private Equity Investor career card" width="700" height="980" loading="lazy" decoding="async"><figcaption>Private Equity Investor</figcaption></figure>
-        <figure><img src="assets/images/cards/career-real-estate.webp" alt="Real Estate Developer career card" width="700" height="980" loading="lazy" decoding="async"><figcaption>Real Estate Developer</figcaption></figure>
+        <figure><img src="assets/images/cards/career-doctor.webp" alt="Doctor career card" width="750" height="1050" loading="lazy" decoding="async"><figcaption>Doctor<em>Employee</em></figcaption></figure>
+        <figure><img src="assets/images/cards/career-real-estate-agent.webp" alt="Real Estate Agent career card" width="750" height="1050" loading="lazy" decoding="async"><figcaption>Real Estate Agent<em>Self Employed</em></figcaption></figure>
+        <figure><img src="assets/images/cards/career-real-estate.webp" alt="Real Estate Developer career card" width="750" height="1050" loading="lazy" decoding="async"><figcaption>Real Estate Developer<em>Business Owner</em></figcaption></figure>
+        <figure><img src="assets/images/cards/career-hedge-fund.webp" alt="Hedge Fund Founder career card" width="750" height="1050" loading="lazy" decoding="async"><figcaption>Hedge Fund Founder<em>Investor</em></figcaption></figure>
       </div>
     </div>
 
@@ -698,13 +671,14 @@ a{color:inherit;}
         <span class="chip" style="background:var(--employee);">Investment</span>
         <span class="chip" style="background:var(--owner);">Business</span>
         <span class="chip" style="background:var(--realestate);">Real Estate</span>
-        <p>What you buy. Every asset has a cost and pays income on every lap.</p>
+        <span class="chip" style="background:var(--digital);">Digital</span>
+        <p>Five categories. Every asset has a cost and pays income on every lap.</p>
       </div>
       <div class="cards">
-        <figure><img src="assets/images/cards/asset-bitcoin.webp" alt="Bitcoin asset card" width="700" height="980" loading="lazy" decoding="async"><figcaption>Bitcoin</figcaption></figure>
-        <figure><img src="assets/images/cards/asset-fitness.webp" alt="Iron Legacy Fitness asset card" width="700" height="980" loading="lazy" decoding="async"><figcaption>Iron Legacy Fitness</figcaption></figure>
-        <figure><img src="assets/images/cards/asset-penthouse.webp" alt="New York Penthouse Rental asset card" width="700" height="980" loading="lazy" decoding="async"><figcaption>NY Penthouse Rental</figcaption></figure>
-        <figure><img src="assets/images/cards/asset-workspace.webp" alt="The Legacy Workspace asset card" width="700" height="980" loading="lazy" decoding="async"><figcaption>The Legacy Workspace</figcaption></figure>
+        <figure><img src="assets/images/cards/asset-bitcoin.webp" alt="Bitcoin asset card" width="700" height="980" loading="lazy" decoding="async"><figcaption>Bitcoin<em>Investment</em></figcaption></figure>
+        <figure><img src="assets/images/cards/asset-fitness.webp" alt="Iron Legacy Fitness asset card" width="700" height="980" loading="lazy" decoding="async"><figcaption>Iron Legacy Fitness<em>Business</em></figcaption></figure>
+        <figure><img src="assets/images/cards/asset-penthouse.webp" alt="New York Penthouse Rental asset card" width="700" height="980" loading="lazy" decoding="async"><figcaption>NY Penthouse Rental<em>Real Estate</em></figcaption></figure>
+        <figure><img src="assets/images/cards/asset-ai-automation.webp" alt="AI Automation Business asset card" width="750" height="1050" loading="lazy" decoding="async"><figcaption>AI Automation Business<em>Digital</em></figcaption></figure>
       </div>
     </div>
 
@@ -737,6 +711,48 @@ a{color:inherit;}
         <figure><img src="assets/images/cards/iq-principal-interest.webp" alt="Wealth IQ card: principal versus interest" width="700" height="980" loading="lazy" decoding="async"><figcaption>Principal vs. Interest</figcaption></figure>
       </div>
     </div>
+
+    <div class="mech rise">
+      <div>
+        <span class="tick"></span>
+        <h3>Pick a career</h3>
+        <p>Start as an Employee, Self Employed, a Business Owner or an Investor. Each career sets your
+          starting cash, your income per lap, your debt, how many assets you can hold, and one advantage
+          nobody else has.</p>
+      </div>
+      <div>
+        <span class="tick"></span>
+        <h3>Collect income on every lap</h3>
+        <p>Pass GO and collect your salary and the income from every asset you own. Earned income is
+          where you start. Asset income is how you win.</p>
+      </div>
+      <div>
+        <span class="tick"></span>
+        <h3>Buy real assets</h3>
+        <p>Five categories of assets, each with a cost and the income it returns every lap — from
+          Bitcoin to a Manhattan penthouse to an AI automation business.</p>
+      </div>
+      <div>
+        <span class="tick"></span>
+        <h3>See What Your Habits Cost You</h3>
+        <p>Rich habits can strengthen your position. Poor habits drain it. Each card connects an
+          in-game consequence to the real-world financial principle behind it.</p>
+      </div>
+      <div>
+        <span class="tick"></span>
+        <h3>Weather the Downside</h3>
+        <p>Market crashes. IRS audits. Financial setbacks. When the unexpected hits, your strategy gets
+          tested. Players who built strong, durable income are better positioned to recover and keep
+          building.</p>
+      </div>
+      <div>
+        <span class="tick"></span>
+        <h3>Build the Highest Legacy Value</h3>
+        <p>Cash alone does not win the game. Legacy Value measures what you built and what it produces.
+          Be the first player to reach $1 million in Legacy Value and earn the title of The Legacy
+          Builder.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -760,24 +776,6 @@ a{color:inherit;}
   </div>
 </section>
 
-<!-- ============================ TOKENS ============================ -->
-<section class="band band-dark">
-  <div class="shell">
-    <div class="rise center" style="max-width:660px;margin:0 auto;">
-      <p class="eyebrow">Choose Your Token</p>
-      <h2 class="display gilt">Six Ways to Play</h2>
-      <p class="lede">Every player picks the piece that fits how they intend to win.</p>
-    </div>
-    <div class="tokens rise">
-      <div class="token"><div class="pad"><img src="assets/images/tokens/token-businessman.webp" alt="The Executive token" loading="lazy" decoding="async"></div><span>The Executive</span></div>
-      <div class="token"><div class="pad"><img src="assets/images/tokens/token-bonsai.webp" alt="The Legacy Tree token" loading="lazy" decoding="async"></div><span>The Legacy Tree</span></div>
-      <div class="token"><div class="pad"><img src="assets/images/tokens/token-torch.webp" alt="The Torch token" loading="lazy" decoding="async"></div><span>The Torch</span></div>
-      <div class="token"><div class="pad"><img src="assets/images/tokens/token-car.webp" alt="The Supercar token" loading="lazy" decoding="async"></div><span>The Supercar</span></div>
-      <div class="token"><div class="pad"><img src="assets/images/tokens/token-jet.webp" alt="The Private Jet token" loading="lazy" decoding="async"></div><span>The Private Jet</span></div>
-      <div class="token"><div class="pad"><img src="assets/images/tokens/token-yacht.webp" alt="The Yacht token" loading="lazy" decoding="async"></div><span>The Yacht</span></div>
-    </div>
-  </div>
-</section>
 
 <!-- ============================ AI LEGACY MENTOR ============================ -->
 <section class="band band-darker" id="mentor">
@@ -1037,30 +1035,15 @@ a{color:inherit;}
     button.textContent = button.getAttribute('data-label') || 'Try again';
   }
 
-  /* ---- hero: email first, then name and phone ----
-     The endpoint requires a name, so the emailed-only first step expands in
-     place rather than posting something the server would reject. */
+  /* ---- hero signup: name, email and phone in one step ---- */
   var heroForm = document.getElementById('heroForm');
-  var heroMore = document.getElementById('heroMore');
   var heroError = document.getElementById('heroError');
   var heroOk = document.getElementById('heroOk');
-  var heroStep1 = heroForm.querySelector('button[type=submit]');
-  var heroStep2 = heroForm.querySelector('[data-role=finish]');
+  var heroBtn = heroForm.querySelector('button[type=submit]');
 
   heroForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    if (!EMAIL.test(val(heroForm, 'email').trim())) {
-      return fail(heroStep1, heroError, 'Please enter a valid email address.');
-    }
-    heroError.hidden = true;
-    heroMore.hidden = false;
-    heroStep1.disabled = true;
-    heroStep1.textContent = 'Almost there';
-    heroForm.elements['name'].focus();
-  });
-
-  heroStep2.addEventListener('click', function () {
-    post(heroForm, heroStep2, heroError, heroOk);
+    post(heroForm, heroBtn, heroError, heroOk);
   });
 
   /* ---- closing form: everything at once ---- */
