@@ -67,6 +67,17 @@ unprotected.
 Needs a D1 database bound as `WAITLIST`, the schema in `db/waitlist-schema.sql`
 run once against it, and the same `WAITLIST_EXPORT_KEY` secret.
 
+The binding's **variable name** must be exactly `WAITLIST`, in capitals. It is
+the name the function looks the database up by, and it is unrelated to what the
+database itself is called — any database name is fine. A binding named
+`waitlist` leaves `env.WAITLIST` undefined and the endpoint answers "The
+waitlist is not configured yet." Cloudflare will not let you rename a binding
+after it is created, so fixing the case means deleting it and adding it again.
+
+Binding changes only reach a build that starts after the change. After adding
+or editing one, retry the deployment or push a commit, or the running site
+carries on without it.
+
 ### Checking it works
 
 Submit the form on the live site. The page shows whatever the server says
