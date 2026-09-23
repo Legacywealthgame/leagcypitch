@@ -100,7 +100,14 @@ per message.
 `NOTIFY_FROM` is optional and defaults to Resend's shared sender, which can
 only deliver to the address on the Resend account — fine for notifying
 yourself, and it needs no DNS setup. To send from your own domain, verify it
-with Resend and set `NOTIFY_FROM` to an address there.
+with Resend and set `NOTIFY_FROM` to an address there, formatted as
+`Display Name <address@yourdomain.com>`.
+
+Sending to anyone other than the Resend account holder requires the domain to
+read Verified in Resend first. Setting `NOTIFY_FROM` to an unverified domain
+makes Resend reject every send, and because notifications are fire-and-forget
+that shows up as mail silently not arriving rather than as an error. Signups
+still save either way. Verify the domain, then set the variable.
 
 Leave either key unset and notifications are skipped. The send happens after
 the row is written and does not block the response, so a slow or broken mail
