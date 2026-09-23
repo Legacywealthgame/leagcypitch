@@ -233,15 +233,14 @@ a{color:inherit;}
 .band-darker{background:linear-gradient(180deg,var(--ink-900),var(--ink-700));}
 .band-stone + .band-stone{padding-top:0;}
 .split{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(30px,4vw,60px);align-items:center;}
-.split.flip > *:first-child{order:2;}
-@media (max-width:900px){.split{grid-template-columns:1fr;gap:38px;}.split.flip > *:first-child{order:0;}}
-
-/* pillars */
-.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px;}
-.pillar{display:flex;gap:13px;align-items:flex-start;}
-.pillar svg{flex:0 0 auto;width:34px;height:34px;}
-.pillar span{font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;line-height:1.6;color:var(--stone-ink);}
-@media (max-width:760px){.pillars{gap:12px;}}
+/* the race leads the page: copy centred, board stacked full width beneath it */
+.race{text-align:center;}
+.race .lede{margin-left:auto;margin-right:auto;max-width:58ch;}
+.board-wrap{margin-top:clamp(26px,3.2vw,40px);}
+.board-wrap .mat-frame{max-width:740px;margin:0 auto;}
+.spec{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold-dim);margin:-6px 0 18px;}
+@media (max-width:900px){.split{grid-template-columns:1fr;gap:38px;}}
 
 .mat-frame{max-width:540px;margin-left:auto;border:1px solid var(--stone-line);padding:7px;background:rgba(255,255,255,.42);border-radius:3px;
   box-shadow:0 26px 54px -34px rgba(0,0,0,.45);}
@@ -250,8 +249,6 @@ a{color:inherit;}
 /* ---- how it plays, and how it ends ------------------------------------- */
 .play{margin-top:clamp(44px,5.2vw,66px);text-align:center;}
 .play .eyebrow{margin-bottom:14px;}
-.play-steps{font-family:var(--serif);font-size:clamp(19px,2.3vw,25px);line-height:1.5;
-  color:var(--stone-ink);margin:0 auto;max-width:36ch;text-wrap:balance;}
 .flourish{display:block;width:44px;height:1px;margin:0 auto 20px;
   background:linear-gradient(90deg,transparent,var(--gold),transparent);}
 .flourish.dark{background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);}
@@ -519,13 +516,7 @@ a{color:inherit;}
   .deck-head p{font-size:11.5px;line-height:1.5;}
   .chip{font-size:7px;padding:3px 6px;letter-spacing:.08em;}
 
-  .pillars{grid-template-columns:repeat(3,1fr);gap:9px;margin-top:20px;}
-  .pillar{flex-direction:column;align-items:center;text-align:center;gap:7px;}
-  .pillar svg{width:26px;height:26px;}
-  .pillar span{font-size:8px;letter-spacing:.07em;line-height:1.45;}
-
   .play{margin-top:34px;}
-  .play-steps{font-size:18px;max-width:24ch;}
   .flourish{margin-bottom:16px;}
   .win{margin-top:24px;padding:26px 18px;border-radius:9px;}
   .win::before{inset:5px;border-radius:6px;}
@@ -590,8 +581,8 @@ a{color:inherit;}
     <div class="hero-copy">
       <p class="eyebrow">Build Wealth Leave a Legacy</p>
       <h1>A New Way for Families to Talk About Money</h1>
-      <p class="lede">Legacy Wealth is a premium financial strategy board game where families compete,
-        make real-world money and business decisions, and learn how to build wealth together.</p>
+      <p class="lede">Legacy Wealth is a premium financial strategy board game where players compete,
+        make real world money and business decisions, and learn how to build wealth together.</p>
 
       <div class="mentor-row">
         <img class="ai-seal" src="assets/images/ai-seal.webp" alt="AI Powered" width="280" height="281">
@@ -650,45 +641,19 @@ a{color:inherit;}
   </div>
 </section>
 
-<!-- ==================== MORE THAN A GAME ==================== -->
+<!-- ==================== THE RACE TO $1 MILLION ==================== -->
 <section class="band band-stone">
-  <div class="shell split">
+  <div class="shell race">
     <div class="rise">
-      <p class="eyebrow on-stone">More Than a Game</p>
-      <h2 class="display on-stone">Real Conversations.<br>A Richer Future.</h2>
-      <p class="lede on-stone">Build income. Acquire assets. Test your financial knowledge. Pitch
-        businesses. Legacy Wealth turns real financial decisions into a competitive experience families
-        can learn from together.</p>
+      <p class="eyebrow on-stone">The Race to $1 Million</p>
+      <h2 class="display on-stone">Outthink. Outbuild.<br>Become The Legacy Builder.</h2>
+      <p class="lede on-stone">Choose a career. Buy assets. Pitch businesses. Navigate financial
+        setbacks. Go head to head in Wealth IQ battles that put your financial knowledge to the test.
+        Be the first player to reach $1 million in Legacy Value and become The Legacy Builder.</p>
 
-      <div class="pillars">
-        <div class="pillar">
-          <svg viewBox="0 0 44 44" fill="none" stroke="#8B6F2E" stroke-width="1.3" aria-hidden="true">
-            <circle cx="22" cy="22" r="20.4" stroke="rgba(26,26,28,.16)"/>
-            <circle cx="17" cy="18.5" r="4"/><circle cx="27.5" cy="19.5" r="3.2"/>
-            <path d="M10 30c1.6-4 4.2-6 7-6s5.4 2 7 6M24 30c1.3-3 3.2-4.6 5.3-4.6S33.3 27 34.6 30"/>
-          </svg>
-          <span>Better Money<br>Conversations</span>
-        </div>
-        <div class="pillar">
-          <svg viewBox="0 0 44 44" fill="none" stroke="#8B6F2E" stroke-width="1.3" aria-hidden="true">
-            <circle cx="22" cy="22" r="20.4" stroke="rgba(26,26,28,.16)"/>
-            <path d="M12 29h20M13.5 29V22M19.5 29v-9.5M25.5 29v-6M31.5 29V15"/>
-            <path d="m27 13 5-1.4.6 5"/>
-          </svg>
-          <span>Smarter Financial<br>Decisions</span>
-        </div>
-        <div class="pillar">
-          <svg viewBox="0 0 44 44" fill="none" stroke="#8B6F2E" stroke-width="1.3" aria-hidden="true">
-            <circle cx="22" cy="22" r="20.4" stroke="rgba(26,26,28,.16)"/>
-            <path d="M22 32V18M22 18c0-3.4 2.6-6.2 6.4-6.2 0 3.6-2.7 6.2-6.4 6.2ZM22 24c0-3-2.4-5.4-5.8-5.4 0 3.2 2.5 5.4 5.8 5.4Z"/>
-            <path d="M15 32h14"/>
-          </svg>
-          <span>A Wealthier<br>Next Generation</span>
-        </div>
-      </div>
     </div>
 
-    <div class="rise">
+    <div class="rise board-wrap">
       <div class="mat-frame">
         <img src="assets/images/board-mat.webp" alt="The Legacy Wealth playing board" width="1800" height="1800" loading="lazy" decoding="async">
       </div>
@@ -710,33 +675,15 @@ a{color:inherit;}
   </div>
 </section>
 
-<!-- ======================== WHY WE BUILT IT ======================== -->
-<section class="band band-dark" id="story">
-  <div class="shell center" style="max-width:820px;">
-    <div class="rise">
-      <p class="eyebrow">Why We Built It</p>
-      <h2 class="display gilt">What Wealthy Families Already Know</h2>
-      <div class="rule" style="margin-left:auto;margin-right:auto;"></div>
-      <p class="lede">Money becomes easier to understand when families actually talk about it.</p>
-      <p class="lede">Legacy Wealth gives families a reason to sit at the same table and make decisions
-        around careers, income, assets, business, investing, habits, and risk together.</p>
-      <p class="lede">Designed by a financial planner, Legacy Wealth turns financial education into a
-        competitive experience your family actually wants to play. Instead of only hearing about wealth
-        building, players get to practice the decisions behind it before the stakes are real.</p>
-      <p class="lede" style="color:var(--gold-soft);">What some families learn early should not be
-        reserved for a few.<br>Every family deserves the opportunity to learn how wealth works.</p>
-    </div>
-  </div>
-</section>
-
 <!-- ============================ THE GAME ============================ -->
 <section class="band band-stone" id="game">
   <div class="shell">
     <div class="rise center" style="max-width:760px;margin:0 auto;">
       <p class="eyebrow on-stone">The Game</p>
       <h2 class="display on-stone">Play the Decisions,<br>Not the Dice</h2>
-      <p class="lede on-stone">Pick a career. Buy assets. Pitch businesses. Duel your family over what you
-        actually know. Every lap around the board is a year of financial decisions compressed into a few minutes.</p>
+      <p class="spec">2&ndash;6 Players &bull; Ages 12+ &bull; 60&ndash;90 Min</p>
+      <p class="lede on-stone">Pick a career. Buy assets. Pitch businesses. Go head to head in Wealth
+        IQ. Every lap around the board compresses a year of financial decisions into a few minutes.</p>
     </div>
 
 
@@ -772,7 +719,7 @@ a{color:inherit;}
         <span class="chip" style="background:var(--digital);">Digital</span>
         <span class="chip" style="background:var(--protection);">Protection</span>
         </div>
-        <p>62 unique asset cards across five categories. Every one has a cost and pays income on every lap.</p>
+        <p>62 unique Asset Cards across five categories. Build income producing assets and use Protection cards to defend what you have built from costly financial setbacks.</p>
       </div>
       <div class="cards">
         <figure><img src="assets/images/cards/asset-bitcoin.webp" alt="Bitcoin asset card" width="700" height="980" loading="lazy" decoding="async"><figcaption>Bitcoin<em>Investment</em></figcaption></figure>
@@ -804,7 +751,7 @@ a{color:inherit;}
     <div class="deck rise">
       <div class="deck-head">
         <h3>Wealth IQ &amp; the Financial Duel</h3>
-        <p>100 Wealth IQ cards. Challenge another player head to head — answer right and you take the pot.</p>
+        <p>100 Wealth IQ cards. Go head to head. Be the first to answer correctly and win $50,000 from the bank.</p>
       </div>
       <div class="cards">
         <figure><img src="assets/images/cards/iq-compound-interest.webp" alt="Wealth IQ card: what is compound interest" width="700" height="980" loading="lazy" decoding="async"><figcaption>Compound Interest</figcaption></figure>
@@ -815,19 +762,15 @@ a{color:inherit;}
     </div>
 
     <div class="play rise">
-      <p class="eyebrow on-stone">Build Your Legacy</p>
-      <span class="flourish dark" aria-hidden="true"></span>
-      <p class="play-steps">Choose a career. Earn income. Buy assets. Navigate setbacks.
-        Make the decisions that grow your wealth.</p>
-
       <div class="win">
         <p class="win-label">How to Win</p>
         <span class="flourish" aria-hidden="true"></span>
         <p class="win-lead">Cash alone doesn&rsquo;t win.</p>
         <p class="win-amount">$1 Million</p>
         <p class="win-in">In Legacy Value</p>
-        <p class="win-copy">Legacy Value measures what you&rsquo;ve built and what it produces.
-          Be the first to reach it and become <em class="term">The Legacy Builder</em>.</p>
+        <p class="win-copy"><em class="term">Legacy Value</em> is your cash on hand plus your total
+          asset value. Be the first to reach $1 million and become
+          <em class="term">The Legacy Builder</em>.</p>
       </div>
     </div>
   </div>
@@ -856,19 +799,27 @@ a{color:inherit;}
 
 <!-- ============================ AI LEGACY MENTOR ============================ -->
 <section class="band band-darker" id="mentor">
-  <div class="shell split flip">
+  <div class="shell split">
+    <div class="rise">
+      <p class="eyebrow">AI Legacy Mentor</p>
+      <h2 class="display gilt">Your AI Mentor at the Table</h2>
+      <p class="lede">Legacy Wealth can be played completely without a phone. When you want to go
+        deeper, scan QR codes on select cards and board spaces to unlock the AI Legacy Mentor for real
+        world explanations, questions, and guidance.</p>
+    </div>
+
     <div class="rise">
       <div class="mentor-list">
         <div>
           <h3>Scan. Learn. Go Deeper.</h3>
-          <p>Scan a QR code throughout the game and the AI Legacy Mentor helps explain the real-world
-            thinking behind what you encountered, from careers and financial habits to business and
-            wealth-building concepts.</p>
+          <p>Scan Career, Wealth IQ, Rich Habits and Poor Habits cards and select board spaces for
+            deeper real world explanations from the AI Legacy Mentor.</p>
         </div>
         <div>
           <h3>Legacy Pitch</h3>
-          <p>Turn a business idea into a real pitch. The AI Legacy Mentor helps you develop the hook,
-            problem, solution, and value so you can present your idea at the table.</p>
+          <p>Pitch a business idea and collect $30,000 from the bank. If the table believes in your
+            idea, other players can choose to invest. Use the AI Legacy Mentor to build your pitch
+            before you present it.</p>
         </div>
         <div>
           <h3>Business Blueprint</h3>
@@ -877,14 +828,22 @@ a{color:inherit;}
         </div>
       </div>
     </div>
+  </div>
+</section>
 
+<!-- ======================== WHY WE BUILT IT ======================== -->
+<section class="band band-dark" id="story">
+  <div class="shell center" style="max-width:820px;">
     <div class="rise">
-      <p class="eyebrow">AI Legacy Mentor</p>
-      <h2 class="display gilt">Your AI Mentor at the Table</h2>
-      <p class="lede">Legacy Wealth goes beyond the board. The AI Legacy Mentor helps players explore
-        the financial and business concepts they encounter throughout the game with personalized
-        explanations, real-world questions, and guidance based on what they want to understand.</p>
-      <p class="lede">No complicated setup. Scan a QR code with your phone and keep learning.</p>
+      <p class="eyebrow">Why We Built It</p>
+      <h2 class="display gilt">What Wealthy Families Already Know</h2>
+      <div class="rule" style="margin-left:auto;margin-right:auto;"></div>
+      <p class="lede">Money becomes easier to understand when people actually talk about it.</p>
+      <p class="lede">Designed by a financial planner, Legacy Wealth gives players a place to practice
+        decisions around careers, assets, business, investing, habits, and risk before the stakes are
+        real.</p>
+      <p class="lede" style="color:var(--gold-soft);">What some families learn early should not be
+        reserved for a few.</p>
     </div>
   </div>
 </section>
@@ -939,8 +898,9 @@ a{color:inherit;}
         <div class="cd-unit"><b class="cd-num" data-cd="seconds">--</b><span class="cd-lab">Seconds</span></div>
       </div>
 
-      <p class="urgency">Preorders open November 8th. Join the waitlist now to be notified the moment it
-        goes live — and be first in line.</p>
+      <p class="urgency">Preorders open November 8. Join the waitlist to be notified the moment
+        preorders go live. Preorder customers also receive the Legacy Credit Playbook, Family Wealth
+        Dashboard, and an exclusive Wealth Planning Workshop.</p>
 
       <div class="signup">
         <form id="mainForm" novalidate>
