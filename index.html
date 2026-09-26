@@ -233,34 +233,53 @@ a{color:inherit;}
 .form-ok p{font-size:15px;line-height:1.7;color:var(--paper-dim);margin:0;}
 
 /* ---- the box, built in CSS from the flat cover art --------------------- */
-/* The set, assembled from flat art: the board laid back into the table, the
-   box standing behind it, the tokens out in front. All one perspective. */
-.stage{position:relative;display:grid;place-items:center;padding:4px 0 18px;perspective:1500px;}
-.stage-in{position:relative;width:min(100%,356px);
-  animation:boxIn 1s cubic-bezier(.2,.7,.25,1) both;}
-/* the board laid back into the table. Rotating about its top edge means the
-   projected height is width x cos(62deg), which the padding box reserves. */
-.mat{position:relative;z-index:1;height:0;padding-bottom:58%;margin-top:-4%;perspective:1150px;}
-.mat img{position:absolute;inset:0;width:100%;height:auto;border-radius:3px;
-  transform:rotateX(56deg);transform-origin:50% 0;
-  filter:brightness(.94) contrast(1.04) saturate(1.04);
-  box-shadow:0 40px 54px -24px rgba(0,0,0,.95);
-  -webkit-mask-image:linear-gradient(180deg,#000 58%,rgba(0,0,0,.35) 84%,transparent 100%);
-  mask-image:linear-gradient(180deg,#000 58%,rgba(0,0,0,.35) 84%,transparent 100%);}
-.box{position:relative;z-index:2;width:62%;margin:0 auto;
-  transform:rotateY(-15deg) rotateX(2deg);transform-style:preserve-3d;}
-@keyframes boxIn{from{opacity:0;transform:rotateY(-26deg) rotateX(3deg) translateY(22px);}to{opacity:1;}}
-.box img{width:100%;height:auto;border-radius:2px;position:relative;z-index:2;
-  box-shadow:-22px 26px 60px -18px rgba(0,0,0,.92), 0 2px 0 rgba(255,255,255,.07) inset;}
-/* right-hand spine, catching the lamp */
-.box::after{
-  content:"";position:absolute;top:1.4%;right:-25px;width:26px;height:97%;z-index:1;
-  transform:rotateY(64deg);transform-origin:left center;border-radius:0 2px 2px 0;
-  background:linear-gradient(180deg,#6d5528,#332714 46%,#1b1409);
-  box-shadow:inset 1px 0 0 rgba(232,212,154,.32);
+/* ==========================================================================
+   The staged set. One perspective, four layers, fixed aspect so the hero
+   never grows: box at the back, board laid into the table, a row of cards
+   along the front edge, the pieces out to the right. Everything is placed
+   as a percentage of the stage, so it holds together at any width.
+   ========================================================================== */
+.stage{position:relative;display:grid;place-items:center;padding:0 0 10px;}
+.stage-in{
+  position:relative;width:min(100%,430px);aspect-ratio:1 / 0.88;
+  animation:boxIn 1s cubic-bezier(.2,.7,.25,1) both;
 }
-.box-shadow{position:absolute;left:50%;bottom:0;width:86%;height:30px;transform:translateX(-50%);
-  background:radial-gradient(ellipse at center, rgba(0,0,0,.78), transparent 72%);filter:blur(11px);}
+
+/* back: the box, standing */
+.box{position:absolute;top:0;left:50%;width:50%;z-index:3;
+  transform:translateX(-50%) rotateY(-13deg);transform-style:preserve-3d;perspective:1000px;
+  filter:drop-shadow(-14px 20px 26px rgba(0,0,0,.9));}
+
+/* middle: the board, laid back. Rotated about its top edge, then masked so
+   the near edge dissolves into the table instead of ending on a hard line. */
+.mat{position:absolute;top:33%;left:-6%;width:112%;z-index:1;perspective:1050px;}
+.mat img{width:100%;height:auto;border-radius:3px;
+  transform:rotateX(59deg);transform-origin:50% 0;
+  filter:brightness(.95) contrast(1.05);
+  box-shadow:0 38px 50px -22px rgba(0,0,0,.95);
+  -webkit-mask-image:linear-gradient(180deg,#000 62%,rgba(0,0,0,.4) 86%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 62%,rgba(0,0,0,.4) 86%,transparent 100%);}
+
+/* front: five cards along the table edge, evenly spaced and tipped back a
+   little so they read as lying on the surface rather than pasted on it */
+.fan{position:absolute;left:1%;width:76%;bottom:0;z-index:4;
+  display:flex;justify-content:space-between;align-items:flex-end;
+  perspective:900px;}
+.fan img{width:20.4%;height:auto;border-radius:2px;
+  transform:rotateX(20deg);transform-origin:50% 100%;
+  box-shadow:0 10px 15px -5px rgba(0,0,0,.92), 0 0 0 1px rgba(0,0,0,.4);}
+/* a shallow arc: the outer cards sit a touch lower, as they would on a table */
+.fan img:nth-child(1){transform:rotateX(20deg) rotate(-4deg) translateY(6%);}
+.fan img:nth-child(2){transform:rotateX(20deg) rotate(-2deg) translateY(2%);}
+.fan img:nth-child(4){transform:rotateX(20deg) rotate(2deg) translateY(2%);}
+.fan img:nth-child(5){transform:rotateX(20deg) rotate(4deg) translateY(6%);}
+
+/* right: three pieces, standing on the board's near corner */
+.pawns{position:absolute;right:0;bottom:1%;z-index:5;
+  display:flex;align-items:flex-end;justify-content:flex-end;gap:7%;width:23%;}
+.pawns img{width:29%;height:auto;
+  filter:drop-shadow(0 7px 6px rgba(0,0,0,.95));}
+
 @media (max-width:940px){
   .hero{padding:calc(var(--head-h) + 20px) 0 46px;}
   .hero-grid{grid-template-columns:1fr;gap:16px;}
@@ -269,8 +288,9 @@ a{color:inherit;}
   .cta-note{justify-content:center;}
   .jump{margin-left:auto;margin-right:auto;}
   .stage{order:-1;padding:0 0 2px;}
-  .stage-in{width:min(74%,238px);}
-  .box{width:64%;transform:rotateY(-13deg);}
+  .stage-in{width:min(100%,300px);}
+  /* keep the centring translate, or the box jumps out of the composition */
+  .box{width:52%;transform:translateX(-50%) rotateY(-12deg);}
   .hero::before{background-position:62% 42%;}
   .hero::after{background:linear-gradient(180deg,rgba(5,5,6,.86) 0%,rgba(5,5,6,.56) 30%,rgba(5,5,6,.80) 74%,rgba(5,5,6,.94) 100%);}
 }
@@ -728,21 +748,35 @@ a{color:inherit;}
         <span class="arw" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></a>
     </div>
 
-    <!-- the set as it sits on a table: box standing behind the board, the
-         tokens out in front of it. Built from the flat art, no photography. -->
-    <div class="stage">
+    <!-- The set, staged from the flat art in one perspective: box standing at
+         the back, board laid into the table, a row of cards along the front
+         edge, the pieces out to the right. Nothing here is photography. -->
+    <div class="stage" aria-label="The Legacy Wealth set: box, board, cards and player tokens">
       <div class="stage-in">
         <div class="box">
           <img src="assets/images/box-cover.webp" alt="The Legacy Wealth board game box" width="1100" height="1100">
         </div>
+
         <div class="mat" aria-hidden="true">
           <img src="assets/images/board-mat.webp" alt="" width="1800" height="1800">
         </div>
+
+        <div class="fan" aria-hidden="true">
+          <img src="assets/images/cards/career-doctor.webp" alt="" width="750" height="1050">
+          <img src="assets/images/cards/asset-bitcoin.webp" alt="" width="700" height="980">
+          <img src="assets/images/cards/habit-rich-generational.webp" alt="" width="700" height="980">
+          <img src="assets/images/cards/iq-compound-interest.webp" alt="" width="700" height="980">
+          <img src="assets/images/cards/habit-poor-gave-up.webp" alt="" width="700" height="980">
+        </div>
+
+        <div class="pawns" aria-hidden="true">
+          <img src="assets/images/tokens/token-businessman.webp" alt="">
+          <img src="assets/images/tokens/token-bonsai.webp" alt="">
+          <img src="assets/images/tokens/token-torch.webp" alt="">
+        </div>
       </div>
-      <span class="box-shadow" aria-hidden="true"></span>
     </div>
-  </div>
-</section>
+  </section>
 
 <!-- ==================== THE RACE TO $1 MILLION ==================== -->
 <section class="band band-stone" id="race">
