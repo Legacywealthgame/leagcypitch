@@ -233,18 +233,15 @@ a{color:inherit;}
 .form-ok p{font-size:15px;line-height:1.7;color:var(--paper-dim);margin:0;}
 
 /* ---- the box, built in CSS from the flat cover art --------------------- */
-/* ---- the staged set, one image ----------------------------------------- */
-.stage{position:relative;display:grid;place-items:center;padding:0;}
-/* the shot carries its own room, so its edges are faded into the hero's
-   rather than left as a rectangle sitting on top of it */
+/* ---- the staged set, one rendered shot ---------------------------------- */
 .set{width:min(128%,780px);height:auto;margin-right:-8%;
   animation:setIn .9s cubic-bezier(.2,.7,.25,1) both;
   -webkit-mask-image:
-    linear-gradient(180deg,transparent 0,#000 6%,#000 88%,transparent 100%),
+    linear-gradient(180deg,transparent 0,#000 6%,#000 90%,transparent 100%),
     linear-gradient(90deg,transparent 0,#000 6%,#000 94%,transparent 100%);
   -webkit-mask-composite:source-in;
   mask-image:
-    linear-gradient(180deg,transparent 0,#000 6%,#000 88%,transparent 100%),
+    linear-gradient(180deg,transparent 0,#000 6%,#000 90%,transparent 100%),
     linear-gradient(90deg,transparent 0,#000 6%,#000 94%,transparent 100%);
   mask-composite:intersect;}
 @keyframes setIn{from{opacity:0;transform:translateY(16px) scale(.985);}to{opacity:1;}}
@@ -257,11 +254,12 @@ a{color:inherit;}
   .hero-sub{margin-left:auto;margin-right:auto;}
   .cta-note{justify-content:center;}
   .jump{margin-left:auto;margin-right:auto;}
-  .stage{order:-1;}
-  /* break the gutter: the set runs edge to edge, as in the reference */
-  .set{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
-    -webkit-mask-image:linear-gradient(180deg,#000 90%,transparent 100%);
-    mask-image:linear-gradient(180deg,#000 90%,transparent 100%);}
+  /* the set leads on a phone, and runs edge to edge */
+  /* the picture element is the grid child, so the order lives on it */
+  .hero-grid > picture{order:-1;}
+  .set{width:100vw;max-width:none;margin:0 calc(50% - 50vw);
+    -webkit-mask-image:linear-gradient(180deg,#000 92%,transparent 100%);
+    mask-image:linear-gradient(180deg,#000 92%,transparent 100%);}
   .hero::before{background-position:62% 42%;}
   .hero::after{background:linear-gradient(180deg,rgba(5,5,6,.86) 0%,rgba(5,5,6,.56) 30%,rgba(5,5,6,.80) 74%,rgba(5,5,6,.94) 100%);}
 }
@@ -719,17 +717,15 @@ a{color:inherit;}
         <span class="arw" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></a>
     </div>
 
-    <div class="stage">
-      <picture>
-        <!-- the wide framing loses the box on a phone, so phones get a
-             tighter crop of the same scene -->
-        <source media="(max-width:940px)" srcset="assets/images/hero-set-tall.webp"
-                width="1018" height="826">
-        <img class="set" src="assets/images/hero-set.webp"
-             alt="The Legacy Wealth set: the box, the board laid out, the five card decks and the player pieces"
-             width="1512" height="858" fetchpriority="high" decoding="async">
-      </picture>
-    </div>
+    <picture>
+      <!-- the wide framing loses the box on a phone, so phones get a tighter
+           crop of the same scene -->
+      <source media="(max-width:940px)" srcset="assets/images/hero-set-tall.webp"
+              width="966" height="790">
+      <img class="set" src="assets/images/hero-set.webp"
+           alt="The Legacy Wealth box standing behind the board, with the Doctor, Bitcoin and New York Penthouse cards dealt in front and a player piece beside them"
+           width="1448" height="814" fetchpriority="high" decoding="async">
+    </picture>
   </section>
 
 <!-- ==================== THE RACE TO $1 MILLION ==================== -->

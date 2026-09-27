@@ -8,7 +8,7 @@ the desktop crop just shows more of the table around it.
 Layers, back to front:
     room (blurred study)  ->  marble table  ->  money stack and dice, set
     back beside the box   ->  box, standing  ->  board, laid into the table
-    ->  four cards along the near edge  ->  two player pieces at the right
+    ->  three cards along the near edge  ->  one player piece at the right
 
 Run:  python3 tools/props.py && python3 tools/scene.py
 """
@@ -16,7 +16,6 @@ import sys, os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from PIL import Image, ImageDraw, ImageFilter, ImageEnhance, ImageChops
 from stage import warp, place, shadow, vgrad, over, A, W as _W
-from props import die, money_stack
 
 W, H = 1600, 1050
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'assets', 'images')
@@ -56,22 +55,6 @@ pool = blank()
 ImageDraw.Draw(pool).ellipse([W * .16, HORIZON - 30, W * .84, H * .94], fill=(122, 94, 46, 54))
 canvas = over(canvas, pool.filter(ImageFilter.GaussianBlur(120)))
 
-# --------------------------------------------- 3. money and dice, set behind
-stack = money_stack(300)
-sx, sy = 372, 452 - stack.height
-s_lay = blank(); s_lay.alpha_composite(ImageEnhance.Brightness(stack).enhance(0.74), (sx, sy))
-canvas = over(canvas,
-              ground(sx - 16, 452 - 26, sx + stack.width + 16, 452 + 22, 190, 20),
-              shadow(s_lay, 16, .70, -16, 10), s_lay)
-
-for dsize, dx, dy, faces in ((132, 1112, 330, ((2, 5), 3, 1)),
-                             (104, 1244, 372, ((2, 2), 2, 4))):
-    dd = die(dsize, top=faces[0], left=faces[1], right=faces[2])
-    d_lay = blank(); d_lay.alpha_composite(ImageEnhance.Brightness(dd).enhance(0.92), (dx, dy))
-    canvas = over(canvas,
-                  ground(dx + dsize * .10, dy + dsize * .74, dx + dsize * .90, dy + dsize * .98, 200, 13),
-                  shadow(d_lay, 12, .66, -12, 8), d_lay)
-
 # ------------------------------------------------------------------- 4. box
 box = Image.open(A + 'box-cover.webp')
 BW = 452
@@ -96,34 +79,41 @@ canvas = over(canvas, refl,
 board = Image.open(A + 'board-mat.webp')
 BOARD = [(556, 508), (1044, 508), (1338, 806), (262, 806)]
 b_lay = warp(board, BOARD, SZ)
+# partial reveal: the far half dissolves, so the board supports the box
+# instead of competing with it
+fade = Image.new('L', SZ, 255)
+ImageDraw.Draw(fade).rectangle([0, 0, W, 470], fill=0)
+for i in range(120):
+    ImageDraw.Draw(fade).rectangle([0, 470 + i, W, 470 + i + 1], fill=int(255 * i / 120))
+b_lay.putalpha(ImageChops.multiply(b_lay.split()[3], fade))
 b_lay = ImageEnhance.Contrast(ImageEnhance.Color(
     ImageEnhance.Brightness(b_lay).enhance(0.86)).enhance(1.22)).enhance(1.10)
 canvas = over(canvas, shadow(b_lay, 24, .78, 0, 14), b_lay)
 
 # ----------------------------------------------- 6. one card from each deck
 CARDS = ['cards/career-doctor.webp', 'cards/asset-bitcoin.webp',
-         'cards/habit-rich-generational.webp', 'cards/iq-compound-interest.webp']
-cw, gap = 132, 14
-x0 = (W - (len(CARDS) * cw + (len(CARDS) - 1) * gap)) // 2
+         'cards/asset-penthouse.webp']
+cw = 164
+overlap = 26
+x0 = (W - (len(CARDS) * cw - (len(CARDS) - 1) * overlap)) // 2
 for i, f in enumerate(CARDS):
     c = Image.open(A + f)
-    x = x0 + i * (cw + gap)
-    ch = int(cw * c.height / c.width * 0.70)
-    y = 692
-    lean = (i - 1.5) * 7
+    x = x0 + i * (cw - overlap)
+    ch = int(cw * c.height / c.width * 0.74)
+    y = 636 + (0 if i == 1 else 13)          # centre card stands a little proud
+    lean = (i - 1) * 11
     cl = warp(c, [(x + lean * .5, y), (x + cw + lean * .5, y),
                   (x + cw + lean, y + ch), (x + lean, y + ch)], SZ)
-    cl = ImageEnhance.Contrast(ImageEnhance.Brightness(cl).enhance(1.02)).enhance(1.18)
+    cl = ImageEnhance.Contrast(ImageEnhance.Brightness(cl).enhance(1.02)).enhance(1.16)
     canvas = over(canvas,
-                  ground(x + lean - 12, y + ch - 16, x + cw + lean + 12, y + ch + 15, 200, 13),
-                  shadow(cl, 11, .78, -5, 8), cl)
+                  ground(x + lean - 14, y + ch - 18, x + cw + lean + 14, y + ch + 16, 205, 14),
+                  shadow(cl, 12, .80, -6, 9), cl)
 
 # --------------------------------------------------------- 7. player pieces
-for f, ph, px in (('tokens/token-businessman.webp', 108, 1146),
-                  ('tokens/token-torch.webp', 116, 1250)):
+for f, ph, px in (('tokens/token-businessman.webp', 112, 1146),):
     t = Image.open(A + f)
     pw = int(ph * t.width / t.height)
-    py = 660 - ph
+    py = 700 - ph
     t_lay = place(t, (px, py, pw, ph), SZ)
     canvas = over(canvas,
                   ground(px - 5, py + ph - 13, px + pw + 5, py + ph + 13, 200, 10),
@@ -140,8 +130,8 @@ canvas = over(canvas, dark)
 
 # ------------------------------------------------------------------ 9. crops
 # phone first: the tight frame is the one the composition was built for
-tall = canvas.crop((312, 32, 1330, 858))
-wide = canvas.crop((44, 22, W - 44, 880))
+tall = canvas.crop((334, 38, 1300, 828))
+wide = canvas.crop((76, 30, W - 76, 844))
 for im, name in ((tall, 'hero-set-tall'), (wide, 'hero-set')):
     im.convert('RGB').save(os.path.join(OUT, name + '.webp'), 'WEBP', quality=86, method=6)
     im.convert('RGB').save(PREV + name + '.png')
