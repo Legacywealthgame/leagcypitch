@@ -1,129 +1,148 @@
-import sys
-sys.path.insert(0, '/tmp/claude-0/-home-user-leagcypitch/a296ac58-67ba-580e-a1ad-52d13f3833b1/scratchpad/build')
-from stage import *
-from PIL import Image, ImageFilter, ImageEnhance, ImageChops
+"""
+Legacy Wealth hero. One staged shot, built from the real components.
 
-# ============================================================= 1. the room
+Composed mobile first: everything that matters sits inside a centre band
+about 1100px wide, so the phone crop is a complete picture on its own and
+the desktop crop just shows more of the table around it.
+
+Layers, back to front:
+    room (blurred study)  ->  marble table  ->  money stack and dice, set
+    back beside the box   ->  box, standing  ->  board, laid into the table
+    ->  four cards along the near edge  ->  two player pieces at the right
+
+Run:  python3 tools/props.py && python3 tools/scene.py
+"""
+import sys, os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from PIL import Image, ImageDraw, ImageFilter, ImageEnhance, ImageChops
+from stage import warp, place, shadow, vgrad, over, A, W as _W
+from props import die, money_stack
+
+W, H = 1600, 1050
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'assets', 'images')
+PREV = '/tmp/claude-0/-home-user-leagcypitch/a296ac58-67ba-580e-a1ad-52d13f3833b1/scratchpad/build/'
+SZ = (W, H)
+
+
+def blank():
+    return Image.new('RGBA', SZ, (0, 0, 0, 0))
+
+
+def ground(x0, y0, x1, y1, alpha, blur):
+    """A contact shadow: the dark smudge where an object meets the stone."""
+    g = blank()
+    ImageDraw.Draw(g).ellipse([x0, y0, x1, y1], fill=(0, 0, 0, alpha))
+    return g.filter(ImageFilter.GaussianBlur(blur))
+
+
+# ------------------------------------------------------------------ 1. room
 room = Image.open(A + 'hero-study.webp').convert('RGBA')
 room = room.resize((W, int(W * room.height / room.width)), Image.LANCZOS)
-room = room.crop((0, 0, W, 560)).filter(ImageFilter.GaussianBlur(7))
-room = ImageEnhance.Brightness(room).enhance(0.52)
-canvas = Image.new('RGBA', (W, H), (6, 6, 8, 255))
-canvas.paste(room, (0, 0))
+room = room.crop((0, 0, W, 520)).filter(ImageFilter.GaussianBlur(8))
+canvas = Image.new('RGBA', SZ, (6, 6, 8, 255))
+canvas.paste(ImageEnhance.Brightness(room).enhance(0.46), (0, 0))
 
-# ============================================================= 2. the table
-# black marble, laid into perspective from the horizon down to the frame edge
+# ------------------------------------------------------------------ 2. table
+HORIZON = 430
 marble = Image.open(A + 'marble-bg.webp').convert('RGBA')
-HORIZON = 470
-table = warp(marble, [(-520, HORIZON), (W + 520, HORIZON), (W + 1500, H), (-1500, H)])
-table = ImageEnhance.Brightness(table).enhance(0.78)
-canvas = over(canvas, table)
+table = warp(marble, [(-560, HORIZON), (W + 560, HORIZON), (W + 1600, H), (-1600, H)], SZ)
+canvas = over(canvas, ImageEnhance.Brightness(table).enhance(0.74))
 
-# the room does not end on a line: blend the seam into the stone
-seam = Image.new('RGBA', (W, H), (0, 0, 0, 0))
-ImageDraw.Draw(seam).rectangle([0, HORIZON - 120, W, HORIZON + 90], fill=(4, 4, 6, 230))
-canvas = over(canvas, seam.filter(ImageFilter.GaussianBlur(70)))
+seam = blank()
+ImageDraw.Draw(seam).rectangle([0, HORIZON - 110, W, HORIZON + 70], fill=(4, 4, 6, 235))
+canvas = over(canvas, seam.filter(ImageFilter.GaussianBlur(64)))
 
-# a soft warm pool of light where the set will sit
-pool = Image.new('RGBA', (W, H), (0, 0, 0, 0))
-d = ImageDraw.Draw(pool)
-d.ellipse([W * 0.12, HORIZON - 40, W * 0.88, H * 0.96], fill=(120, 92, 44, 58))
+pool = blank()
+ImageDraw.Draw(pool).ellipse([W * .16, HORIZON - 30, W * .84, H * .94], fill=(122, 94, 46, 54))
 canvas = over(canvas, pool.filter(ImageFilter.GaussianBlur(120)))
 
-# ============================================================= 3. the board
-board = Image.open(A + 'board-mat.webp')
-BOARD = [(486, 596), (1114, 596), (1470, 916), (130, 916)]      # tl tr br bl
-b_lay = warp(board, BOARD)
+# --------------------------------------------- 3. money and dice, set behind
+stack = money_stack(300)
+sx, sy = 372, 452 - stack.height
+s_lay = blank(); s_lay.alpha_composite(ImageEnhance.Brightness(stack).enhance(0.74), (sx, sy))
 canvas = over(canvas,
-              shadow(b_lay, 26, 0.80, 0, 16),
-              ImageEnhance.Contrast(ImageEnhance.Color(ImageEnhance.Brightness(b_lay).enhance(0.86)).enhance(1.22)).enhance(1.10))
+              ground(sx - 16, 452 - 26, sx + stack.width + 16, 452 + 22, 190, 20),
+              shadow(s_lay, 16, .70, -16, 10), s_lay)
 
-# ============================================================= 4. the box
+for dsize, dx, dy, faces in ((132, 1112, 330, ((2, 5), 3, 1)),
+                             (104, 1244, 372, ((2, 2), 2, 4))):
+    dd = die(dsize, top=faces[0], left=faces[1], right=faces[2])
+    d_lay = blank(); d_lay.alpha_composite(ImageEnhance.Brightness(dd).enhance(0.92), (dx, dy))
+    canvas = over(canvas,
+                  ground(dx + dsize * .10, dy + dsize * .74, dx + dsize * .90, dy + dsize * .98, 200, 13),
+                  shadow(d_lay, 12, .66, -12, 8), d_lay)
+
+# ------------------------------------------------------------------- 4. box
 box = Image.open(A + 'box-cover.webp')
-BX, BY, BW = 540, 96, 520
+BW = 452
 BH = int(BW * box.height / box.width)
+BX, BY = (W - BW) // 2, 86
 
-# right-hand spine, built from a slice of the cover's own edge
-edge = box.crop((box.width - 14, 0, box.width, box.height))
-spine = warp(edge, [(BX + BW - 2, BY + 6), (BX + BW + 30, BY + 22),
-                    (BX + BW + 30, BY + BH - 14), (BX + BW - 2, BY + BH)])
-spine = ImageEnhance.Brightness(spine).enhance(0.30)
+edge = box.crop((box.width - 13, 0, box.width, box.height))
+spine = warp(edge, [(BX + BW - 2, BY + 5), (BX + BW + 27, BY + 20),
+                    (BX + BW + 27, BY + BH - 13), (BX + BW - 2, BY + BH)], SZ)
+box_all = over(blank(), ImageEnhance.Brightness(spine).enhance(0.30), place(box, (BX, BY, BW, BH), SZ))
 
-face = place(box, (BX, BY, BW, BH))
-box_all = over(Image.new('RGBA', (W, H), (0, 0, 0, 0)), spine, face)
-
-# contact shadow on the table, thrown back and to the left by the key light
-foot = Image.new('RGBA', (W, H), (0, 0, 0, 0))
-ImageDraw.Draw(foot).ellipse([BX - 70, BY + BH - 40, BX + BW + 120, BY + BH + 52],
-                             fill=(0, 0, 0, 220))
 refl = box_all.transpose(Image.FLIP_TOP_BOTTOM)
-refl = ImageChops.offset(refl, 0, 2 * (BY + BH) - H + 6)
-refl = refl.filter(ImageFilter.GaussianBlur(7))
-ra = refl.split()[3].point(lambda v: int(v * 0.20))
-ra = ImageChops.multiply(ra, vgrad((W, H), 255, 0).point(lambda v: 255 - v))
-refl.putalpha(ra)
+refl = ImageChops.offset(refl, 0, 2 * (BY + BH) - H + 4).filter(ImageFilter.GaussianBlur(7))
+ra = refl.split()[3].point(lambda v: int(v * .18))
+refl.putalpha(ImageChops.multiply(ra, vgrad(SZ, 255, 0).point(lambda v: 255 - v)))
 
-canvas = over(canvas, refl, foot.filter(ImageFilter.GaussianBlur(34)),
-              shadow(box_all, 30, 0.72, -34, 26), box_all)
+canvas = over(canvas, refl,
+              ground(BX - 58, BY + BH - 34, BX + BW + 96, BY + BH + 44, 215, 30),
+              shadow(box_all, 28, .70, -30, 22), box_all)
 
-# ============================================================= 5. the cards
+# ----------------------------------------------------------------- 5. board
+board = Image.open(A + 'board-mat.webp')
+BOARD = [(556, 508), (1044, 508), (1338, 806), (262, 806)]
+b_lay = warp(board, BOARD, SZ)
+b_lay = ImageEnhance.Contrast(ImageEnhance.Color(
+    ImageEnhance.Brightness(b_lay).enhance(0.86)).enhance(1.22)).enhance(1.10)
+canvas = over(canvas, shadow(b_lay, 24, .78, 0, 14), b_lay)
+
+# ----------------------------------------------- 6. one card from each deck
 CARDS = ['cards/career-doctor.webp', 'cards/asset-bitcoin.webp',
-         'cards/habit-rich-generational.webp', 'cards/iq-compound-interest.webp',
-         'cards/habit-poor-gave-up.webp']
-cw, gap = 206, 18
-total = len(CARDS) * cw + (len(CARDS) - 1) * gap
-x0 = (W - total) // 2
+         'cards/habit-rich-generational.webp', 'cards/iq-compound-interest.webp']
+cw, gap = 132, 14
+x0 = (W - (len(CARDS) * cw + (len(CARDS) - 1) * gap)) // 2
 for i, f in enumerate(CARDS):
     c = Image.open(A + f)
     x = x0 + i * (cw + gap)
-    ch = int(cw * c.height / c.width * 0.72)          # foreshortened, lying down
-    y = 866
-    lean = (i - 2) * 7                                 # a shallow arc
-    q = [(x + lean * 0.5, y), (x + cw + lean * 0.5, y),
-         (x + cw + lean, y + ch), (x + lean, y + ch)]
-    cl = warp(c, q)
-    contact = Image.new('RGBA', (W, H), (0, 0, 0, 0))
-    ImageDraw.Draw(contact).ellipse([x + lean - 12, y + ch - 18, x + cw + lean + 12, y + ch + 16],
-                                    fill=(0, 0, 0, 205))
-    cl = ImageEnhance.Contrast(ImageEnhance.Brightness(cl).enhance(1.02)).enhance(1.20)
-    canvas = over(canvas, contact.filter(ImageFilter.GaussianBlur(14)),
-                  shadow(cl, 12, 0.80, -5, 9), cl)
+    ch = int(cw * c.height / c.width * 0.70)
+    y = 692
+    lean = (i - 1.5) * 7
+    cl = warp(c, [(x + lean * .5, y), (x + cw + lean * .5, y),
+                  (x + cw + lean, y + ch), (x + lean, y + ch)], SZ)
+    cl = ImageEnhance.Contrast(ImageEnhance.Brightness(cl).enhance(1.02)).enhance(1.18)
+    canvas = over(canvas,
+                  ground(x + lean - 12, y + ch - 16, x + cw + lean + 12, y + ch + 15, 200, 13),
+                  shadow(cl, 11, .78, -5, 8), cl)
 
-# ============================================================= 6. the pieces
-PIECES = [('tokens/token-businessman.webp', 132), ('tokens/token-bonsai.webp', 104),
-          ('tokens/token-torch.webp', 144)]
-px = 1258
-for f, ph in PIECES:
+# --------------------------------------------------------- 7. player pieces
+for f, ph, px in (('tokens/token-businessman.webp', 108, 1146),
+                  ('tokens/token-torch.webp', 116, 1250)):
     t = Image.open(A + f)
     pw = int(ph * t.width / t.height)
-    py = 858 - ph
-    tl = place(t, (px, py, pw, ph))
-    ImageDraw.Draw(tl)  # no-op, keeps intent clear
-    contact = Image.new('RGBA', (W, H), (0, 0, 0, 0))
-    ImageDraw.Draw(contact).ellipse([px - 6, py + ph - 14, px + pw + 6, py + ph + 14],
-                                    fill=(0, 0, 0, 200))
-    canvas = over(canvas, contact.filter(ImageFilter.GaussianBlur(11)),
-                  shadow(tl, 10, 0.7, -10, 6), tl)
-    px += pw + 20
+    py = 660 - ph
+    t_lay = place(t, (px, py, pw, ph), SZ)
+    canvas = over(canvas,
+                  ground(px - 5, py + ph - 13, px + pw + 5, py + ph + 13, 200, 10),
+                  shadow(t_lay, 9, .64, -9, 6), t_lay)
 
-# ============================================================= 7. grade
-canvas = ImageEnhance.Color(canvas).enhance(1.06)
-canvas = ImageEnhance.Contrast(canvas).enhance(1.05)
-
-vig = Image.new('L', (W, H), 0)
-ImageDraw.Draw(vig).ellipse([-W * 0.30, -H * 0.42, W * 1.30, H * 1.30], fill=255)
-vig = vig.filter(ImageFilter.GaussianBlur(190))
-dark = Image.new('RGBA', (W, H), (0, 0, 0, 255))
-dark.putalpha(ImageChops.invert(vig).point(lambda v: int(v * 0.72)))
+# ------------------------------------------------------------------ 8. grade
+canvas = ImageEnhance.Contrast(ImageEnhance.Color(canvas).enhance(1.06)).enhance(1.05)
+vig = Image.new('L', SZ, 0)
+ImageDraw.Draw(vig).ellipse([-W * .28, -H * .40, W * 1.28, H * 1.30], fill=255)
+vig = vig.filter(ImageFilter.GaussianBlur(180))
+dark = Image.new('RGBA', SZ, (0, 0, 0, 255))
+dark.putalpha(ImageChops.invert(vig).point(lambda v: int(v * .70)))
 canvas = over(canvas, dark)
 
-# let the frame edges fall away so the shot sits inside the page
-fade = Image.new('RGBA', (W, H), (5, 5, 6, 255))
-fade.putalpha(vgrad((W, H), 0, 235).point(lambda v: v if v > 120 else 0))
-canvas = over(canvas, fade)
-
-# two framings. Wide for desktop; a tighter one for a phone, where the wide
-# crop shrinks the box to nothing.
-canvas.crop((44, 30, W - 30, 1104)).convert('RGB').save(OUT + 'hero-set.png')
-canvas.crop((300, 84, 1300, 1000)).convert('RGB').save(OUT + 'hero-set-tall.png')
-print('rendered', canvas.size)
+# ------------------------------------------------------------------ 9. crops
+# phone first: the tight frame is the one the composition was built for
+tall = canvas.crop((312, 32, 1330, 858))
+wide = canvas.crop((44, 22, W - 44, 880))
+for im, name in ((tall, 'hero-set-tall'), (wide, 'hero-set')):
+    im.convert('RGB').save(os.path.join(OUT, name + '.webp'), 'WEBP', quality=86, method=6)
+    im.convert('RGB').save(PREV + name + '.png')
+    print('%-16s %s' % (name, im.size))

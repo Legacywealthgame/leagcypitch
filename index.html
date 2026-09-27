@@ -240,19 +240,19 @@ a{color:inherit;}
 .set{width:min(128%,780px);height:auto;margin-right:-8%;
   animation:setIn .9s cubic-bezier(.2,.7,.25,1) both;
   -webkit-mask-image:
-    linear-gradient(180deg,transparent 0,#000 7%,#000 76%,transparent 99%),
-    linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%);
+    linear-gradient(180deg,transparent 0,#000 6%,#000 88%,transparent 100%),
+    linear-gradient(90deg,transparent 0,#000 6%,#000 94%,transparent 100%);
   -webkit-mask-composite:source-in;
   mask-image:
-    linear-gradient(180deg,transparent 0,#000 7%,#000 76%,transparent 99%),
-    linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%);
+    linear-gradient(180deg,transparent 0,#000 6%,#000 88%,transparent 100%),
+    linear-gradient(90deg,transparent 0,#000 6%,#000 94%,transparent 100%);
   mask-composite:intersect;}
 @keyframes setIn{from{opacity:0;transform:translateY(16px) scale(.985);}to{opacity:1;}}
 
 @media (max-width:940px){
   .hero{padding:calc(var(--head-h) + 10px) 0 40px;}
   .hero-grid{grid-template-columns:1fr;gap:0;}
-  .hero-copy{margin-top:-46px;}
+  .hero-copy{margin-top:-4px;}
   .hero-copy{max-width:none;text-align:center;}
   .hero-sub{margin-left:auto;margin-right:auto;}
   .cta-note{justify-content:center;}
@@ -260,8 +260,8 @@ a{color:inherit;}
   .stage{order:-1;}
   /* break the gutter: the set runs edge to edge, as in the reference */
   .set{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
-    -webkit-mask-image:linear-gradient(180deg,#000 76%,transparent 99%);
-    mask-image:linear-gradient(180deg,#000 76%,transparent 99%);}
+    -webkit-mask-image:linear-gradient(180deg,#000 90%,transparent 100%);
+    mask-image:linear-gradient(180deg,#000 90%,transparent 100%);}
   .hero::before{background-position:62% 42%;}
   .hero::after{background:linear-gradient(180deg,rgba(5,5,6,.86) 0%,rgba(5,5,6,.56) 30%,rgba(5,5,6,.80) 74%,rgba(5,5,6,.94) 100%);}
 }
@@ -724,10 +724,10 @@ a{color:inherit;}
         <!-- the wide framing loses the box on a phone, so phones get a
              tighter crop of the same scene -->
         <source media="(max-width:940px)" srcset="assets/images/hero-set-tall.webp"
-                width="1000" height="916">
+                width="1018" height="826">
         <img class="set" src="assets/images/hero-set.webp"
              alt="The Legacy Wealth set: the box, the board laid out, the five card decks and the player pieces"
-             width="1526" height="1074" fetchpriority="high" decoding="async">
+             width="1512" height="858" fetchpriority="high" decoding="async">
       </picture>
     </div>
   </section>
