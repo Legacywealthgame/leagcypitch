@@ -160,7 +160,7 @@ a{color:inherit;}
 .hero .lede{color:rgba(243,239,230,.88);max-width:50ch;}
 
 /* the hero sells: eyebrow, headline, one paragraph, one button, the facts */
-.hero h1{margin:6px 0 22px;}
+.hero h1{margin:6px 0 16px;padding-bottom:.17em;}
 /* each sentence owns its own line at every width. As inline-blocks they
    paired up from about 500px and sat within a few pixels of the edge, so any
    nudge — a device text-size setting, a late-loading font — pushed the second
@@ -247,7 +247,7 @@ a{color:inherit;}
 @keyframes setIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;}}
 
 @media (max-width:940px){
-  .hero{padding:calc(var(--head-h) + 10px) 0 40px;}
+  .hero{padding:var(--head-h) 0 40px;}
   .hero-grid{grid-template-columns:1fr;gap:0;}
   .hero-copy{margin-top:6px;}
   .hero-copy{max-width:none;text-align:center;}
@@ -257,8 +257,8 @@ a{color:inherit;}
   /* the shot leads on a phone, and runs edge to edge */
   .hero-grid > picture{order:-1;}
   .shot{width:100vw;max-width:none;margin:0 calc(50% - 50vw);
-    -webkit-mask-image:linear-gradient(180deg,#000 88%,transparent 100%);
-    mask-image:linear-gradient(180deg,#000 88%,transparent 100%);}
+    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 4%,#000 88%,transparent 100%);
+    mask-image:linear-gradient(180deg,transparent 0,#000 4%,#000 88%,transparent 100%);}
   .hero::before{background-position:center 30%;}
   /* the copy sits on a dark, quiet panel rather than on the busy room */
   .hero::after{background:linear-gradient(180deg,
@@ -589,7 +589,7 @@ a{color:inherit;}
   /* the bar must never sit on top of the last thing on the page */
   .site-foot{padding-bottom:calc(34px + 62px);}
 
-  .hero h1{font-size:clamp(29px,8vw,37px);margin:10px 0 18px;}
+  .hero h1{font-size:clamp(29px,8vw,37px);margin:10px 0 12px;padding-bottom:.17em;}
   .hero-sub{font-size:15px;line-height:1.68;margin-bottom:22px;max-width:31ch;}
   .cta-lg{max-width:none;font-size:12px;padding:17px 26px;}
   .cta-note{font-size:12px;}
