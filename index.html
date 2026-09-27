@@ -141,7 +141,7 @@ a{color:inherit;}
 .hero{position:relative;padding:calc(var(--head-h) + 40px) 0 62px;isolation:isolate;overflow:hidden;}
 .hero::before{
   content:"";position:absolute;inset:0;z-index:-2;
-  background:url("assets/images/hero-room.webp") center 26%/cover no-repeat;
+  background:url("assets/images/hero-room.webp") center 40%/cover no-repeat;
   /* the room goes soft so the box is the only sharp thing on the screen.
      Scaling past the edges keeps the blur from feathering the frame. */
   filter:blur(3.5px) saturate(1.04);
@@ -226,16 +226,17 @@ a{color:inherit;}
 
 /* ---- the box, built in CSS from the flat cover art --------------------- */
 /* ==========================================================================
-   The set: a real box, and the whole mat.
+   The set: a real box and the whole mat, sitting ON the table.
 
-   The box is three faces in 3D space rather than a flat image, so its edges
-   converge and the printed wrap continues onto the side and lid. The mat is
-   the complete board, tipped back about its near edge. Rotating that way
-   squashes it to roughly cos(angle) of its height, which is why the element
-   is far taller than the space it occupies.
+   Three things make an object rest on a surface rather than float over it:
+   a tight dark contact where it touches, a reflection the polished stone
+   gives back, and a base that sits below the table's far edge. All three
+   are here. The box is three faces in 3D so its edges converge; the mat is
+   tipped back about its near edge, which squashes it to roughly cos(angle)
+   of its height and is why its layout position is never where it lands.
    ========================================================================== */
 .stage{position:relative;width:100%;aspect-ratio:100 / 88;}
-/* a warm pool of light behind the box, so it separates from the room */
+/* the warm pool the box stands in */
 .stage::before{
   content:"";position:absolute;z-index:1;pointer-events:none;
   left:8%;right:8%;top:2%;height:64%;
@@ -244,18 +245,18 @@ a{color:inherit;}
   filter:blur(6px);
 }
 
-.box{
-  --d:7.4%;                       /* how deep the box is, as a share of its width */
-  position:absolute;left:50%;top:12%;width:49%;aspect-ratio:1;z-index:2;
-  transform:translateX(-53%) perspective(900px) rotateX(5deg) rotateY(-19deg);
-  transform-style:preserve-3d;
-  animation:setIn .9s cubic-bezier(.2,.7,.25,1) both;
-}
+/* the wrap holds the position; percentages inside it resolve against a
+   square, so the reflection and the contact always land at the box's base */
+.box-wrap{position:absolute;left:50%;top:11%;width:49%;aspect-ratio:1;z-index:4;
+  transform:translateX(-53%);
+  animation:setIn .9s cubic-bezier(.2,.7,.25,1) both;}
+
+.box{--d:7.4%;position:absolute;inset:0;transform-style:preserve-3d;
+  transform:perspective(900px) rotateX(5deg) rotateY(-19deg);}
 .box .f{position:absolute;}
 .box .front{inset:0;}
 .box .front img{width:100%;height:100%;display:block;
   box-shadow:0 0 0 1px rgba(232,212,154,.30) inset;}
-/* the printed wrap carries on around the box */
 .box .side{top:0;left:100%;width:var(--d);height:100%;transform-origin:0 50%;
   transform:rotateY(90deg);
   background:url("assets/images/box-cover.webp") right center/auto 100% no-repeat;
@@ -266,21 +267,35 @@ a{color:inherit;}
   background:url("assets/images/box-cover.webp") center top/100% auto no-repeat;
   filter:brightness(.56) saturate(.9);
   box-shadow:inset 0 -1px 0 rgba(232,212,154,.28);}
-/* where the box meets the stone */
-.box::after{content:"";position:absolute;left:-22%;right:-34%;bottom:-7%;height:15%;
-  background:radial-gradient(ellipse at center,rgba(0,0,0,.94),rgba(0,0,0,.42) 48%,transparent 74%);
-  filter:blur(11px);}
 
-.mat{position:absolute;left:9.5%;width:81%;bottom:-1%;z-index:3;
-  transform:perspective(620px) rotateX(59deg);transform-origin:50% 100%;
+/* the cover again, flipped and squashed into the stone */
+/* scaleY about the top edge throws the copy upward, so translate it down by
+   its own height first; transforms apply right to left. The mask runs from
+   the far end because flipping reverses the element's own axis. */
+.box-refl{position:absolute;left:0;top:100%;width:100%;height:auto;z-index:-2;
+  transform:scaleY(-.42) translateY(-100%) skewX(6deg);transform-origin:50% 0;
+  opacity:.30;filter:blur(2px) brightness(.72) contrast(1.1);pointer-events:none;
+  -webkit-mask-image:linear-gradient(0deg,#000,transparent 72%);
+  mask-image:linear-gradient(0deg,#000,transparent 72%);}
+
+/* the tight dark line it sits on, and the ambient smudge around it */
+.contact{position:absolute;left:-30%;width:160%;top:93%;height:20%;z-index:-1;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse 22% 9% at 44% 14%, rgba(0,0,0,1), transparent 78%),
+    radial-gradient(ellipse 30% 20% at 44% 22%, rgba(0,0,0,.94), transparent 74%),
+    radial-gradient(ellipse 54% 54% at 46% 30%, rgba(0,0,0,.68), transparent 76%);
+  filter:blur(7px);}
+
+.mat{position:absolute;left:13%;width:74%;bottom:3%;z-index:5;
+  transform:perspective(470px) rotateX(60deg);transform-origin:50% 100%;
   animation:setIn .9s .08s cubic-bezier(.2,.7,.25,1) both;
-  /* the near edge dissolves into the table so the board recedes rather than
-     ending on a hard line in front of the copy */
   -webkit-mask-image:linear-gradient(180deg,#000 68%,rgba(0,0,0,.50) 88%,transparent 100%);
   mask-image:linear-gradient(180deg,#000 68%,rgba(0,0,0,.50) 88%,transparent 100%);}
 .mat img{width:100%;height:auto;display:block;border-radius:3px;
   filter:brightness(.84) contrast(1.10) saturate(1.16);
-  box-shadow:0 22px 34px -16px rgba(0,0,0,.95);}
+  /* the board's own shadow on the stone, thrown back and left by the key light */
+  box-shadow:-10px 18px 26px -10px rgba(0,0,0,.95), 0 3px 10px rgba(0,0,0,.8);}
 @keyframes setIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;}}
 
 @media (max-width:940px){
@@ -292,9 +307,9 @@ a{color:inherit;}
   .cta-note{justify-content:center;}
   .jump{margin-left:auto;margin-right:auto;}
   /* the set leads on a phone */
-  .stage{order:-1;aspect-ratio:100 / 80;}
-  .box{width:53%;top:3%;}
-  .hero::before{background-position:center 22%;}
+  .stage{order:-1;aspect-ratio:100 / 84;}
+  .box-wrap{width:48%;top:3%;}
+  .hero::before{background-position:center 30%;}
   /* the copy sits on a dark, quiet panel rather than on the busy room */
   .hero::after{background:linear-gradient(180deg,
      rgba(5,5,6,.72) 0%, rgba(5,5,6,.30) 18%, rgba(5,5,6,.34) 40%,
@@ -497,7 +512,7 @@ a{color:inherit;}
 .rise.in{opacity:1;transform:none;}
 @media (prefers-reduced-motion:reduce){
   .rise{opacity:1;transform:none;transition:none;}
-  .box,.mat{animation:none;}
+  .box-wrap,.mat{animation:none;}
   .cards img:hover,.notes img:hover,.token:hover img{transform:none;}
 }
 
@@ -754,14 +769,22 @@ a{color:inherit;}
          the full playing mat, both sitting on the room the hero already is. -->
     <div class="stage" role="img"
          aria-label="The Legacy Wealth box standing behind the game board on a black marble table">
-      <div class="box">
-        <span class="f side" aria-hidden="true"></span>
-        <span class="f lid" aria-hidden="true"></span>
-        <span class="f front">
-          <img src="assets/images/box-cover.webp" alt="" width="1100" height="1100"
-               fetchpriority="high" decoding="async">
-        </span>
+      <div class="box-wrap">
+        <div class="box">
+          <span class="f side" aria-hidden="true"></span>
+          <span class="f lid" aria-hidden="true"></span>
+          <span class="f front">
+            <img src="assets/images/box-cover.webp" alt="" width="1100" height="1100"
+                 fetchpriority="high" decoding="async">
+          </span>
+        </div>
+        <!-- what the polished stone gives back, and the dark line where the
+             box actually touches it -->
+        <img class="box-refl" src="assets/images/box-cover.webp" alt="" aria-hidden="true"
+             width="1100" height="1100" decoding="async">
+        <span class="contact" aria-hidden="true"></span>
       </div>
+
       <div class="mat">
         <img src="assets/images/board-mat.webp" alt="" width="1800" height="1800" decoding="async">
       </div>
