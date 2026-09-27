@@ -161,7 +161,11 @@ a{color:inherit;}
 
 /* the hero sells: eyebrow, headline, one paragraph, one button, the facts */
 .hero h1{margin:6px 0 22px;}
-.lines span{display:inline-block;text-wrap:balance;}
+/* each sentence owns its own line at every width. As inline-blocks they
+   paired up from about 500px and sat within a few pixels of the edge, so any
+   nudge — a device text-size setting, a late-loading font — pushed the second
+   one off screen. */
+.lines span{display:block;text-wrap:balance;}
 .hero-sub{font-size:clamp(15.5px,1.35vw,17.5px);line-height:1.72;color:rgba(243,239,230,.95);
   max-width:38ch;margin:0 0 28px;}
 .hero-sub .prize{color:var(--gold-soft);font-weight:600;white-space:nowrap;}
@@ -379,7 +383,9 @@ a{color:inherit;}
 .band-stone .deck-head h3{color:var(--stone-ink);}
 .deck-head p{font-size:13.5px;color:var(--paper-faint);margin:0;flex:1 1 100%;}
 .band-stone .deck-head p{color:var(--stone-ink-dim);}
-.chips{display:flex;flex-wrap:nowrap;gap:7px;}
+/* five category chips will not fit one line on a 320px phone, and forcing
+   them to try pushed the whole page sideways */
+.chips{display:flex;flex-wrap:wrap;gap:7px;}
 .chip{font-size:9.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#fff;
   padding:5px 11px;border-radius:2px;white-space:nowrap;}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
