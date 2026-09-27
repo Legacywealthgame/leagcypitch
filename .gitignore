@@ -2,3 +2,7 @@ node_modules/
 
 # Local Netlify folder
 .netlify
+
+# Python
+__pycache__/
+*.pyc
