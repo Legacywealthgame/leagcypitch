@@ -515,21 +515,6 @@ a{color:inherit;}
 }
 
 /* ==========================================================================
-   Countdown
-   ========================================================================== */
-.countdown{display:flex;justify-content:center;gap:clamp(18px,4vw,40px);margin:0 0 34px;}
-.cd-unit{text-align:center;min-width:62px;}
-.cd-num{
-  display:block;font-family:var(--serif);font-size:clamp(30px,4.4vw,46px);font-weight:600;line-height:1;
-  background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;
-  font-variant-numeric:tabular-nums;
-}
-.cd-lab{display:block;margin-top:9px;font-size:9.5px;font-weight:600;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--paper-faint);}
-.cd-sep{font-family:var(--serif);font-size:clamp(24px,3.4vw,34px);color:var(--gold-dim);align-self:flex-start;line-height:1.1;}
-.countdown[hidden]{display:none;}
-
-/* ==========================================================================
    Field craft — floating labels
    ========================================================================== */
 .field{position:relative;}
@@ -681,8 +666,6 @@ a{color:inherit;}
   .mentor-list div{padding:20px 18px;}
   .mentor-list h3{font-size:17px;}
 
-  .countdown{gap:12px;margin-bottom:26px;}
-  .cd-unit{min-width:0;}
   .closer .urgency{font-size:13.5px;margin-bottom:24px;}
 
   .site-foot{padding:38px 0 34px;}
@@ -758,13 +741,13 @@ a{color:inherit;}
       <div class="form-ok hero-ok" id="heroOk">
         <h3>You're on the list</h3>
         <p class="ok-name" data-ok-name></p>
-        <p>Your place is held. We'll email you the moment Legacy Wealth opens for preorder
-          on November 8, and you'll be first in line.</p>
+        <p>Your place is held. We'll email you the moment Legacy Wealth opens for preorder,
+          and you'll be first in line.</p>
       </div>
 
       <p class="cta-note">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
-        Preorders open November 8</p>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        Waitlist members hear first when preorders open</p>
 
       <p class="facts">Ages 12+ &middot; Up to 6 Players &middot; 45&ndash;90 Minutes &middot; AI Optional</p>
 
@@ -1057,19 +1040,9 @@ a{color:inherit;}
       <p class="eyebrow">Join the Waitlist</p>
       <h2 class="display gilt">Be First in Line</h2>
       <div class="rule" style="margin-left:auto;margin-right:auto;"></div>
-      <div class="countdown" id="countdown" hidden aria-label="Time until preorders open">
-        <div class="cd-unit"><b class="cd-num" data-cd="days">--</b><span class="cd-lab">Days</span></div>
-        <span class="cd-sep">:</span>
-        <div class="cd-unit"><b class="cd-num" data-cd="hours">--</b><span class="cd-lab">Hours</span></div>
-        <span class="cd-sep">:</span>
-        <div class="cd-unit"><b class="cd-num" data-cd="minutes">--</b><span class="cd-lab">Minutes</span></div>
-        <span class="cd-sep">:</span>
-        <div class="cd-unit"><b class="cd-num" data-cd="seconds">--</b><span class="cd-lab">Seconds</span></div>
-      </div>
-
-      <p class="urgency">Preorders open November 8. Join the waitlist to be notified the moment
-        preorders go live. Preorder customers also receive the Legacy Credit Playbook, Family Wealth
-        Dashboard, and an exclusive Wealth Planning Workshop.</p>
+      <p class="urgency">Join the waitlist to be notified the moment preorders go live. Preorder
+        customers also receive the Legacy Credit Playbook, Family Wealth Dashboard, and an exclusive
+        Wealth Planning Workshop.</p>
 
       <div class="signup">
         <form id="mainForm" novalidate>
@@ -1099,7 +1072,7 @@ a{color:inherit;}
           <h3>You're on the list</h3>
           <p class="ok-name" data-ok-name></p>
           <p>Your place is held. We'll email you the moment Legacy Wealth opens for
-            preorder on November 8th, and you'll be first in line.</p>
+            preorder, and you'll be first in line.</p>
           <p class="ok-next">Watch your inbox &middot; Add us to your contacts</p>
         </div>
       </div>
@@ -1271,41 +1244,6 @@ a{color:inherit;}
   document.querySelectorAll('.field input').forEach(function (input) {
     input.addEventListener('input', function () { input.parentNode.classList.remove('bad'); });
   });
-
-  /* ==========================================================================
-     Countdown to preorder
-     ========================================================================== */
-  (function () {
-    var box = document.getElementById('countdown');
-    if (!box) { return; }
-    var cells = {};
-    box.querySelectorAll('[data-cd]').forEach(function (el) { cells[el.getAttribute('data-cd')] = el; });
-
-    /* November 8th of whichever year it next falls in, so the page does not
-       start counting to a date in the past once this year's launch passes. */
-    function target() {
-      var now = new Date();
-      var d = new Date(now.getFullYear(), 10, 8, 0, 0, 0);
-      if (d - now <= 0) { d = new Date(now.getFullYear() + 1, 10, 8, 0, 0, 0); }
-      return d;
-    }
-
-    var when = target();
-    function pad(n) { return n < 10 ? '0' + n : String(n); }
-
-    function tick() {
-      var left = when - new Date();
-      if (left <= 0) { box.hidden = true; return; }
-      var s = Math.floor(left / 1000);
-      cells.days.textContent = Math.floor(s / 86400);
-      cells.hours.textContent = pad(Math.floor(s / 3600) % 24);
-      cells.minutes.textContent = pad(Math.floor(s / 60) % 60);
-      cells.seconds.textContent = pad(s % 60);
-      box.hidden = false;
-    }
-    tick();
-    setInterval(tick, 1000);
-  })();
 
   /* ==========================================================================
      Component lightbox
